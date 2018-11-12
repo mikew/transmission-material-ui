@@ -1,0 +1,52 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-airbnb",
+    "tslint-config-prettier"
+  ],
+  "defaultSeverity": "warning",
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts",
+      "coverage/lcov-report/*.js",
+      "prettier.config.js"
+    ]
+  },
+  "rules": {
+    "interface-name": [true, "never-prefix"],
+    "member-access": false,
+    "object-literal-sort-keys": false,
+    "callable-types": false,
+    "interface-over-type-literal": true,
+    "array-type": [true, "array"],
+    "prefer-array-literal": false,
+    "newline-before-return": true,
+    "no-angle-bracket-type-assertion": true,
+    "no-switch-case-fall-through": true,
+    "import-name": [
+      true,
+      {
+        "react": "React"
+      }
+    ],
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "case-insensitive",
+        "grouped-imports": true,
+        "named-imports-order": "case-insensitive",
+        "module-source-path": "full"
+      }
+    ],
+    "curly": [true],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore"
+    ],
+    "prefer-function-over-method": [true, "allow-public"]
+  }
+}

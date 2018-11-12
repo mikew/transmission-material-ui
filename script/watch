@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+./script/create-proxy "${REACT_APP_PROXY_URL}" &
+
+npm run start
