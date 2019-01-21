@@ -21,7 +21,7 @@ class TorrentList extends React.PureComponent<
 
   render() {
     return (
-      <List>
+      <List dense={true}>
         {Object.keys(this.props.torrents).map((x) => {
           const rightIcon =
             this.props.torrents[x].status === TorrentStatus.STOPPED

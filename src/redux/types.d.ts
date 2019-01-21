@@ -24,7 +24,9 @@ export interface AppDispatch extends Dispatch<Action> {}
 /**
  * App-specific interface to be extended by component props.
  */
-export interface AppDispatchProps extends DispatchProp {}
+export interface AppDispatchProps {
+  dispatch: AppDispatch
+}
 
 export interface AppGetState {
   (): RootState

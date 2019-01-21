@@ -1,4 +1,4 @@
-import { List, ListSubheader } from '@material-ui/core'
+import { List } from '@material-ui/core'
 import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
 import React from 'react'
 
@@ -11,7 +11,7 @@ interface Props {
 // tslint:disable-next-line:function-name
 function TrackerList(props: Props) {
   return (
-    <List>
+    <List dense={true}>
       <ListHeaderTopBar style={{ backgroundColor: '#fff' }}>
         {props.torrent.name}
       </ListHeaderTopBar>

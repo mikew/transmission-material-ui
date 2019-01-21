@@ -15,8 +15,8 @@ export enum TorrentStatus {
 
 export default class Transmission {
   url: string
-  sessionId: string | null
-  authHeader: string | null
+  sessionId: string | null = null
+  authHeader: string | null = null
 
   constructor(options: Partial<TransmissionOptions> = {}) {
     const mergedOptions = {

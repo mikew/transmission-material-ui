@@ -7,7 +7,7 @@ import {
   TextField,
 } from '@material-ui/core'
 import apiInstance from '@src/api/apiInstance'
-import { AppDispatch, RootState } from '@src/redux/types'
+import { RootState } from '@src/redux/types'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -61,7 +61,7 @@ class AddTorrentDialog extends React.PureComponent<
 
   handleBackdropClick = () => {
     this.setState(buildInitialState)
-    this.props.toggleAddDialog(null)
+    this.props.toggleAddDialog()
   }
 
   handleMagnetChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

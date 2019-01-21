@@ -7,12 +7,13 @@ import constants from './constants'
 export const showInspector = createAction<number | null>(
   constants.showInspector,
 )
-export const toggleInspector = createAction<null>(constants.toggleInspector)
+export const toggleInspector = createAction(constants.toggleInspector)
 export const toggleTorrentChecked = createAction<{
   action: 'toggle' | 'exclusive' | 'checkAll' | 'unCheckAll'
   ids: number[]
 }>(constants.toggleTorrentChecked)
-export const toggleAddDialog = createAction<null>(constants.toggleAddDialog)
+export const toggleAddDialog = createAction(constants.toggleAddDialog)
+export const toggleDeleteDialog = createAction(constants.toggleDeleteDialog)
 
 export const get = (
   ids?: TransmissionIdLookup,

@@ -1,4 +1,5 @@
-import { Icon, IconButton } from '@material-ui/core'
+import { Icon, IconButton, Omit } from '@material-ui/core'
+import { IconButtonProps } from '@material-ui/core/IconButton'
 import { TorrentStatus } from '@src/api'
 import apiInstance from '@src/api/apiInstance'
 import { AppDispatchProps, RootState } from '@src/redux/types'
@@ -8,12 +9,16 @@ import { connect } from 'react-redux'
 import * as actions from './actions'
 import * as selectors from './selectors'
 
-class StartAllTorrents extends React.PureComponent<
-  ReturnType<typeof mapState> & AppDispatchProps
-> {
+type Props = Omit<IconButtonProps, 'onClick'> &
+  ReturnType<typeof mapState> &
+  AppDispatchProps
+
+class StartAllTorrents extends React.PureComponent<Props> {
   render() {
+    const { torrents, contextIds, dispatch, ...rest } = this.props
+
     return (
-      <IconButton onClick={this.handleClick}>
+      <IconButton {...rest} onClick={this.handleClick}>
         <Icon>{this.areAllStopped ? 'play_arrow' : 'stop'}</Icon>
       </IconButton>
     )

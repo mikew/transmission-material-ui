@@ -6,4 +6,5 @@ export default applyNamespace('torrents', {
   toggleInspector: 0,
   toggleTorrentChecked: 0,
   toggleAddDialog: 0,
+  toggleDeleteDialog: 0,
 })

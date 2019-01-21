@@ -6,25 +6,15 @@ import { connect } from 'react-redux'
 
 import * as actions from './actions'
 
+type Props = ReturnType<typeof mapDispatch> & {
+  children?: React.ReactNode
+}
+
 // tslint:disable-next-line:function-name
-function TorrentDropZone(props: ReturnType<typeof mapDispatch>) {
+function TorrentDropZone(props: Props) {
   hackDocumentPaste(props)
 
-  return (
-    <div
-      onDrop={props.onDrop}
-      style={{
-        pointerEvents: 'none',
-        position: 'absolute',
-        opacity: 0.00001,
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-        zIndex: 999999,
-      }}
-    />
-  )
+  return <div onDrop={props.onDrop} children={props.children} />
 }
 
 let isListeningToPaste = false
@@ -41,26 +31,32 @@ function hackDocumentPaste(props: Parameters<typeof TorrentDropZone>['0']) {
 }
 
 function handleDataTransfer(dispatch: AppDispatch, dataTransfer: DataTransfer) {
-  const prefix = 'data:application/x-bittorrent;base64,'
+  const filePrefixes = [
+    'data:application/x-bittorrent;base64,',
+    'data:application/octet-stream;base64,',
+  ]
+  const magnetPrefix = 'magnet:'
   const files = getFilesFromEvent(dataTransfer)
 
   files.forEach(async (x) => {
-    if (x.text) {
+    const data = await x.reader()
+
+    if (data.startsWith(magnetPrefix)) {
       const response = await apiInstance.addUrl('torrent-add', {
-        filename: x.text,
+        filename: data,
       })
 
       dispatch(actions.get([response.id]))
-    } else if (x.file) {
-      const data = await readFile(x.file)
+    } else {
+      for (const filePrefix of filePrefixes) {
+        if (data.startsWith(filePrefix)) {
+          const response = await apiInstance.addBase64(
+            data.slice(filePrefix.length),
+          )
 
-      if (!data.startsWith(prefix)) {
-        return
+          dispatch(actions.get([response.id]))
+        }
       }
-
-      const response = await apiInstance.addBase64(data.slice(prefix.length))
-
-      dispatch(actions.get([response.id]))
     }
   })
 }
@@ -71,17 +67,6 @@ const mapDispatch = (dispatch: AppDispatch) => ({
     handleDataTransfer(dispatch, event.dataTransfer)
   },
 })
-
-function readFile(file: File) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onloadend = () => resolve(reader.result! as string)
-    reader.onabort = () => reject(new Error())
-    reader.onerror = () => reject(new Error())
-    // reader.readAsText(file)
-    reader.readAsDataURL(file)
-  })
-}
 
 export default connect(
   undefined,

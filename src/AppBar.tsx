@@ -1,8 +1,10 @@
 import {
   AppBar as MuiAppBar,
   Button,
+  createStyles,
   Icon,
   IconButton,
+  Theme,
   Toolbar,
 } from '@material-ui/core'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
@@ -16,7 +18,7 @@ import * as actions from './torrents/actions'
 function AppBar(
   props: ReturnType<typeof mapState> &
     ReturnType<typeof mapDispatch> &
-    WithStyles<ClassKey>,
+    WithStyles<typeof styles>,
 ) {
   const { classes } = props
 
@@ -60,28 +62,28 @@ const mapState = (state: RootState) => ({
 })
 
 const mapDispatch = (dispatch: AppDispatch) => ({
-  toggleInspector: () => dispatch(actions.toggleInspector(null)),
-  toggleAddDialog: () => dispatch(actions.toggleAddDialog(null)),
+  toggleInspector: () => dispatch(actions.toggleInspector()),
+  toggleAddDialog: () => dispatch(actions.toggleAddDialog()),
 })
 
-type ClassKey = 'appBar' | 'toolbar' | 'fabButton' | 'fabContainer'
-const decorator = withStyles<ClassKey>((_theme) => ({
-  appBar: {
-    top: 'auto',
-    bottom: 0,
-    zIndex: _theme.zIndex.drawer + 1,
-  },
-  toolbar: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  fabContainer: {
-    transform: 'translateY(-30px)',
-  },
-  fabButton: {},
-}))
+const styles = (theme: Theme) =>
+  createStyles({
+    appBar: {
+      top: 'auto',
+      bottom: 0,
+      zIndex: theme.zIndex.drawer + 1,
+    },
+    toolbar: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    fabContainer: {
+      transform: 'translateY(-30px)',
+    },
+    fabButton: {},
+  })
 
 export default connect(
   mapState,
   mapDispatch,
-)(decorator(AppBar))
+)(withStyles(styles)(AppBar))

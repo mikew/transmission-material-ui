@@ -12,35 +12,29 @@ type Props = Omit<IconButtonProps, 'onClick'> &
   ReturnType<typeof mapDispatch>
 
 // tslint:disable-next-line:function-name
-function CheckAllTorrents(props: Props) {
-  const { checkAll, unCheckAll, checkIds, ...rest } = props
-  let icon = 'check_box_outline_blank'
-  let action = checkAll
+function DeleteAllTorrents(props: Props) {
+  const { checkedIds, onClick, ...rest } = props
 
-  if (checkIds.length) {
-    icon = 'check_box'
-    action = unCheckAll
+  if (checkedIds.length === 0) {
+    return null
   }
 
   return (
-    <IconButton {...rest} onClick={action}>
-      <Icon>{icon}</Icon>
+    <IconButton {...rest} onClick={onClick}>
+      <Icon>delete</Icon>
     </IconButton>
   )
 }
 
 const mapState = (state: RootState) => ({
-  checkIds: selectors.getCheckedIds(state),
+  checkedIds: selectors.getCheckedIds(state),
 })
 
 const mapDispatch = (dispatch: AppDispatch) => ({
-  checkAll: () =>
-    dispatch(actions.toggleTorrentChecked({ action: 'checkAll', ids: [] })),
-  unCheckAll: () =>
-    dispatch(actions.toggleTorrentChecked({ action: 'unCheckAll', ids: [] })),
+  onClick: () => dispatch(actions.toggleDeleteDialog()),
 })
 
 export default connect(
   mapState,
   mapDispatch,
-)(CheckAllTorrents)
+)(DeleteAllTorrents)

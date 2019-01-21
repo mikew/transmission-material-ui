@@ -1,4 +1,11 @@
-import { Button, Drawer, Icon, Tab, Tabs } from '@material-ui/core'
+import {
+  Button,
+  createStyles,
+  Drawer,
+  Icon,
+  Tab,
+  Tabs,
+} from '@material-ui/core'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import { RootState } from '@src/redux/types'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
@@ -17,7 +24,7 @@ enum InspectorTabs {
 }
 
 class Inspector extends React.PureComponent<
-  ReturnType<typeof mapState> & WithStyles<ClassKey>
+  ReturnType<typeof mapState> & WithStyles<typeof styles>
 > {
   state = {
     currentTab: InspectorTabs.files,
@@ -128,8 +135,7 @@ const mapState = (state: RootState) => ({
   checkedTorrents: selectors.getCheckedTorrents(state),
 })
 
-type ClassKey = 'tabs' | 'tab' | 'paper'
-const decorator = withStyles<ClassKey>((_theme) => ({
+const styles = createStyles({
   tabs: {
     minHeight: 72,
   },
@@ -139,6 +145,6 @@ const decorator = withStyles<ClassKey>((_theme) => ({
   paper: {
     width: 300,
   },
-}))
+})
 
-export default connect(mapState)(decorator(Inspector))
+export default connect(mapState)(withStyles(styles)(Inspector))

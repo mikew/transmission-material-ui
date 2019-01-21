@@ -12,6 +12,7 @@ export interface State {
   }
   checkedTorrents: number[]
   isAddDialogVisible: boolean
+  isDeleteDialogVisible: boolean
 }
 
 const initialState: State = {
@@ -19,6 +20,7 @@ const initialState: State = {
   isInspectorOpen: false,
   isAddDialogVisible: false,
   checkedTorrents: [],
+  isDeleteDialogVisible: false,
 }
 
 export default createReducer(initialState, {
@@ -95,6 +97,13 @@ export default createReducer(initialState, {
     return {
       ...state,
       isAddDialogVisible: !state.isAddDialogVisible,
+    }
+  },
+
+  [constants.toggleDeleteDialog]: (state) => {
+    return {
+      ...state,
+      isDeleteDialogVisible: !state.isDeleteDialogVisible,
     }
   },
 })

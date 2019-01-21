@@ -1,39 +1,34 @@
 import {
   AppBar as MuiAppBar,
+  createStyles,
   Icon,
-  IconButton,
+  Theme,
   Toolbar,
   Typography,
 } from '@material-ui/core'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
-import { AppDispatch, RootState } from '@src/redux/types'
+import { RootState } from '@src/redux/types'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import * as actions from './torrents/actions'
 import CheckAllTorrents from './torrents/CheckAllTorrents'
+import DeleteAllTorrents from './torrents/DeleteAllTorrents'
 import * as selectors from './torrents/selectors'
 import StartAllTorrents from './torrents/StartAllTorrents'
 
 // tslint:disable-next-line:function-name
-function TopAppBar(props: ReturnType<typeof mapState> & WithStyles<ClassKey>) {
+function TopAppBar(
+  props: ReturnType<typeof mapState> & WithStyles<typeof styles>,
+) {
   const { classes } = props
 
   return (
     <MuiAppBar position="fixed" color="primary" className={classes.appBar}>
       <Toolbar variant="dense">
         <div style={{ flexGrow: 1 }}>
-          <CheckAllTorrents />
-          <StartAllTorrents />
-          <IconButton color="inherit">
-            <Icon>play_arrow</Icon>
-          </IconButton>
-          <IconButton color="inherit">
-            <Icon>stop</Icon>
-          </IconButton>
-          <IconButton color="inherit">
-            <Icon>delete</Icon>
-          </IconButton>
+          <CheckAllTorrents color="inherit" />
+          <StartAllTorrents color="inherit" />
+          <DeleteAllTorrents color="inherit" />
         </div>
         <div>
           <Typography color="inherit">
@@ -73,21 +68,11 @@ const mapState = (state: RootState) => ({
   rateDownload: selectors.getRateDownload(state),
 })
 
-type ClassKey = 'appBar'
-const decorator = withStyles<ClassKey>((_theme) => ({
-  appBar: {
-    // top: 'auto',
-    // bottom: 0,
-    zIndex: _theme.zIndex.drawer + 1,
-  },
-  // toolbar: {
-  //   alignItems: 'center',
-  //   justifyContent: 'space-between',
-  // },
-  // fabContainer: {
-  //   transform: 'translateY(-30px)',
-  // },
-  // fabButton: {},
-}))
+const styles = (theme: Theme) =>
+  createStyles({
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1,
+    },
+  })
 
-export default connect(mapState)(decorator(TopAppBar))
+export default connect(mapState)(withStyles(styles)(TopAppBar))
