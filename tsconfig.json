@@ -4,10 +4,7 @@
     "rootDir": "./src",
     "outDir": "build/dist",
     "target": "es2018",
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "lib": ["es6", "dom"],
     "module": "esnext",
     "strict": true,
     "moduleResolution": "node",
@@ -17,9 +14,7 @@
     "jsx": "react",
     "sourceMap": true,
     "paths": {
-      "@src/*": [
-        "src/*"
-      ]
+      "@src/*": ["src/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,
@@ -38,7 +33,5 @@
     "src/setupTests.ts",
     "prettier.config.js"
   ],
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

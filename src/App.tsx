@@ -13,9 +13,7 @@ import FloatingBarSpacer from './util/FloatingBarSpacer'
 function App() {
   return (
     <TorrentDropZone>
-      <div
-      className="App"
-      >
+      <div className="App">
         <FloatingBarSpacer />
         <TorrentList />
         <FloatingBarSpacer />
