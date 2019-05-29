@@ -1,10 +1,8 @@
 import createStore from '@src/redux/createStore'
 import { RootState } from '@src/redux/types'
 import { mount, MountRendererProps } from 'enzyme'
-import { History } from 'history'
 import React from 'react'
 import { Provider } from 'react-redux'
-import { MemoryRouter } from 'react-router-dom'
 import { Store } from 'redux'
 
 export interface MountComponentOptions extends MountRendererProps {
@@ -20,9 +18,7 @@ export default function mountComponent<P = {}>(
 
   const wrapper = mount(
     <Provider store={store}>
-      <MemoryRouter ref={(x) => (history = (x as any).history)}>
-        {element}
-      </MemoryRouter>
+      {element}
     </Provider>,
     options,
   )
@@ -31,6 +27,5 @@ export default function mountComponent<P = {}>(
     element,
     store,
     wrapper,
-    history: history!,
   }
 }

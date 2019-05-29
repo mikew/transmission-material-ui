@@ -9,11 +9,11 @@ import createMuiTheme, {
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-
 import { Provider } from 'react-redux'
 
 import './index.css'
 import createStore from './redux/createStore'
+import { register } from './serviceWorker'
 import ignoreRootDrag from './util/ignoreRootDrag'
 
 const theme = createMuiTheme({
@@ -32,7 +32,6 @@ const theme = createMuiTheme({
 } as ThemeOptions)
 
 ignoreRootDrag()
-import { register } from './serviceWorker'
 
 function renderApp() {
   // Importing this strange way is needed for hot loading.

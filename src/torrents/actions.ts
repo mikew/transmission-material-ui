@@ -1,6 +1,5 @@
-import createAction from 'redux-ts-helpers/lib/createAction'
-
 import apiInstance from '@src/api/apiInstance'
+import createAction from 'redux-ts-helpers/lib/createAction'
 
 import constants from './constants'
 

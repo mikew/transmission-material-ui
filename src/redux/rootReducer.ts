@@ -1,10 +1,9 @@
 // If any feature has a reducer, the reducer and it's state interface must be
 // imported here.
 
-import { combineReducers } from 'redux'
-
 // tslint:disable-next-line:import-name
 import torrents from '@src/torrents/reducer'
+import { combineReducers } from 'redux'
 
 import { RootState } from './types'
 

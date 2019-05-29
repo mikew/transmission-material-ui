@@ -30,7 +30,14 @@ function hackDocumentPaste(props: Parameters<typeof TorrentDropZone>['0']) {
   isListeningToPaste = true
 }
 
-function handleDataTransfer(dispatch: AppDispatch, dataTransfer: DataTransfer) {
+function handleDataTransfer(
+  dispatch: AppDispatch,
+  dataTransfer: DataTransfer | null,
+) {
+  if (dataTransfer == null) {
+    return
+  }
+
   const filePrefixes = [
     'data:application/x-bittorrent;base64,',
     'data:application/octet-stream;base64,',

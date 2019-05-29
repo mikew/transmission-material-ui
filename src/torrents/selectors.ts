@@ -1,6 +1,5 @@
-import { createSelector } from 'reselect'
-
 import { RootState } from '@src/redux/types'
+import { createSelector } from 'reselect'
 
 export const getCheckedIds = (state: RootState) =>
   state.torrents.checkedTorrents
@@ -12,12 +11,14 @@ export const getCheckedTorrents = createSelector(
   (checked, all) => checked.map((x) => all[x]),
 )
 
-export const getRateUpload = createSelector(getAll, (all) =>
-  Object.keys(all).reduce((memo, x) => memo + all[x].rateUpload, 0),
+export const getRateUpload = createSelector(
+  getAll,
+  (all) => Object.keys(all).reduce((memo, x) => memo + all[x].rateUpload, 0),
 )
 
-export const getRateDownload = createSelector(getAll, (all) =>
-  Object.keys(all).reduce((memo, x) => memo + all[x].rateDownload, 0),
+export const getRateDownload = createSelector(
+  getAll,
+  (all) => Object.keys(all).reduce((memo, x) => memo + all[x].rateDownload, 0),
 )
 
 export const getSelectedOrAllIds = createSelector(

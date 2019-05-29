@@ -5,9 +5,8 @@ import LinearProgress, {
 } from '@material-ui/core/LinearProgress'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import React from 'react'
-
 import { TorrentStatus } from '@src/api'
+import React from 'react'
 
 interface Props {
   torrent: TransmissionTorrent
