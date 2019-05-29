@@ -1,3 +1,7 @@
+// This is the main entry point of the application.
+// It does the initial render and sets up the store / router.
+// If you want something to run when the app launches, put it here.
+
 import CssBaseline from '@material-ui/core/CssBaseline'
 import createMuiTheme, {
   ThemeOptions,
@@ -5,17 +9,12 @@ import createMuiTheme, {
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-// This is the main entry point of the application.
-// It does the initial render and sets up the store / router.
-// If you want something to run when the app launches, put it here.
 
 import { Provider } from 'react-redux'
 
 import './index.css'
 import createStore from './redux/createStore'
 import ignoreRootDrag from './util/ignoreRootDrag'
-
-const store = createStore()
 
 const theme = createMuiTheme({
   palette: {
