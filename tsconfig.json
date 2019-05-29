@@ -3,25 +3,30 @@
     "baseUrl": ".",
     "rootDir": "./src",
     "outDir": "build/dist",
-
     "target": "es2018",
-    "lib": ["es6", "dom"],
-
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "module": "commonjs",
-
     "strict": true,
-
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-
     "jsx": "react",
     "sourceMap": true,
-
     "paths": {
-      "@src/*": ["src/*"]
-    }
+      "@src/*": [
+        "src/*"
+      ]
+    },
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noEmit": true
   },
   "exclude": [
     "node_modules",
@@ -32,5 +37,8 @@
     "jest",
     "src/setupTests.ts",
     "prettier.config.js"
+  ],
+  "include": [
+    "src"
   ]
 }
