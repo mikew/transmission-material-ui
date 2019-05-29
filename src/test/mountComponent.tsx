@@ -14,7 +14,6 @@ export default function mountComponent<P = {}>(
   options: MountComponentOptions = {},
 ) {
   const store = options.store || createStore()
-  let history: History | undefined
 
   const wrapper = mount(
     <Provider store={store}>
