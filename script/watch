@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
+set -ex
 
 ./script/create-proxy "${REACT_APP_PROXY_URL}" &
 
-npm run start
+./script/prepare-env
+exec ./node_modules/.bin/react-scripts-ts start

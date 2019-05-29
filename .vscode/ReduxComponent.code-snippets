@@ -15,7 +15,7 @@
   // 	],
   // 	"description": "Log output to console"
   // }
-  "Redux Class Component": {
+  "react-redux Class Component": {
     "scope": "typescriptreact",
     "prefix": "reactreduxclass",
     "body": [
@@ -41,7 +41,7 @@
     ],
     "description": "Redux Class Component"
   },
-  "Redux Functional Component": {
+  "react-redux Functional Component": {
     "scope": "typescriptreact",
     "prefix": "reactreduxfunctional",
     "body": [
@@ -66,7 +66,7 @@
     ],
     "description": "Redux Functional Component"
   },
-  "Redux mapState": {
+  "react-redux mapState": {
     "scope": "typescript,typescriptreact",
     "prefix": "reduxmapstate",
     "body": [
@@ -82,13 +82,27 @@
     ],
     "description": "Redux mapState"
   },
-  "Redux createReducer Handler": {
+  "react-redux mapDispatch": {
+    "prefix": "reduxmapdispatch",
+    "body": [
+      "import { AppDispatch } from '@src/redux/types'",
+      "",
+      "const mapDispatch = (dispatch: AppDispatch) => ({",
+      "  $1",
+      "})",
+      "// Add this to your props: ${2:& ReturnType<typeof mapDispatch>}",
+      "// Decorate your component with: ${3:connect(mapState${4, mapDispatch})()}",
+      ""
+    ],
+    "description": "react-redux mapDispatch"
+  },
+  "redux-ts-helpers createReducer Handler": {
     "scope": "typescript",
     "prefix": "reduxreducerhandler",
     "body": [
       "[constants.${1:action}]: (",
       "  state,",
-      "  action: ActionSuccessType<typeof actions.$1>,",
+      "  action: ReturnType<typeof actions.$1>,",
       ") => {",
       "  return {",
       "    ...state,",
@@ -104,21 +118,14 @@
     "prefix": "muiwithstyles",
     "body": [
       "import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'",
-      "import createStyles from '@material-ui/core/styles/createStyles'",
-      "import { Theme } from '@material-ui/core/styles/createMuiTheme'",
       "",
-      "const styles = (theme: Theme) =>",
-      "  createStyles({",
-      "    root: {",
-      "      $1",
-      "    },",
-      "    class1: {",
-      "      $2",
-      "    },",
-      "  })",
-      "// Add this to your props: ${3:& WithStyles<typeof styles>}",
-      "// Decorate your component with: ${4:withStyles(styles)()}",
-      "// Remove `(theme) =>` if you don't need to access the theme",
+      "type ClassKey = '${1:root}' | '${2:class1}'",
+      "const styleDecorator = withStyles<ClassKey>((theme) => ({",
+      "  $1: {$3},",
+      "  $2: {$4},",
+      "}))",
+      "// Add this to your props: ${5:& WithStyles<ClassKey>}",
+      "// Decorate your component with: ${6:styleDecorator()}",
       ""
     ],
     "description": "material-ui WithStyles"

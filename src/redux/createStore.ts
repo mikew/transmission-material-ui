@@ -1,32 +1,47 @@
 import {
   applyMiddleware,
   createStore as _createStore,
-  DeepPartial,
+  Middleware,
   Store,
 } from 'redux'
 import reduxAsyncPayload from 'redux-async-payload'
+import { createLogger } from 'redux-logger'
 
 import { RootState } from './types'
 
-const middleware = [reduxAsyncPayload()]
+const IS_TEST_ENV = typeof describe !== 'undefined'
+const IS_PRODUCTION_ENV = process.env.NODE_ENV === 'production'
+
+const middleware: Middleware[] = []
+
+if (IS_TEST_ENV) {
+  // tslint:disable-next-line:no-var-requires
+  const failsafeMiddleware = require('./failsafeMiddleware').default
+  middleware.push(failsafeMiddleware)
+}
+
+middleware.push(reduxAsyncPayload())
+
+if (!IS_PRODUCTION_ENV && !IS_TEST_ENV) {
+  middleware.push(createLogger())
+}
 
 function getRootReducer() {
   // Importing this strange way is needed for hot loading.
   return require('./rootReducer').default
 }
 
-export default function createStore(initialState?: DeepPartial<RootState>) {
+export default function createStore(initialState?: Partial<RootState>) {
   // Type errors came in after upgrading to redux@4 + typescript@2.8.
   // Now a cast to Store is needed.
   const store = _createStore(
     getRootReducer(),
-    initialState || {},
+    initialState as RootState,
     applyMiddleware(...middleware),
   ) as Store<RootState>
 
-  const m = module as any
-  if (m.hot) {
-    m.hot.accept('./rootReducer', () => {
+  if (module.hot) {
+    module.hot.accept('./rootReducer', () => {
       store.replaceReducer(getRootReducer())
     })
   }

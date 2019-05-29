@@ -5,12 +5,14 @@ import createMuiTheme, {
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+// This is the main entry point of the application.
+// It does the initial render and sets up the store / router.
+// If you want something to run when the app launches, put it here.
+
 import { Provider } from 'react-redux'
 
-// import App from './App'
 import './index.css'
 import createStore from './redux/createStore'
-import registerServiceWorker from './registerServiceWorker'
 import ignoreRootDrag from './util/ignoreRootDrag'
 
 const store = createStore()
@@ -31,8 +33,10 @@ const theme = createMuiTheme({
 } as ThemeOptions)
 
 ignoreRootDrag()
+import { register } from './serviceWorker'
 
 function renderApp() {
+  // Importing this strange way is needed for hot loading.
   // tslint:disable-next-line:variable-name
   const App = require('./App').default
 
@@ -48,10 +52,22 @@ function renderApp() {
   )
 }
 
-registerServiceWorker()
-renderApp()
+let store: ReturnType<typeof createStore>
+export function getStore() {
+  return store
+}
 
-const m = module as any
-if (m.hot) {
-  m.hot.accept('./App', renderApp)
+async function init() {
+  store = createStore()
+  renderApp()
+}
+
+register({
+  onUpdate: () => window.location.reload(),
+})
+
+init()
+
+if (module.hot) {
+  module.hot.accept('./App', renderApp)
 }

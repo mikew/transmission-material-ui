@@ -1,20 +1,12 @@
-import { Action, Dispatch } from 'redux'
-
 import { State as TorrentsState } from '@src/torrents/reducer'
 import { DispatchProp } from 'react-redux'
+import { Action, Dispatch } from 'redux'
 
+// The interface must be added to the RootStore, so anything using redux is
+// aware of your state.
 export interface RootState {
   torrents: TorrentsState
 }
-
-/**
- * Base Flux action with generic types for payload and meta.
- */
-// export interface FluxAction<TPayload = any, TMeta = any> extends Action {
-//   payload: TPayload
-//   meta?: TMeta
-//   error?: boolean
-// }
 
 /**
  * App-specific interface for dispatching actions.
@@ -24,9 +16,7 @@ export interface AppDispatch extends Dispatch<Action> {}
 /**
  * App-specific interface to be extended by component props.
  */
-export interface AppDispatchProps {
-  dispatch: AppDispatch
-}
+export interface AppDispatchProps extends DispatchProp<Action> {}
 
 export interface AppGetState {
   (): RootState
