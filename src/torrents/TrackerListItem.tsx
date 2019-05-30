@@ -1,7 +1,7 @@
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import Typography from '@material-ui/core/Typography/Typography'
+import { AppStyles, appStyles } from '@src/styles'
 import React from 'react'
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 // tslint:disable-next-line:function-name
-function TrackerListItem(props: Props & WithStyles<typeof styles>) {
+function TrackerListItem(props: Props & AppStyles<typeof styles>) {
   const { tracker: x } = props
 
   const secondary = (
@@ -44,7 +44,7 @@ function TrackerListItem(props: Props & WithStyles<typeof styles>) {
   )
 }
 
-const styles = createStyles({
+const styles = appStyles({
   left: {
     float: 'left',
     width: 'calc(100% - 120px)',
@@ -55,7 +55,7 @@ const styles = createStyles({
   },
 })
 
-export default React.memo(withStyles(styles)(TrackerListItem))
+export default React.memo(styles(TrackerListItem))
 
 // tslint:disable-next-line:variable-name
 const AlignedNumber: React.SFC = (props) => (

@@ -1,22 +1,22 @@
-import { createStyles } from '@material-ui/core'
 import ListSubheader, {
   ListSubheaderProps,
 } from '@material-ui/core/ListSubheader'
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
+import { AppStyles, appStyles } from '@src/styles'
 import React from 'react'
 
 // tslint:disable-next-line:function-name
 function ListHeaderTopBar(
-  props: ListSubheaderProps & WithStyles<typeof styles>,
+  props: ListSubheaderProps & AppStyles<typeof styles>,
 ) {
-  return <ListSubheader {...props} classes={{ root: props.classes.root }} />
+  return <ListSubheader {...props} />
 }
 
-const styles = createStyles({
+const styles = appStyles({
   root: {
     top: 48,
     wordBreak: 'break-all',
+    lineHeight: 1.5,
   },
 })
 
-export default React.memo(withStyles(styles)(ListHeaderTopBar))
+export default React.memo(styles(ListHeaderTopBar))

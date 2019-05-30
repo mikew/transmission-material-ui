@@ -1,10 +1,10 @@
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import Button from '@material-ui/core/Button/Button'
 import Drawer from '@material-ui/core/Drawer/Drawer'
 import Icon from '@material-ui/core/Icon/Icon'
 import Tab from '@material-ui/core/Tab/Tab'
 import Tabs from '@material-ui/core/Tabs/Tabs'
 import { RootState } from '@src/redux/types'
+import { AppStyles, appStyles } from '@src/styles'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -21,7 +21,7 @@ enum InspectorTabs {
 }
 
 class Inspector extends React.PureComponent<
-  ReturnType<typeof mapState> & WithStyles<typeof styles>
+  ReturnType<typeof mapState> & AppStyles<typeof styles>
 > {
   state = {
     currentTab: InspectorTabs.files,
@@ -94,9 +94,9 @@ class Inspector extends React.PureComponent<
             <Button>Stop All</Button>
             <Button>Delete All</Button>
             <Button>Verify</Button>
-            {this.props.checkedTorrents.map((x) => (
+            {/* {this.props.checkedTorrents.map((x) => (
               <TrackerList torrent={x} key={x.id} />
-            ))}
+            ))} */}
           </React.Fragment>
         )
       // case InspectorTabs.files:
@@ -132,7 +132,7 @@ const mapState = (state: RootState) => ({
   checkedTorrents: selectors.getCheckedTorrents(state),
 })
 
-const styles = createStyles({
+const styles = appStyles(() => ({
   tabs: {
     minHeight: 72,
   },
@@ -142,6 +142,6 @@ const styles = createStyles({
   paper: {
     width: 300,
   },
-})
+}))
 
-export default connect(mapState)(withStyles(styles)(Inspector))
+export default connect(mapState)(styles(Inspector))

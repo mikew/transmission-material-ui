@@ -1,4 +1,3 @@
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import { default as MuiAppBar } from '@material-ui/core/AppBar/AppBar'
 import Fab from '@material-ui/core/Fab/Fab'
 import Icon from '@material-ui/core/Icon/Icon'
@@ -8,13 +7,14 @@ import { AppDispatch, RootState } from '@src/redux/types'
 import React from 'react'
 import { connect } from 'react-redux'
 
+import { appStyles, AppStyles } from './styles'
 import * as actions from './torrents/actions'
 
 // tslint:disable-next-line:function-name
 function AppBar(
   props: ReturnType<typeof mapState> &
     ReturnType<typeof mapDispatch> &
-    WithStyles<typeof styles>,
+    AppStyles<typeof styles>,
 ) {
   const { classes } = props
 
@@ -61,24 +61,23 @@ const mapDispatch = (dispatch: AppDispatch) => ({
   toggleAddDialog: () => dispatch(actions.toggleAddDialog()),
 })
 
-const styles = (theme: Theme) =>
-  createStyles({
-    appBar: {
-      top: 'auto !important',
-      bottom: '0 !important',
-      zIndex: `${theme.zIndex.drawer + 1} !important` as any,
-    },
-    toolbar: {
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    },
-    fabContainer: {
-      transform: 'translateY(-30px)',
-    },
-    fabButton: {},
-  })
+const styles = appStyles((theme) => ({
+  appBar: {
+    top: 'auto !important',
+    bottom: '0 !important',
+    zIndex: `${theme.zIndex.drawer + 1} !important` as any,
+  },
+  toolbar: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  fabContainer: {
+    transform: 'translateY(-30px)',
+  },
+  fabButton: {},
+}))
 
 export default connect(
   mapState,
   mapDispatch,
-)(withStyles(styles)(AppBar))
+)(styles(AppBar))

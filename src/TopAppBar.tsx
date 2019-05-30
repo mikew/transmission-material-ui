@@ -1,4 +1,3 @@
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import { default as MuiAppBar } from '@material-ui/core/AppBar/AppBar'
 import Icon from '@material-ui/core/Icon/Icon'
 import Toolbar from '@material-ui/core/Toolbar/Toolbar'
@@ -7,6 +6,7 @@ import { RootState } from '@src/redux/types'
 import React from 'react'
 import { connect } from 'react-redux'
 
+import { AppStyles, appStyles } from './styles'
 import CheckAllTorrents from './torrents/CheckAllTorrents'
 import DeleteAllTorrents from './torrents/DeleteAllTorrents'
 import * as selectors from './torrents/selectors'
@@ -14,7 +14,7 @@ import StartAllTorrents from './torrents/StartAllTorrents'
 
 // tslint:disable-next-line:function-name
 function TopAppBar(
-  props: ReturnType<typeof mapState> & WithStyles<typeof styles>,
+  props: ReturnType<typeof mapState> & AppStyles<typeof styles>,
 ) {
   const { classes } = props
 
@@ -64,11 +64,10 @@ const mapState = (state: RootState) => ({
   rateDownload: selectors.getRateDownload(state),
 })
 
-const styles = (theme: Theme) =>
-  createStyles({
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-    },
-  })
+const styles = appStyles((theme) => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+}))
 
-export default connect(mapState)(withStyles(styles)(TopAppBar))
+export default connect(mapState)(styles(TopAppBar))
