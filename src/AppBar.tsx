@@ -69,9 +69,9 @@ const mapDispatch = (dispatch: AppDispatch) => ({
 const styles = (theme: Theme) =>
   createStyles({
     appBar: {
-      top: 'auto',
-      bottom: 0,
-      zIndex: theme.zIndex.drawer + 1,
+      top: 'auto !important',
+      bottom: '0 !important',
+      zIndex: `${theme.zIndex.drawer + 1} !important` as any,
     },
     toolbar: {
       alignItems: 'center',
