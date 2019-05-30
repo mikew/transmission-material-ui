@@ -1,4 +1,5 @@
 import withStyles, {
+  StyleRules,
   StyleRulesCallback,
 } from '@material-ui/core/styles/withStyles'
 import { PropInjector } from '@material-ui/types'
@@ -41,14 +42,10 @@ export {
 //
 //     export default styles(MyComponent)
 
-export function appStyles<C extends string>(style: StyleRulesCallback<C>) {
+export function appStyles<C extends string>(
+  style: StyleRules<C> | StyleRulesCallback<C>,
+) {
   return withStyles(style)
 }
-
-// export type AppStyles<T> = T extends PropInjector<WithStyles<infer K>, any>
-//   ? K extends string
-//     ? { classes: ClassNameMap<K> }
-//     : never
-//   : never
 
 export type AppStyles<T> = T extends PropInjector<infer K> ? K : never
