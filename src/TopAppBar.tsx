@@ -1,12 +1,8 @@
-import {
-  AppBar as MuiAppBar,
-  createStyles,
-  Icon,
-  Theme,
-  Toolbar,
-  Typography,
-} from '@material-ui/core'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
+import { default as MuiAppBar } from '@material-ui/core/AppBar/AppBar'
+import Icon from '@material-ui/core/Icon/Icon'
+import Toolbar from '@material-ui/core/Toolbar/Toolbar'
+import Typography from '@material-ui/core/Typography/Typography'
 import { RootState } from '@src/redux/types'
 import React from 'react'
 import { connect } from 'react-redux'

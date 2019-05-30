@@ -1,12 +1,9 @@
-import {
-  Button,
-  createStyles,
-  Drawer,
-  Icon,
-  Tab,
-  Tabs,
-} from '@material-ui/core'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
+import Button from '@material-ui/core/Button/Button'
+import Drawer from '@material-ui/core/Drawer/Drawer'
+import Icon from '@material-ui/core/Icon/Icon'
+import Tab from '@material-ui/core/Tab/Tab'
+import Tabs from '@material-ui/core/Tabs/Tabs'
 import { RootState } from '@src/redux/types'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
 import React from 'react'

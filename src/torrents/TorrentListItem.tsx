@@ -1,10 +1,12 @@
-import { Checkbox, Icon, IconButton, Typography } from '@material-ui/core'
-import { IconButtonProps } from '@material-ui/core/IconButton'
+import Checkbox from '@material-ui/core/Checkbox/Checkbox'
+import Icon from '@material-ui/core/Icon/Icon'
+import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
 import LinearProgress, {
   LinearProgressProps,
 } from '@material-ui/core/LinearProgress'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import Typography from '@material-ui/core/Typography/Typography'
 import { TorrentStatus } from '@src/api'
 import React from 'react'
 

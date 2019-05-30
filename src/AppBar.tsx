@@ -1,13 +1,9 @@
-import {
-  AppBar as MuiAppBar,
-  Button,
-  createStyles,
-  Icon,
-  IconButton,
-  Theme,
-  Toolbar,
-} from '@material-ui/core'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
+import { default as MuiAppBar } from '@material-ui/core/AppBar/AppBar'
+import Fab from '@material-ui/core/Fab/Fab'
+import Icon from '@material-ui/core/Icon/Icon'
+import IconButton from '@material-ui/core/IconButton/IconButton'
+import Toolbar from '@material-ui/core/Toolbar/Toolbar'
 import { AppDispatch, RootState } from '@src/redux/types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -34,15 +30,14 @@ function AppBar(
           </IconButton>
         </div>
         <div className={classes.fabContainer}>
-          <Button
-            variant="fab"
+          <Fab
             color="secondary"
             aria-label="Add"
             className={classes.fabButton}
             onClick={props.toggleAddDialog}
           >
             <Icon>add</Icon>
-          </Button>
+          </Fab>
         </div>
         <div>
           <IconButton color="inherit" onClick={props.toggleInspector}>

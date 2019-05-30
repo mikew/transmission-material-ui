@@ -1,5 +1,6 @@
-import { Icon, IconButton, Omit } from '@material-ui/core'
-import { IconButtonProps } from '@material-ui/core/IconButton'
+import Icon from '@material-ui/core/Icon/Icon'
+import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
+import { Omit } from '@material-ui/types'
 import { AppDispatch, RootState } from '@src/redux/types'
 import React from 'react'
 import { connect } from 'react-redux'

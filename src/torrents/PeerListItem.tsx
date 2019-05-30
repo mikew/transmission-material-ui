@@ -1,4 +1,6 @@
-import { Icon, ListItem, ListItemText } from '@material-ui/core'
+import Icon from '@material-ui/core/Icon/Icon'
+import ListItem from '@material-ui/core/ListItem/ListItem'
+import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import React from 'react'
 
 interface Props {

@@ -1,10 +1,7 @@
-import {
-  createStyles,
-  ListItem,
-  ListItemText,
-  Typography,
-} from '@material-ui/core'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
+import ListItem from '@material-ui/core/ListItem/ListItem'
+import ListItemText from '@material-ui/core/ListItemText/ListItemText'
+import Typography from '@material-ui/core/Typography/Typography'
 import React from 'react'
 
 interface Props {
