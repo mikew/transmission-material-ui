@@ -128,4 +128,4 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
   return null
 }
 
-export default TorrentListItem
+export default React.memo(TorrentListItem)

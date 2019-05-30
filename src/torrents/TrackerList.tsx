@@ -22,4 +22,4 @@ function TrackerList(props: Props) {
   )
 }
 
-export default TrackerList
+export default React.memo(TrackerList)

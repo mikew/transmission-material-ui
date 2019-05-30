@@ -58,7 +58,7 @@ const styles = createStyles({
   },
 })
 
-export default withStyles(styles)(TrackerListItem)
+export default React.memo(withStyles(styles)(TrackerListItem))
 
 // tslint:disable-next-line:variable-name
 const AlignedNumber: React.SFC = (props) => (

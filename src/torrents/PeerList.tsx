@@ -22,4 +22,4 @@ function PeerList(props: Props) {
   )
 }
 
-export default PeerList
+export default React.memo(PeerList)

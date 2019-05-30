@@ -19,4 +19,4 @@ const styles = createStyles({
   },
 })
 
-export default withStyles(styles)(ListHeaderTopBar)
+export default React.memo(withStyles(styles)(ListHeaderTopBar))

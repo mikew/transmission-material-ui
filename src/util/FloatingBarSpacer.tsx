@@ -1,3 +1,3 @@
 import * as React from 'react'
 
-export default () => <div style={{ minHeight: 50 }} />
+export default React.memo(() => <div style={{ minHeight: 50 }} />)
