@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -ex
+
+b3cmd static-put --exclude '*.map' build/ /
