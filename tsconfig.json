@@ -1,27 +1,45 @@
 {
   "compilerOptions": {
+    // App (build) specific.
     "baseUrl": ".",
     "rootDir": "./src",
     "outDir": "build/dist",
+
+    // Target (ie browser or node) specific.
     "target": "es2018",
     "lib": ["es6", "dom"],
     "module": "esnext",
-    "strict": true,
     "moduleResolution": "node",
+
+    // Should be as strict as possible ...
+    "strict": true,
+    // But some are just annoying.
+    "strictFunctionTypes": false,
+
+    // Some libs need these, but if you're not using decorators, are safe to
+    // remove.
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "esModuleInterop": true,
+
     "jsx": "react",
     "sourceMap": true,
     "paths": {
       "@src/*": ["src/*"]
     },
     "allowJs": true,
-    "skipLibCheck": true,
+
+    // Better imports from bad typings / JS projects.
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
     "resolveJsonModule": true,
-    "noEmit": true
+
+    // For quick builds when watching, overridden in tsconfig.prod, should be
+    // enabled in other cases.
+    "skipLibCheck": true,
+    "noEmit": true,
+
+    // ???
+    "forceConsistentCasingInFileNames": true
   },
   "exclude": [
     "node_modules",
