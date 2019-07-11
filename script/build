@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -ex
 
+REACT_APP_TRANSMISSION_API_URL=/transmission/rpc \
 PUBLIC_URL=/transmission/web/ \
   ./node_modules/.bin/react-scripts-ts build
