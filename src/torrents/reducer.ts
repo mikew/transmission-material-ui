@@ -13,6 +13,7 @@ export interface State {
   checkedTorrents: number[]
   isAddDialogVisible: boolean
   isDeleteDialogVisible: boolean
+  fields: Set<keyof TransmissionTorrent>
 }
 
 const initialState: State = {
@@ -21,6 +22,7 @@ const initialState: State = {
   isAddDialogVisible: false,
   checkedTorrents: [],
   isDeleteDialogVisible: false,
+  fields: new Set(['id']),
 }
 
 export default createReducer(initialState, {
@@ -104,6 +106,32 @@ export default createReducer(initialState, {
     return {
       ...state,
       isDeleteDialogVisible: !state.isDeleteDialogVisible,
+    }
+  },
+
+  [constants.addFields]: (
+    state,
+    action: ReturnType<typeof actions.addFields>,
+  ) => {
+    const newFields = new Set(state.fields)
+    action.payload.forEach((x) => newFields.add(x))
+
+    return {
+      ...state,
+      fields: newFields,
+    }
+  },
+
+  [constants.removeFields]: (
+    state,
+    action: ReturnType<typeof actions.removeFields>,
+  ) => {
+    const newFields = new Set(state.fields)
+    action.payload.forEach((x) => newFields.delete(x))
+
+    return {
+      ...state,
+      fields: newFields,
     }
   },
 })

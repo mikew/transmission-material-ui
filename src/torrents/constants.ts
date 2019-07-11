@@ -7,4 +7,6 @@ export default applyNamespace('torrents', {
   toggleTorrentChecked: 0,
   toggleAddDialog: 0,
   toggleDeleteDialog: 0,
+  addFields: 0,
+  removeFields: 0,
 })

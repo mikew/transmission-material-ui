@@ -13,6 +13,12 @@ export const toggleTorrentChecked = createAction<{
 }>(constants.toggleTorrentChecked)
 export const toggleAddDialog = createAction(constants.toggleAddDialog)
 export const toggleDeleteDialog = createAction(constants.toggleDeleteDialog)
+export const addFields = createAction<Set<keyof TransmissionTorrent>>(
+  constants.addFields,
+)
+export const removeFields = createAction<Set<keyof TransmissionTorrent>>(
+  constants.removeFields,
+)
 
 export const get = (
   ids?: TransmissionIdLookup,
