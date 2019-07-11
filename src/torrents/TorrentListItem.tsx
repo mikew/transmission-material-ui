@@ -105,7 +105,7 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
 
     case TorrentStatus.SEED:
       return {
-        progress: torrent.uploadRatio * 100,
+        progress: (torrent.uploadRatio / torrent.seedRatioLimit) * 100,
         progressColor: 'primary',
         message: `Seeding to ${torrent.peersGettingFromUs} of ${
           torrent.peersConnected
