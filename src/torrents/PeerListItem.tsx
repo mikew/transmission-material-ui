@@ -16,17 +16,13 @@ function PeerListItem(props: Props) {
   )
 
   return (
-    <ListItem>
+    <ListItem divider={true}>
       <ListItemText
-        primary={
-          <span>
-            {icon}
-            {props.peer.address}
-          </span>
-        }
-        secondary={`${props.peer.rateToPeer} ${props.peer.clientName}`}
+        primary={props.peer.address}
+        secondary={props.peer.clientName}
         secondaryTypographyProps={{ component: 'div' }}
       />
+      {icon}
     </ListItem>
   )
 }

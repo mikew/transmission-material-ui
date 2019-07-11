@@ -15,7 +15,7 @@ const styles = appStyles({
   root: {
     top: 48,
     wordBreak: 'break-all',
-    lineHeight: 1.5,
+    lineHeight: 2,
   },
 })
 

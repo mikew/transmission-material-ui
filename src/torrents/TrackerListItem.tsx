@@ -34,7 +34,7 @@ function TrackerListItem(props: Props & AppStyles<typeof styles>) {
   )
 
   return (
-    <ListItem>
+    <ListItem divider={true}>
       <ListItemText
         primary={x.host}
         secondary={secondary}
