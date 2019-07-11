@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 set -ex
 
-./node_modules/.bin/react-scripts-ts build
+PUBLIC_URL=/transmission/web/ \
+  ./node_modules/.bin/react-scripts-ts build
