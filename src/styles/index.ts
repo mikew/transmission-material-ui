@@ -14,6 +14,12 @@ export {
 
 // Easy overloads for using material-uis style system.
 // before:
+//     import {
+//       createStyles,
+//       Theme,
+//       withStyles,
+//       WithStyles,
+//     } from '@material-ui/core'
 //
 //     const styles = (theme: Theme) =>
 //       createStyles({
@@ -29,6 +35,7 @@ export {
 //     export default withStyles(styles)(MyComponent)
 //
 // after:
+//     import { appStyles, AppStyles } from '@src/styles'
 //
 //     const styles = appStyles((theme: Theme) => ({
 //       appBar: {
