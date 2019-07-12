@@ -119,11 +119,6 @@ export default createReducer(initialState, {
     }
   },
 
-  [constants.toggleInspector]: (state) => ({
-    ...state,
-    isInspectorOpen: !state.isInspectorOpen,
-  }),
-
   [constants.toggleAddDialog]: (state) => {
     return {
       ...state,
