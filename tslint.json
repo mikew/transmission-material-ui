@@ -3,5 +3,8 @@
   "extends": ["tslint-config-sst", "tslint-config-prettier"],
   "jsRules": {},
   "rulesDirectory": [],
-  "rules": {}
+  "rules": {
+    "function-name": false,
+    "jsx-no-lambda": false
+  }
 }
