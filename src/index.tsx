@@ -14,6 +14,7 @@ import { Provider } from 'react-redux'
 import './index.css'
 import createStore from './redux/createStore'
 import { register } from './serviceWorker'
+import serviceWorkerIosHack from './serviceWorkerIosHack'
 import './util/disableZoom.css'
 import ignoreRootDrag from './util/ignoreRootDrag'
 
@@ -57,6 +58,7 @@ export function getStore() {
 }
 
 async function init() {
+  serviceWorkerIosHack()
   store = createStore()
   renderApp()
 }
