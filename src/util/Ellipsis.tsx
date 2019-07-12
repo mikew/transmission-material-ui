@@ -1,27 +1,26 @@
-import * as React from 'react'
+import React from 'react'
 
-export default class Ellipsis extends React.PureComponent<
-  // This wild guy was taken from @types/react
-  React.DetailedHTMLProps<
+function Ellipsis(
+  props: React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLSpanElement>,
     HTMLSpanElement
-  >
-> {
-  render() {
-    const { style, ...rest } = this.props
+  >,
+) {
+  const { style, ...rest } = props
 
-    return (
-      <span
-        {...rest}
-        style={{
-          display: 'inherit',
-          ...style,
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          // minWidth: 0,
-        }}
-      />
-    )
-  }
+  return (
+    <span
+      {...rest}
+      style={{
+        display: 'inherit',
+        ...style,
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        // minWidth: 0,
+      }}
+    />
+  )
 }
+
+export default React.memo(Ellipsis)

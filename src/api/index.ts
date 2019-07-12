@@ -86,27 +86,6 @@ export default class Transmission {
   }
 
   /**
-   * Adds a torrent from a file path to a torrent file
-   */
-  addFile(filename: string, options?: TorrentAddRequest) {
-    return this.addTorrentDataSrc({ filename, ...options })
-  }
-
-  /**
-   * Adds a torrent from the base64 contents of a torrent file
-   */
-  addBase64(fileb64: string, options?: TorrentAddRequest) {
-    return this.addTorrentDataSrc({ metainfo: fileb64, ...options })
-  }
-
-  /**
-   * Adds a torrent from a magnet url
-   */
-  addUrl(url: string, options?: TorrentAddRequest) {
-    return this.addTorrentDataSrc({ filename: url, ...options })
-  }
-
-  /**
    * Adds a new torrent from a variety of sources
    */
   addTorrentDataSrc(options: TorrentAddRequest) {

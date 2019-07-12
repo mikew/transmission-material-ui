@@ -1,116 +1,126 @@
 import List from '@material-ui/core/List'
 import { TorrentStatus } from '@src/api'
-import apiInstance from '@src/api/apiInstance'
-import { RootState } from '@src/redux/types'
-import React from 'react'
+import { AppDispatch, RootState } from '@src/redux/types'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
 import TorrentListItem from './TorrentListItem'
 
-class TorrentList extends React.PureComponent<
-  ReturnType<typeof mapState> & typeof actions
-> {
-  timer?: number
+const fields = new Set<keyof TransmissionTorrent>([
+  'error',
+  'errorString',
 
-  componentDidMount() {
-    this.update()
-    this.startWatching()
-  }
+  'name',
 
-  render() {
-    return (
-      <List dense={true}>
-        {Object.keys(this.props.torrents).map((x) => {
-          const rightIcon =
-            this.props.torrents[x].status === TorrentStatus.STOPPED
-              ? 'play_arrow'
-              : 'stop'
+  'peersConnected',
+  'peersGettingFromUs',
+  'peersSendingToUs',
+  'status',
 
-          return (
-            <TorrentListItem
-              key={x}
-              torrent={this.props.torrents[x]}
-              onClick={this.handleClick}
-              onCheckboxChange={this.handleCheckboxClick}
-              rightIcon={rightIcon}
-              onRightIconClick={this.handleRightIconClick}
-              checked={this.isChecked(x)}
-            />
-          )
-        })}
-      </List>
-    )
-  }
+  'percentDone',
+  'uploadRatio',
+  'seedRatioLimit',
 
-  isChecked = (id: number | string) =>
-    this.props.checkedTorrents.indexOf(Number(id)) > -1
+  'startDate',
+  'addedDate',
 
-  update = () => {
-    this.props.get()
-  }
+  'rateDownload',
+  'rateUpload',
+])
 
-  startWatching = () => {
-    if (this.timer) {
-      return
+type Props = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>
+
+function TorrentList(props: Props) {
+  useEffect(() => {
+    props.addFields()
+
+    return () => {
+      props.removeFields()
     }
+  }, [])
 
-    this.timer = window.setInterval(this.update, 10000)
-  }
+  const isChecked = (id: number | string) =>
+    props.checkedTorrents.indexOf(Number(id)) > -1
 
-  stopWatching = () => {
-    if (!this.timer) {
-      return
-    }
+  return (
+    <List dense={true}>
+      {props.torrents.map((x) => {
+        const rightIcon =
+          x.status === TorrentStatus.STOPPED ? 'play_arrow' : 'stop'
 
-    window.clearInterval(this.timer)
-    this.timer = undefined
-  }
+        return (
+          <TorrentListItem
+            key={x.id}
+            torrent={x}
+            onClick={props.handleClick}
+            onCheckboxChange={props.handleCheckboxClick}
+            rightIcon={rightIcon}
+            onRightIconClick={props.handleRightIconClick}
+            checked={isChecked(x.id)}
+          />
+        )
+      })}
+    </List>
+  )
+}
 
-  handleClick = (event: React.MouseEvent, torrent: TransmissionTorrent) => {
+const mapState = (state: RootState) => ({
+  torrents: selectors.getAllFiltered(state),
+  checkedTorrents: selectors.getCheckedIds(state),
+  fields: state.torrents.fields,
+})
+
+const mapDispatch = (dispatch: AppDispatch) => ({
+  handleClick: (event: React.MouseEvent, torrent: TransmissionTorrent) => {
     const target = event.target as HTMLInputElement
 
     if (target.tagName === 'INPUT') {
       return
     }
 
-    this.props.toggleTorrentChecked({
-      action: 'exclusive',
-      ids: [torrent.id],
-    })
-  }
+    dispatch(
+      actions.toggleTorrentChecked({
+        action: 'exclusive',
+        ids: [torrent.id],
+      }),
+    )
+  },
 
-  handleCheckboxClick = (
+  handleCheckboxClick: (
     event: React.ChangeEvent,
     torrent: TransmissionTorrent,
   ) => {
     event.stopPropagation()
-    this.props.toggleTorrentChecked({
-      action: 'toggle',
-      ids: [torrent.id],
-    })
-  }
+    dispatch(
+      actions.toggleTorrentChecked({
+        action: 'toggle',
+        ids: [torrent.id],
+      }),
+    )
+  },
 
-  handleRightIconClick = (
+  handleRightIconClick: (
     event: React.MouseEvent,
     torrent: TransmissionTorrent,
   ) => {
     event.stopPropagation()
     if (torrent.status === TorrentStatus.STOPPED) {
-      apiInstance.callServer('torrent-start-now', { ids: [torrent.id] })
+      dispatch(actions.startTorrent([torrent.id]))
     } else {
-      apiInstance.callServer('torrent-stop', { ids: [torrent.id] })
+      dispatch(actions.stopTorrent([torrent.id]))
     }
-  }
-}
+  },
 
-const mapState = (state: RootState) => ({
-  torrents: selectors.getAll(state),
-  checkedTorrents: selectors.getCheckedIds(state),
+  startWatching: () => dispatch(actions.startWatching()),
+  stopWatching: () => dispatch(actions.stopWatching()),
+
+  addFields: () => dispatch(actions.addFields(fields)),
+  removeFields: () => dispatch(actions.removeFields(fields)),
 })
 
 export default connect(
   mapState,
-  actions,
+  mapDispatch,
 )(TorrentList)

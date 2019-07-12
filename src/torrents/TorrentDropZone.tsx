@@ -1,7 +1,6 @@
-import apiInstance from '@src/api/apiInstance'
 import { AppDispatch } from '@src/redux/types'
 import getFilesFromEvent from '@src/util/getFilesFromEvent'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import * as actions from './actions'
@@ -10,24 +9,14 @@ type Props = ReturnType<typeof mapDispatch> & {
   children?: React.ReactNode
 }
 
-// tslint:disable-next-line:function-name
 function TorrentDropZone(props: Props) {
-  hackDocumentPaste(props)
+  useEffect(() => {
+    document.addEventListener('paste', (event) => {
+      handleDataTransfer(props.dispatch, event.clipboardData)
+    })
+  }, [])
 
   return <div onDrop={props.onDrop} children={props.children} />
-}
-
-let isListeningToPaste = false
-function hackDocumentPaste(props: Parameters<typeof TorrentDropZone>['0']) {
-  if (isListeningToPaste) {
-    return
-  }
-
-  document.addEventListener('paste', (event) => {
-    handleDataTransfer(props.dispatch, event.clipboardData)
-  })
-
-  isListeningToPaste = true
 }
 
 function handleDataTransfer(
@@ -49,19 +38,16 @@ function handleDataTransfer(
     const data = await x.reader()
 
     if (data.startsWith(magnetPrefix)) {
-      const response = await apiInstance.addUrl('torrent-add', {
-        filename: data,
-      })
-
-      dispatch(actions.get([response.id]))
+      dispatch(actions.addTorrent({ data, mode: 'magnet' }))
     } else {
       for (const filePrefix of filePrefixes) {
         if (data.startsWith(filePrefix)) {
-          const response = await apiInstance.addBase64(
-            data.slice(filePrefix.length),
+          dispatch(
+            actions.addTorrent({
+              mode: 'base64',
+              data: data.slice(filePrefix.length),
+            }),
           )
-
-          dispatch(actions.get([response.id]))
         }
       }
     }

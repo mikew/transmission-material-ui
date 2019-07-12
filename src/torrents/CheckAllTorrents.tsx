@@ -12,7 +12,6 @@ type Props = Omit<IconButtonProps, 'onClick'> &
   ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>
 
-// tslint:disable-next-line:function-name
 function CheckAllTorrents(props: Props) {
   const { checkAll, unCheckAll, checkIds, ...rest } = props
   let icon = 'check_box_outline_blank'

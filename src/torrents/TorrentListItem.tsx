@@ -33,7 +33,6 @@ interface StatusResult {
   progressColor: NonNullable<LinearProgressProps['color']>
 }
 
-// tslint:disable-next-line:function-name
 function TorrentListItem(props: Props) {
   const status = getStatus(props.torrent)
   const progress = status ? (

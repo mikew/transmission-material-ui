@@ -5,6 +5,13 @@ export const getCheckedIds = (state: RootState) =>
   state.torrents.checkedTorrents
 export const getAll = (state: RootState) => state.torrents.all
 
+export const getAllFiltered = createSelector(
+  getAll,
+  (all) => {
+    return Object.values(all).sort((a, b) => b.addedDate - a.addedDate)
+  },
+)
+
 export const getCheckedTorrents = createSelector(
   getCheckedIds,
   getAll,

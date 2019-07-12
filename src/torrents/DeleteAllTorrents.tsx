@@ -12,7 +12,6 @@ type Props = Omit<IconButtonProps, 'onClick'> &
   ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>
 
-// tslint:disable-next-line:function-name
 function DeleteAllTorrents(props: Props) {
   const { checkedIds, onClick, ...rest } = props
 

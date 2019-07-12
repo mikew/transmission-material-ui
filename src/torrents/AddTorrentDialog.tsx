@@ -4,85 +4,59 @@ import DialogActions from '@material-ui/core/DialogActions/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle/DialogTitle'
 import TextField from '@material-ui/core/TextField/TextField'
-import apiInstance from '@src/api/apiInstance'
 import { RootState } from '@src/redux/types'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { connect } from 'react-redux'
 
 import * as actions from './actions'
 
-interface State {
-  magnetUrl: string
-}
+function AddTorrentDialog(props: ReturnType<typeof mapState> & typeof actions) {
+  const [magnetUrl, setMagnetUrl] = useState('')
 
-function buildInitialState(): State {
-  return {
-    magnetUrl: '',
-  }
-}
+  const handleBackdropClick = useCallback(() => {
+    setMagnetUrl('')
+    props.toggleAddDialog()
+  }, [])
 
-class AddTorrentDialog extends React.PureComponent<
-  ReturnType<typeof mapState> & typeof actions
-> {
-  state: State = buildInitialState()
+  const handleSubmit = useCallback((event: React.FormEvent) => {
+    event.preventDefault()
+    handleAddClick()
+  }, [])
 
-  render() {
-    return (
-      <Dialog
-        open={this.props.isAddDialogVisible}
-        onBackdropClick={this.handleBackdropClick}
-      >
-        <DialogTitle>Add Torrent</DialogTitle>
-        <DialogContent>
-          <form onSubmit={this.handleSubmit}>
-            <TextField
-              fullWidth={true}
-              autoFocus={true}
-              label="Magnet"
-              onChange={this.handleMagnetChange}
-            />
-            <TextField fullWidth={true} type="file" />
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.handleAddClick}
-          >
-            Add
-          </Button>
-        </DialogActions>
-      </Dialog>
-    )
-  }
-
-  handleBackdropClick = () => {
-    this.setState(buildInitialState)
-    this.props.toggleAddDialog()
-  }
-
-  handleMagnetChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    this.setState({ magnetUrl: event.target.value })
-  }
-
-  handleAddClick = async () => {
-    if (this.state.magnetUrl) {
-      const response = await apiInstance.addUrl('torrent-add', {
-        filename: this.state.magnetUrl,
-      })
-
-      this.props.get([response.id])
+  const handleAddClick = useCallback(() => {
+    if (magnetUrl) {
+      props.addTorrent({ mode: 'magnet', data: magnetUrl })
     }
 
-    this.handleBackdropClick()
-    this.props.get()
-  }
+    handleBackdropClick()
+  }, [])
 
-  handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
-    this.handleAddClick()
-  }
+  return (
+    <Dialog
+      open={props.isAddDialogVisible}
+      onBackdropClick={handleBackdropClick}
+    >
+      <DialogTitle>Add Torrent</DialogTitle>
+      <DialogContent>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            fullWidth={true}
+            autoFocus={true}
+            label="Magnet"
+            onChange={(event) => {
+              setMagnetUrl(event.target.value)
+            }}
+          />
+          <TextField fullWidth={true} type="file" />
+        </form>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="contained" color="primary" onClick={handleAddClick}>
+          Add
+        </Button>
+      </DialogActions>
+    </Dialog>
+  )
 }
 
 const mapState = (state: RootState) => ({

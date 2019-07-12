@@ -23,6 +23,14 @@ const initialState: State = {
   fields: new Set(['id']),
 }
 
+function normalizeTorrent(torrent: TransmissionTorrent) {
+  return {
+    trackerStats: [],
+    peers: [],
+    ...torrent,
+  }
+}
+
 export default createReducer(initialState, {
   [`${constants.get}/success`]: (
     state,
@@ -39,13 +47,36 @@ export default createReducer(initialState, {
 
       all[x.id] = {
         ...all[x.id],
-        ...x,
+        ...normalizeTorrent(x),
       }
     })
 
     return {
       ...state,
       all,
+    }
+  },
+
+  [constants.removeTorrent]: (
+    state,
+    action: ReturnType<typeof actions.removeTorrent>,
+  ) => {
+    const all = { ...state.all }
+    const checkedTorrents = [...state.checkedTorrents]
+
+    action.payload.ids.forEach((x) => {
+      delete all[x]
+
+      const checkedIndex = checkedTorrents.indexOf(Number(x))
+      if (checkedIndex !== -1) {
+        checkedTorrents.splice(checkedIndex, 1)
+      }
+    })
+
+    return {
+      ...state,
+      all,
+      checkedTorrents,
     }
   },
 

@@ -8,7 +8,6 @@ interface Props {
   tracker: TransmissionTrackerStat
 }
 
-// tslint:disable-next-line:function-name
 function TrackerListItem(props: Props & AppStyles<typeof styles>) {
   const { tracker: x } = props
 
