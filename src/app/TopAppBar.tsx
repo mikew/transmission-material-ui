@@ -3,23 +3,23 @@ import Icon from '@material-ui/core/Icon/Icon'
 import Toolbar from '@material-ui/core/Toolbar/Toolbar'
 import Typography from '@material-ui/core/Typography/Typography'
 import { RootState } from '@src/redux/types'
+import { appStyles, AppStyles } from '@src/styles'
+import CheckAllTorrents from '@src/torrents/CheckAllTorrents'
+import DeleteAllTorrents from '@src/torrents/DeleteAllTorrents'
+import * as selectors from '@src/torrents/selectors'
+import StartAllTorrents from '@src/torrents/StartAllTorrents'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { AppStyles, appStyles } from './styles'
-import CheckAllTorrents from './torrents/CheckAllTorrents'
-import DeleteAllTorrents from './torrents/DeleteAllTorrents'
-import * as selectors from './torrents/selectors'
-import StartAllTorrents from './torrents/StartAllTorrents'
-
-// tslint:disable-next-line:function-name
 function TopAppBar(
   props: ReturnType<typeof mapState> & AppStyles<typeof styles>,
 ) {
-  const { classes } = props
-
   return (
-    <MuiAppBar position="fixed" color="primary" className={classes.appBar}>
+    <MuiAppBar
+      position="fixed"
+      color="primary"
+      className={props.classes.appBar}
+    >
       <Toolbar variant="dense">
         <div style={{ flexGrow: 1 }}>
           <CheckAllTorrents color="inherit" />

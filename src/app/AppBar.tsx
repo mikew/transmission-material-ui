@@ -3,14 +3,13 @@ import Fab from '@material-ui/core/Fab/Fab'
 import Icon from '@material-ui/core/Icon/Icon'
 import IconButton from '@material-ui/core/IconButton/IconButton'
 import Toolbar from '@material-ui/core/Toolbar/Toolbar'
+import * as inspectorActions from '@src/inspector/actions'
 import { AppDispatch, RootState } from '@src/redux/types'
+import { appStyles, AppStyles } from '@src/styles'
+import * as torrentsActions from '@src/torrents/actions'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { appStyles, AppStyles } from './styles'
-import * as actions from './torrents/actions'
-
-// tslint:disable-next-line:function-name
 function AppBar(
   props: ReturnType<typeof mapState> &
     ReturnType<typeof mapDispatch> &
@@ -53,12 +52,12 @@ function AppBar(
 }
 
 const mapState = (state: RootState) => ({
-  isInspectorOpen: state.torrents.isInspectorOpen,
+  isInspectorOpen: state.inspector.isInspectorOpen,
 })
 
 const mapDispatch = (dispatch: AppDispatch) => ({
-  toggleInspector: () => dispatch(actions.toggleInspector()),
-  toggleAddDialog: () => dispatch(actions.toggleAddDialog()),
+  toggleInspector: () => dispatch(inspectorActions.toggleInspector()),
+  toggleAddDialog: () => dispatch(torrentsActions.toggleAddDialog()),
 })
 
 const styles = appStyles((theme) => ({

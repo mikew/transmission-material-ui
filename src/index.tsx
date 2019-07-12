@@ -38,7 +38,7 @@ ignoreRootDrag()
 function renderApp() {
   // Importing this strange way is needed for hot loading.
   // tslint:disable-next-line:variable-name
-  const App = require('./App').default
+  const App = require('./app/App').default
 
   ReactDOM.render(
     <Provider store={store}>
@@ -70,5 +70,5 @@ register({
 init()
 
 if (module.hot) {
-  module.hot.accept('./App', renderApp)
+  module.hot.accept('./app/App', renderApp)
 }
