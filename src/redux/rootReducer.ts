@@ -9,6 +9,10 @@ import { combineReducers } from 'redux'
 
 import { RootState } from './types'
 
+// tslint:disable:ordered-imports
+import '@src/torrents/sideEffects'
+// tslint:enable:ordered-imports
+
 // The reducer must be added to the rootReducer. It's key must match the key
 // you've given the feature in the RootStore.
 const rootReducer = combineReducers<RootState>({

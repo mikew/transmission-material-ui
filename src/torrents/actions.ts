@@ -1,4 +1,5 @@
 import apiInstance from '@src/api/apiInstance'
+import { AppDispatch, AppGetState } from '@src/redux/types'
 import createAction from 'redux-ts-helpers/lib/createAction'
 
 import constants from './constants'
@@ -9,6 +10,7 @@ export const toggleTorrentChecked = createAction<{
 }>(constants.toggleTorrentChecked)
 export const toggleAddDialog = createAction(constants.toggleAddDialog)
 export const toggleDeleteDialog = createAction(constants.toggleDeleteDialog)
+
 export const addFields = createAction<Set<keyof TransmissionTorrent>>(
   constants.addFields,
 )
@@ -16,77 +18,32 @@ export const removeFields = createAction<Set<keyof TransmissionTorrent>>(
   constants.removeFields,
 )
 
-export const get = (
-  ids?: TransmissionIdLookup,
-  fields?: (keyof TransmissionTorrent)[],
-) => ({
+export const startTorrent = createAction<TransmissionIdLookup>(
+  constants.startTorrent,
+)
+export const stopTorrent = createAction<TransmissionIdLookup>(
+  constants.stopTorrent,
+)
+
+export const startWatching = createAction(constants.startWatching)
+export const stopWatching = createAction(constants.stopWatching)
+
+export const addTorrent = createAction<{
+  mode: 'magnet' | 'base64'
+  data: string
+}>(constants.addTorrent)
+
+export const removeTorrent = createAction<{
+  deleteData: boolean
+  ids: TransmissionIdLookup
+}>(constants.removeTorrent)
+
+export const get = (ids?: TransmissionIdLookup) => ({
   type: constants.get,
-  payload: apiInstance.callServer('torrent-get', {
-    ids,
-    fields: fields || [
-      'activityDate',
-      'addedDate',
-      'bandwidthPriority',
-      'comment',
-      'corruptEver',
-      'creator',
-      'dateCreated',
-      'desiredAvailable',
-      'doneDate',
-      'downloadDir',
-      'downloadLimit',
-      'downloadLimited',
-      'downloadedEver',
-      'error',
-      'errorString',
-      'eta',
-      'fileStats',
-      'files',
-      'hashString',
-      'haveUnchecked',
-      'haveValid',
-      'honorsSessionLimits',
-      'id',
-      'isFinished',
-      'isPrivate',
-      'leftUntilDone',
-      'magnetLink',
-      'manualAnnounceTime',
-      'maxConnectedPeers',
-      'metadataPercentComplete',
-      'name',
-      'peer-limit',
-      'peers',
-      'peersConnected',
-      'peersFrom',
-      'peersGettingFromUs',
-      'peersSendingToUs',
-      'percentDone',
-      'pieceCount',
-      'pieceSize',
-      'pieces',
-      'priorities',
-      'rateDownload',
-      'rateUpload',
-      'recheckProgress',
-      'seedIdleLimit',
-      'seedIdleMode',
-      'seedRatioLimit',
-      'seedRatioMode',
-      'sizeWhenDone',
-      'startDate',
-      'status',
-      'torrentFile',
-      'totalSize',
-      'trackerStats',
-      'trackers',
-      'uploadLimit',
-      'uploadLimited',
-      'uploadRatio',
-      'uploadedEver',
-      'wanted',
-      'webseeds',
-      'webseedsSendingToUs',
-    ],
-  }),
+  payload(_dispatch: AppDispatch, getState: AppGetState) {
+    return apiInstance.callServer('torrent-get', {
+      ids,
+      fields: [...getState().torrents.fields],
+    })
+  },
 })

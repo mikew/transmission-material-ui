@@ -7,6 +7,8 @@ import {
 import reduxAsyncPayload from 'redux-async-payload'
 import { createLogger } from 'redux-logger'
 
+// tslint:disable-next-line:import-name
+import sideEffectMiddleware from './sideEffects/middleware'
 import { RootState } from './types'
 
 const IS_TEST_ENV = typeof describe !== 'undefined'
@@ -21,6 +23,7 @@ if (IS_TEST_ENV) {
 }
 
 middleware.push(reduxAsyncPayload())
+middleware.push(sideEffectMiddleware())
 
 if (!IS_PRODUCTION_ENV && !IS_TEST_ENV) {
   middleware.push(createLogger())
