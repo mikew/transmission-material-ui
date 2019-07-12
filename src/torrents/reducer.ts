@@ -5,7 +5,6 @@ import * as actions from './actions'
 import constants from './constants'
 
 export interface State {
-  isInspectorOpen: boolean
   all: {
     [id: number]: TransmissionTorrent
     [id: string]: TransmissionTorrent
@@ -18,7 +17,6 @@ export interface State {
 
 const initialState: State = {
   all: {},
-  isInspectorOpen: false,
   isAddDialogVisible: false,
   checkedTorrents: [],
   isDeleteDialogVisible: false,

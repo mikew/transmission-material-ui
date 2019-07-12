@@ -3,10 +3,6 @@ import createAction from 'redux-ts-helpers/lib/createAction'
 
 import constants from './constants'
 
-export const showInspector = createAction<number | null>(
-  constants.showInspector,
-)
-export const toggleInspector = createAction(constants.toggleInspector)
 export const toggleTorrentChecked = createAction<{
   action: 'toggle' | 'exclusive' | 'checkAll' | 'unCheckAll'
   ids: number[]

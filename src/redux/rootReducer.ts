@@ -2,6 +2,8 @@
 // imported here.
 
 // tslint:disable-next-line:import-name
+import inspector from '@src/inspector/reducer'
+// tslint:disable-next-line:import-name
 import torrents from '@src/torrents/reducer'
 import { combineReducers } from 'redux'
 
@@ -11,6 +13,7 @@ import { RootState } from './types'
 // you've given the feature in the RootStore.
 const rootReducer = combineReducers<RootState>({
   torrents,
+  inspector,
 })
 
 export default rootReducer
