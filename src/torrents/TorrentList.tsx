@@ -41,6 +41,14 @@ function TorrentList(props: Props) {
     }
   }, [])
 
+  useEffect(() => {
+    props.startWatching()
+
+    return () => {
+      props.stopWatching()
+    }
+  }, [])
+
   const isChecked = (id: number | string) =>
     props.checkedTorrents.indexOf(Number(id)) > -1
 
