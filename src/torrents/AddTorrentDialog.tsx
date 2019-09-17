@@ -18,18 +18,21 @@ function AddTorrentDialog(props: ReturnType<typeof mapState> & typeof actions) {
     props.toggleAddDialog()
   }, [])
 
-  const handleSubmit = useCallback((event: React.FormEvent) => {
-    event.preventDefault()
-    handleAddClick()
-  }, [])
-
   const handleAddClick = useCallback(() => {
     if (magnetUrl) {
       props.addTorrent({ mode: 'magnet', data: magnetUrl })
     }
 
     handleBackdropClick()
-  }, [])
+  }, [magnetUrl])
+
+  const handleSubmit = useCallback(
+    (event: React.FormEvent) => {
+      event.preventDefault()
+      handleAddClick()
+    },
+    [handleAddClick],
+  )
 
   return (
     <Dialog
