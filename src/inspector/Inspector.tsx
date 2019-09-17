@@ -119,4 +119,4 @@ const styles = appStyles((theme) => ({
 export default connect(
   mapState,
   mapDispatch,
-)(styles(React.memo(Inspector)))
+)(React.memo(styles(Inspector)))
