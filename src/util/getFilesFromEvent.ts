@@ -1,19 +1,15 @@
 export interface DropZoneFile {
   item: DataTransferItem
-  reader: DropZoneFileReader
-}
-
-interface DropZoneFileReader {
-  (): Promise<string>
+  reader: () => Promise<string>
 }
 
 export default function getFilesFromEvent(
   dataTransfer: React.DragEvent['dataTransfer'],
-): DropZoneFile[] {
+) {
   const items: DropZoneFile[] = []
 
   for (const item of Array.from(dataTransfer.items)) {
-    let reader: DropZoneFileReader | undefined
+    let reader: DropZoneFile['reader'] | undefined
     if (item.kind === 'file') {
       reader = buildFileReader(item.getAsFile())
     } else {
