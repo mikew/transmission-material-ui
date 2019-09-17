@@ -14,7 +14,7 @@ sideEffect(constants.startWatching, (_action, dispatch) => {
 
   timer = window.setInterval(() => {
     dispatch(actions.get())
-  }, 10000)
+  }, 5000)
 })
 
 sideEffect(constants.stopWatching, () => {
