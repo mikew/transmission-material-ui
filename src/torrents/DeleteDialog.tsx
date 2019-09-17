@@ -9,7 +9,7 @@ import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import { AppDispatch, RootState } from '@src/redux/types'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
 import * as actions from './actions'
@@ -20,14 +20,21 @@ function DeleteDialog(
 ) {
   const [deleteData, setDeleteData] = useState(false)
 
+  const handleBackdropClick = useCallback(() => {
+    props.onClose()
+  }, [])
+
+  useEffect(() => {
+    if (!props.isDeleteDialogVisible) {
+      setDeleteData(false)
+    }
+  }, [props.isDeleteDialogVisible])
+
   return (
     <Dialog
       open={props.isDeleteDialogVisible}
       fullWidth={true}
-      onClose={() => {
-        setDeleteData(false)
-        props.onClose()
-      }}
+      onClose={handleBackdropClick}
     >
       <DialogTitle>Delete {props.checked.length} torrents</DialogTitle>
       <DialogContent>

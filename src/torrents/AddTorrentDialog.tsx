@@ -5,7 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle/DialogTitle'
 import TextField from '@material-ui/core/TextField/TextField'
 import { RootState } from '@src/redux/types'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
 import * as actions from './actions'
@@ -14,7 +14,6 @@ function AddTorrentDialog(props: ReturnType<typeof mapState> & typeof actions) {
   const [magnetUrl, setMagnetUrl] = useState('')
 
   const handleBackdropClick = useCallback(() => {
-    setMagnetUrl('')
     props.toggleAddDialog()
   }, [])
 
@@ -34,11 +33,14 @@ function AddTorrentDialog(props: ReturnType<typeof mapState> & typeof actions) {
     [handleAddClick],
   )
 
+  useEffect(() => {
+    if (!props.isAddDialogVisible) {
+      setMagnetUrl('')
+    }
+  }, [props.isAddDialogVisible])
+
   return (
-    <Dialog
-      open={props.isAddDialogVisible}
-      onBackdropClick={handleBackdropClick}
-    >
+    <Dialog open={props.isAddDialogVisible} onClose={handleBackdropClick}>
       <DialogTitle>Add Torrent</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit}>
