@@ -1,10 +1,13 @@
-import { FormControlLabel } from '@material-ui/core'
 import Button from '@material-ui/core/Button/Button'
 import Checkbox from '@material-ui/core/Checkbox/Checkbox'
 import Dialog from '@material-ui/core/Dialog/Dialog'
 import DialogActions from '@material-ui/core/DialogActions/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle/DialogTitle'
+import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel'
+import List from '@material-ui/core/List/List'
+import ListItem from '@material-ui/core/ListItem/ListItem'
+import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import { AppDispatch, RootState } from '@src/redux/types'
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
@@ -28,11 +31,13 @@ function DeleteDialog(
     >
       <DialogTitle>Delete {props.checked.length} torrents</DialogTitle>
       <DialogContent>
-        <ul>
+        <List dense={true}>
           {props.checked.map((x) => (
-            <li key={x.id}>{x.name}</li>
+            <ListItem divider={true} key={x.id}>
+              <ListItemText primary={x.name} />
+            </ListItem>
           ))}
-        </ul>
+        </List>
       </DialogContent>
       <DialogActions>
         <FormControlLabel
