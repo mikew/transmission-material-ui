@@ -21,12 +21,12 @@ function AppBar(
     <MuiAppBar position="fixed" color="primary" className={classes.appBar}>
       <Toolbar className={classes.toolbar} variant="dense">
         <div>
-          <IconButton color="inherit">
+          {/* <IconButton color="inherit">
             <Icon>search</Icon>
           </IconButton>
           <IconButton color="inherit">
             <Icon>filter_list</Icon>
-          </IconButton>
+          </IconButton> */}
         </div>
         <div className={classes.fabContainer}>
           <Fab
@@ -42,9 +42,9 @@ function AppBar(
           <IconButton color="inherit" onClick={props.toggleInspector}>
             <Icon>{props.isInspectorOpen ? 'close' : 'info'}</Icon>
           </IconButton>
-          <IconButton color="inherit" aria-label="Open drawer">
+          {/* <IconButton color="inherit" aria-label="Open drawer">
             <Icon>menu</Icon>
-          </IconButton>
+          </IconButton> */}
         </div>
       </Toolbar>
     </MuiAppBar>
