@@ -6,7 +6,6 @@ import LinearProgress, {
 } from '@material-ui/core/LinearProgress'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import Typography from '@material-ui/core/Typography/Typography'
 import { TorrentStatus } from '@src/api'
 import React from 'react'
 
@@ -28,8 +27,7 @@ interface Props {
 
 interface StatusResult {
   progress: number
-  message: string
-  // progressColor: string
+  message: React.ReactNode
   progressColor: NonNullable<LinearProgressProps['color']>
 }
 
@@ -78,9 +76,7 @@ function TorrentListItem(props: Props) {
         secondary={
           <React.Fragment>
             {progress}
-            <Typography color="textSecondary">
-              {status ? status.message : undefined}
-            </Typography>
+            {status ? status.message : undefined}
           </React.Fragment>
         }
         secondaryTypographyProps={{ component: 'div' }}
@@ -94,21 +90,41 @@ function TorrentListItem(props: Props) {
 const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
   switch (torrent.status) {
     case TorrentStatus.DOWNLOAD:
+      const eta =
+        torrent.eta <= 0
+          ? 'Unknown'
+          : new Date(torrent.eta * 1000).toISOString().substr(11, 8)
+
       return {
         progress: torrent.percentDone * 100,
         progressColor: 'secondary',
-        message: `Downloading from ${torrent.peersSendingToUs} of ${
-          torrent.peersConnected
-        } peers`,
+        message: (
+          <React.Fragment>
+            <Icon fontSize="small" style={{ verticalAlign: 'middle' }}>
+              group
+            </Icon>{' '}
+            {torrent.peersSendingToUs} / {torrent.peersConnected}
+            {' | '}
+            <Icon fontSize="small" style={{ verticalAlign: 'middle' }}>
+              timer
+            </Icon>{' '}
+            {eta}
+          </React.Fragment>
+        ),
       }
 
     case TorrentStatus.SEED:
       return {
         progress: (torrent.uploadRatio / torrent.seedRatioLimit) * 100,
         progressColor: 'primary',
-        message: `Seeding to ${torrent.peersGettingFromUs} of ${
-          torrent.peersConnected
-        } peers`,
+        message: (
+          <React.Fragment>
+            <Icon fontSize="small" style={{ verticalAlign: 'middle' }}>
+              group
+            </Icon>{' '}
+            {torrent.peersGettingFromUs} / {torrent.peersConnected}
+          </React.Fragment>
+        ),
       }
     case TorrentStatus.STOPPED:
       if (torrent.error) {

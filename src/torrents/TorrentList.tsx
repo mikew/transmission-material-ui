@@ -28,6 +28,8 @@ const fields = new Set<keyof TransmissionTorrent>([
 
   'rateDownload',
   'rateUpload',
+
+  'eta',
 ])
 
 type Props = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>
