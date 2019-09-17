@@ -38,12 +38,15 @@ export const removeTorrent = createAction<{
   ids: TransmissionIdLookup
 }>(constants.removeTorrent)
 
-export const get = (ids?: TransmissionIdLookup) => ({
-  type: constants.get,
-  payload(_dispatch: AppDispatch, getState: AppGetState) {
+export const get = createAction(
+  constants.get,
+  (ids?: TransmissionIdLookup) => (
+    _dispatch: AppDispatch,
+    getState: AppGetState,
+  ) => {
     return apiInstance.callServer('torrent-get', {
       ids,
       fields: [...getState().torrents.fields],
     })
   },
-})
+)
