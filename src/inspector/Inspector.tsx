@@ -11,6 +11,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import * as actions from './actions'
+import InspectorTabFiles from './InspectorTabFiles'
 import InspectorTabs from './InspectorTabs'
 
 type Props = ReturnType<typeof mapState> &
@@ -83,6 +84,8 @@ function renderCurrentTab(props: { currentTab: InspectorTabs }) {
       return <InspectorTabTrackers />
     case InspectorTabs.peers:
       return <InspectorTabPeers />
+    case InspectorTabs.files:
+      return <InspectorTabFiles />
   }
 
   return null
@@ -98,7 +101,7 @@ const mapDispatch = (dispatch: AppDispatch) => ({
     dispatch(actions.setTab(value)),
 })
 
-const styles = appStyles(() => ({
+const styles = appStyles((theme) => ({
   tabs: {
     minHeight: 72,
   },
@@ -106,7 +109,10 @@ const styles = appStyles(() => ({
     minWidth: 48,
   },
   paper: {
-    width: 300,
+    [theme.breakpoints.only('xs')]: {
+      width: '100%',
+    },
+    width: 400,
   },
 }))
 
