@@ -12,6 +12,10 @@ type Props = ReturnType<typeof mapDispatch> & {
 function TorrentDropZone(props: Props) {
   useEffect(() => {
     document.addEventListener('paste', (event) => {
+      if (event.target && (event.target as HTMLElement).tagName === 'INPUT') {
+        return
+      }
+
       handleDataTransfer(props.dispatch, event.clipboardData)
     })
   }, [])
