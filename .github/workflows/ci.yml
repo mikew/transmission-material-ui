@@ -72,19 +72,19 @@ jobs:
 
     steps:
       - name: Download build
-        if: github.ref == 'master'
+        # if: github.ref == 'master'
         uses: actions/download-artifact@v1
         with:
           name: build
 
       - name: Debug
-        if: github.ref == 'master'
+        # if: github.ref == 'master'
         run: |
           env | sort
           ls -lahR
 
       - name: Create release
-        if: github.ref == 'master'
+        # if: github.ref == 'master'
         id: create_release
         uses: actions/create-release@v1.0.0
         env:
@@ -96,7 +96,7 @@ jobs:
           prerelease: false
 
       - name: Upload release asset
-        if: github.ref == 'master'
+        # if: github.ref == 'master'
         uses: actions/upload-release-asset@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
