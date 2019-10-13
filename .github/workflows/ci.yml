@@ -14,7 +14,7 @@ jobs:
       - name: prepare-env
         run: ./script/prepare-env
 
-      - name: Compresss workspace
+      - name: Compress workspace
         run: |
           rm -f workspace-cache.tar.gz
           touch workspace-cache.tar.gz
@@ -40,6 +40,12 @@ jobs:
 
       - name: build
         run: ./script/build
+
+      - name: Cache build
+        uses: actions/upload-artifact@v1
+        with:
+          name: build
+          path: build
 
   test:
     needs: prepare-env
