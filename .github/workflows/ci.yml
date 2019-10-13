@@ -34,7 +34,7 @@ jobs:
         ls -laR .
         env | sort
     - name: Extract cache
-      run: tar zxf workspace-cache.tar.gz
+      run: tar zxf workspace-cache.tar.gz/workspace-cache.tar.gz
     - name: build
       run: ./script/build
       
@@ -47,6 +47,6 @@ jobs:
       with:
         name: workspace-cache.tar.gz
     - name: Extract cache
-      run: tar zxf workspace-cache.tar.gz
+      run: tar zxf workspace-cache.tar.gz/workspace-cache.tar.gz
     - name: test
       run: ./script/test
