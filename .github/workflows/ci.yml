@@ -28,6 +28,11 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: workspace-cache.tar.gz
+        
+    - name: Debug
+      run: |
+        ls -laR .
+        env | sort
     - name: Extract cache
       run: tar zxf workspace-cache.tar.gz
     - name: build
