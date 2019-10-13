@@ -68,42 +68,42 @@ jobs:
 
     steps:
       - name: Download build
-        # if: github.ref == 'master'
+        # if: endsWith(github.ref, '/master')
         uses: actions/download-artifact@v1
         with:
           name: build
 
       - name: Debug
-        # if: github.ref == 'master'
+        # if: endsWith(github.ref, '/master')
         run: |
           env | sort
           ls -lahR
 
       - name: Cleanup build
-        # if: github.ref == 'master'
+        # if: endsWith(github.ref, '/master')
         run: |
           find build/ -iname '*.map' -print -exec rm {} \;
 
       - name: Create release artifact
-        # if: github.ref == 'master'
+        # if: endsWith(github.ref, '/master')
         run: |
           rm -f build.zip
           zip -r build.zip build/
 
       - name: Create release
-        # if: github.ref == 'master'
+        # if: endsWith(github.ref, '/master')
         id: create_release
         uses: actions/create-release@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: release-${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: release-${{ github.sha }}
+          release_name: Release ${{ github.sha }}
           draft: false
           prerelease: false
 
       - name: Upload release asset
-        # if: github.ref == 'master'
+        # if: endsWith(github.ref, '/master')
         uses: actions/upload-release-asset@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
