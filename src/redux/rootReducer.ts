@@ -1,10 +1,11 @@
 // If any feature has a reducer, the reducer and it's state interface must be
 // imported here.
 
-// tslint:disable-next-line:import-name
+// tslint:disable:import-name
 import inspector from '@src/inspector/reducer'
-// tslint:disable-next-line:import-name
+import settings from '@src/settings/reducer'
 import torrents from '@src/torrents/reducer'
+// tslint:enable:import-name
 import { combineReducers } from 'redux'
 
 import { RootState } from './types'
@@ -18,6 +19,7 @@ import '@src/torrents/sideEffects'
 const rootReducer = combineReducers<RootState>({
   torrents,
   inspector,
+  settings,
 })
 
 export default rootReducer

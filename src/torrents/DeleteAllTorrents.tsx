@@ -1,40 +1,29 @@
 import Icon from '@material-ui/core/Icon/Icon'
 import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
 import { Omit } from '@material-ui/types'
-import { AppDispatch, RootState } from '@src/redux/types'
+import useDispatch from '@src/redux/useDispatch'
+import useSelector from '@src/redux/useSelector'
 import React from 'react'
-import { connect } from 'react-redux'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
 
-type Props = Omit<IconButtonProps, 'onClick'> &
-  ReturnType<typeof mapState> &
-  ReturnType<typeof mapDispatch>
+type Props = Omit<IconButtonProps, 'onClick'>
 
 function DeleteAllTorrents(props: Props) {
-  const { checkedIds, onClick, ...rest } = props
+  const dispatch = useDispatch()
+  const checkedIds = useSelector(selectors.getCheckedIds)
+  const handleClick = () => dispatch(actions.toggleDeleteDialog())
 
   if (checkedIds.length === 0) {
     return null
   }
 
   return (
-    <IconButton {...rest} onClick={onClick}>
+    <IconButton {...props} onClick={handleClick}>
       <Icon>delete</Icon>
     </IconButton>
   )
 }
 
-const mapState = (state: RootState) => ({
-  checkedIds: selectors.getCheckedIds(state),
-})
-
-const mapDispatch = (dispatch: AppDispatch) => ({
-  onClick: () => dispatch(actions.toggleDeleteDialog()),
-})
-
-export default connect(
-  mapState,
-  mapDispatch,
-)(DeleteAllTorrents)
+export default React.memo(DeleteAllTorrents)

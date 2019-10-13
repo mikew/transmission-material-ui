@@ -2,20 +2,22 @@ import { default as MuiAppBar } from '@material-ui/core/AppBar/AppBar'
 import Fab from '@material-ui/core/Fab/Fab'
 import Icon from '@material-ui/core/Icon/Icon'
 import IconButton from '@material-ui/core/IconButton/IconButton'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 import Toolbar from '@material-ui/core/Toolbar/Toolbar'
 import * as inspectorActions from '@src/inspector/actions'
-import { AppDispatch, RootState } from '@src/redux/types'
-import { appStyles, AppStyles } from '@src/styles'
+import useDispatch from '@src/redux/useDispatch'
+import useSelector from '@src/redux/useSelector'
 import * as torrentsActions from '@src/torrents/actions'
 import React from 'react'
-import { connect } from 'react-redux'
 
-function AppBar(
-  props: ReturnType<typeof mapState> &
-    ReturnType<typeof mapDispatch> &
-    AppStyles<typeof styles>,
-) {
-  const { classes } = props
+function AppBar() {
+  const classes = useStyles()
+  const dispatch = useDispatch()
+  const toggleInspector = () => dispatch(inspectorActions.toggleInspector())
+  const toggleAddDialog = () => dispatch(torrentsActions.toggleAddDialog())
+  const isInspectorOpen = useSelector(
+    (state) => state.inspector.isInspectorOpen,
+  )
 
   return (
     <MuiAppBar position="fixed" color="primary" className={classes.appBar}>
@@ -33,14 +35,14 @@ function AppBar(
             color="secondary"
             aria-label="Add"
             className={classes.fabButton}
-            onClick={props.toggleAddDialog}
+            onClick={toggleAddDialog}
           >
             <Icon>add</Icon>
           </Fab>
         </div>
         <div>
-          <IconButton color="inherit" onClick={props.toggleInspector}>
-            <Icon>{props.isInspectorOpen ? 'close' : 'info'}</Icon>
+          <IconButton color="inherit" onClick={toggleInspector}>
+            <Icon>{isInspectorOpen ? 'close' : 'info'}</Icon>
           </IconButton>
           {/* <IconButton color="inherit" aria-label="Open drawer">
             <Icon>menu</Icon>
@@ -51,20 +53,11 @@ function AppBar(
   )
 }
 
-const mapState = (state: RootState) => ({
-  isInspectorOpen: state.inspector.isInspectorOpen,
-})
-
-const mapDispatch = (dispatch: AppDispatch) => ({
-  toggleInspector: () => dispatch(inspectorActions.toggleInspector()),
-  toggleAddDialog: () => dispatch(torrentsActions.toggleAddDialog()),
-})
-
-const styles = appStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   appBar: {
-    top: 'auto !important',
-    bottom: '0 !important',
-    zIndex: `${theme.zIndex.drawer + 1} !important` as any,
+    top: 'auto',
+    bottom: 0,
+    zIndex: theme.zIndex.drawer + 1,
   },
   toolbar: {
     alignItems: 'center',
@@ -76,7 +69,4 @@ const styles = appStyles((theme) => ({
   fabButton: {},
 }))
 
-export default connect(
-  mapState,
-  mapDispatch,
-)(styles(AppBar))
+export default React.memo(AppBar)

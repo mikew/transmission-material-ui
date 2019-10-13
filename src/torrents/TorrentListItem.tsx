@@ -37,7 +37,7 @@ function TorrentListItem(props: Props) {
     <LinearProgress
       variant="determinate"
       color={status.progressColor}
-      value={status.progress}
+      value={Math.min(status.progress, 100)}
     />
   ) : null
 
@@ -111,6 +111,9 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
             {eta}
           </React.Fragment>
         ),
+        // message: `Downloading from ${torrent.peersSendingToUs} of ${
+        //   torrent.peersConnected
+        // } peers`,
       }
 
     case TorrentStatus.SEED:
@@ -125,6 +128,9 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
             {torrent.peersGettingFromUs} / {torrent.peersConnected}
           </React.Fragment>
         ),
+        // message: `Seeding to ${torrent.peersGettingFromUs} of ${
+        //   torrent.peersConnected
+        // } peers`,
       }
     case TorrentStatus.STOPPED:
       if (torrent.error) {

@@ -8,38 +8,48 @@ import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabe
 import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
-import { AppDispatch, RootState } from '@src/redux/types'
+import { RootState } from '@src/redux/types'
+import useDispatch from '@src/redux/useDispatch'
+import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import React, { useCallback, useEffect, useState } from 'react'
-import { connect } from 'react-redux'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
 
-function DeleteDialog(
-  props: ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>,
-) {
+function DeleteDialog() {
+  const dispatch = useDispatch()
+  const mappedState = useShallowEqualSelector(mapState)
   const [deleteData, setDeleteData] = useState(false)
-
+  const onClose = () => dispatch(actions.toggleDeleteDialog())
+  const onDeleteClick = () => {
+    dispatch(
+      actions.removeTorrent({
+        deleteData,
+        ids: mappedState.checked.map((x) => x.id),
+      }),
+    )
+    onClose()
+  }
   const handleBackdropClick = useCallback(() => {
-    props.onClose()
-  }, [])
+    onClose()
+  }, [dispatch])
 
   useEffect(() => {
-    if (!props.isDeleteDialogVisible) {
+    if (!mappedState.isDeleteDialogVisible) {
       setDeleteData(false)
     }
-  }, [props.isDeleteDialogVisible])
+  }, [mappedState.isDeleteDialogVisible])
 
   return (
     <Dialog
-      open={props.isDeleteDialogVisible}
+      open={mappedState.isDeleteDialogVisible}
       fullWidth={true}
       onClose={handleBackdropClick}
     >
-      <DialogTitle>Delete {props.checked.length} torrents</DialogTitle>
+      <DialogTitle>Delete {mappedState.checked.length} torrents</DialogTitle>
       <DialogContent>
         <List dense={true}>
-          {props.checked.map((x) => (
+          {mappedState.checked.map((x) => (
             <ListItem divider={true} key={x.id}>
               <ListItemText primary={x.name} />
             </ListItem>
@@ -57,14 +67,7 @@ function DeleteDialog(
           label="Delete Data?"
         />
 
-        <Button
-          onClick={() => {
-            props.onDeleteClick(props.checked.map((x) => x.id), deleteData)
-            props.onClose()
-          }}
-        >
-          Delete
-        </Button>
+        <Button onClick={onDeleteClick}>Delete</Button>
       </DialogActions>
     </Dialog>
   )
@@ -75,18 +78,4 @@ const mapState = (state: RootState) => ({
   isDeleteDialogVisible: state.torrents.isDeleteDialogVisible,
 })
 
-const mapDispatch = (dispatch: AppDispatch) => ({
-  onClose: () => dispatch(actions.toggleDeleteDialog()),
-  onDeleteClick: (ids: TransmissionIdLookup, deleteData: boolean) =>
-    dispatch(
-      actions.removeTorrent({
-        deleteData,
-        ids,
-      }),
-    ),
-})
-
-export default connect(
-  mapState,
-  mapDispatch,
-)(DeleteDialog)
+export default React.memo(DeleteDialog)

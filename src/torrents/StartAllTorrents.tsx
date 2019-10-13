@@ -2,34 +2,34 @@ import Icon from '@material-ui/core/Icon/Icon'
 import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
 import { Omit } from '@material-ui/types'
 import { TorrentStatus } from '@src/api'
-import { AppDispatchProps, RootState } from '@src/redux/types'
+import { RootState } from '@src/redux/types'
+import useDispatch from '@src/redux/useDispatch'
+import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import React from 'react'
-import { connect } from 'react-redux'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
 
-type Props = Omit<IconButtonProps, 'onClick'> &
-  ReturnType<typeof mapState> &
-  AppDispatchProps
+type Props = Omit<IconButtonProps, 'onClick'>
 
 function StartAllTorrents(props: Props) {
-  const { torrents, contextIds, dispatch, ...rest } = props
+  const dispatch = useDispatch()
+  const mappedState = useShallowEqualSelector(mapState)
 
-  const areAllStopped = props.contextIds.every(
-    (x) => props.torrents[x].status === TorrentStatus.STOPPED,
+  const areAllStopped = mappedState.contextIds.every(
+    (x) => mappedState.torrents[x].status === TorrentStatus.STOPPED,
   )
 
-  const handleClick = async () => {
+  const handleClick = () => {
     if (areAllStopped) {
-      props.dispatch(actions.startTorrent(props.contextIds))
+      dispatch(actions.startTorrent(mappedState.contextIds))
     } else {
-      props.dispatch(actions.stopTorrent(props.contextIds))
+      dispatch(actions.stopTorrent(mappedState.contextIds))
     }
   }
 
   return (
-    <IconButton {...rest} onClick={handleClick}>
+    <IconButton {...props} onClick={handleClick}>
       <Icon>{areAllStopped ? 'play_arrow' : 'stop'}</Icon>
     </IconButton>
   )
@@ -40,4 +40,4 @@ const mapState = (state: RootState) => ({
   contextIds: selectors.getSelectedOrAllIds(state),
 })
 
-export default connect(mapState)(React.memo(StartAllTorrents))
+export default React.memo(StartAllTorrents)

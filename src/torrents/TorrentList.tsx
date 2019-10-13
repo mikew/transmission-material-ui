@@ -1,8 +1,11 @@
 import List from '@material-ui/core/List'
 import { TorrentStatus } from '@src/api'
-import { AppDispatch, RootState } from '@src/redux/types'
+import { RootState } from '@src/redux/types'
+import useDispatch from '@src/redux/useDispatch'
+import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
+import * as settingsSelectors from '@src/settings/selectors'
+import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
@@ -30,60 +33,18 @@ const fields = new Set<keyof TransmissionTorrent>([
   'rateUpload',
 
   'eta',
+
+  'downloadDir',
 ])
 
-type Props = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>
+const NO_GROUP = '__NO_GROUP'
 
-function TorrentList(props: Props) {
-  useEffect(() => {
-    props.addFields()
-
-    return () => {
-      props.removeFields()
-    }
-  }, [])
-
-  useEffect(() => {
-    props.startWatching()
-
-    return () => {
-      props.stopWatching()
-    }
-  }, [])
-
-  const isChecked = (id: number | string) =>
-    props.checkedTorrents.indexOf(Number(id)) > -1
-
-  return (
-    <List dense={true}>
-      {props.torrents.map((x) => {
-        const rightIcon =
-          x.status === TorrentStatus.STOPPED ? 'play_arrow' : 'stop'
-
-        return (
-          <TorrentListItem
-            key={x.id}
-            torrent={x}
-            onClick={props.handleClick}
-            onCheckboxChange={props.handleCheckboxClick}
-            rightIcon={rightIcon}
-            onRightIconClick={props.handleRightIconClick}
-            checked={isChecked(x.id)}
-          />
-        )
-      })}
-    </List>
-  )
-}
-
-const mapState = (state: RootState) => ({
-  torrents: selectors.getAllFiltered(state),
-  checkedTorrents: selectors.getCheckedIds(state),
-  fields: state.torrents.fields,
-})
-
-const mapDispatch = (dispatch: AppDispatch) => ({
-  handleClick: (event: React.MouseEvent, torrent: TransmissionTorrent) => {
+function TorrentList() {
+  const dispatch = useDispatch()
+  const handleClick = (
+    event: React.MouseEvent,
+    torrent: TransmissionTorrent,
+  ) => {
     const target = event.target as HTMLInputElement
 
     if (target.tagName === 'INPUT') {
@@ -96,9 +57,9 @@ const mapDispatch = (dispatch: AppDispatch) => ({
         ids: [torrent.id],
       }),
     )
-  },
+  }
 
-  handleCheckboxClick: (
+  const handleCheckboxClick = (
     event: React.ChangeEvent,
     torrent: TransmissionTorrent,
   ) => {
@@ -109,9 +70,9 @@ const mapDispatch = (dispatch: AppDispatch) => ({
         ids: [torrent.id],
       }),
     )
-  },
+  }
 
-  handleRightIconClick: (
+  const handleRightIconClick = (
     event: React.MouseEvent,
     torrent: TransmissionTorrent,
   ) => {
@@ -121,16 +82,79 @@ const mapDispatch = (dispatch: AppDispatch) => ({
     } else {
       dispatch(actions.stopTorrent([torrent.id]))
     }
-  },
+  }
 
-  startWatching: () => dispatch(actions.startWatching()),
-  stopWatching: () => dispatch(actions.stopWatching()),
+  const mappedState = useShallowEqualSelector(mapState)
 
-  addFields: () => dispatch(actions.addFields(fields)),
-  removeFields: () => dispatch(actions.removeFields(fields)),
+  useEffect(() => {
+    dispatch(actions.addFields(fields))
+    dispatch(actions.startWatching())
+
+    return () => {
+      dispatch(actions.removeFields(fields))
+      dispatch(actions.stopWatching())
+    }
+  }, [])
+
+  const isChecked = (id: number | string) =>
+    mappedState.checkedTorrents.indexOf(Number(id)) > -1
+
+  const groups: Record<string, TransmissionTorrent[]> = {
+    [NO_GROUP]: [],
+  }
+  const groupLookup: TorrentGroupDefinition[] = []
+  Object.keys(mappedState.groups).forEach((groupName) => {
+    groups[groupName] = []
+    mappedState.groups[groupName].forEach((location) => {
+      groupLookup.push({ groupName, location })
+    })
+  })
+
+  mappedState.torrents.forEach((torrent) => {
+    const group = groupLookup.find((x) =>
+      torrent.downloadDir.startsWith(x.location),
+    ) || { groupName: NO_GROUP }
+    groups[group.groupName].push(torrent)
+  })
+
+  return (
+    <List dense={true}>
+      {Object.keys(groups).map((groupName) => {
+        if (groups[groupName].length === 0) {
+          return null
+        }
+
+        return (
+          <div key={groupName}>
+            <ListHeaderTopBar>{groupName}</ListHeaderTopBar>
+            {groups[groupName].map((torrent) => {
+              const rightIcon =
+                torrent.status === TorrentStatus.STOPPED ? 'play_arrow' : 'stop'
+
+              return (
+                <TorrentListItem
+                  key={torrent.id}
+                  torrent={torrent}
+                  onClick={handleClick}
+                  onCheckboxChange={handleCheckboxClick}
+                  rightIcon={rightIcon}
+                  onRightIconClick={handleRightIconClick}
+                  checked={isChecked(torrent.id)}
+                />
+              )
+            })}
+          </div>
+        )
+      })}
+    </List>
+  )
+}
+
+const mapState = (state: RootState) => ({
+  torrents: selectors.getAllFiltered(state),
+  checkedTorrents: selectors.getCheckedIds(state),
+  fields: state.torrents.fields,
+  groups: settingsSelectors.getGroups(state),
 })
 
-export default connect(
-  mapState,
-  mapDispatch,
-)(TorrentList)
+export default React.memo(TorrentList)

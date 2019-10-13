@@ -1,5 +1,6 @@
 import { State as TorrentsState } from '@src/torrents/reducer'
 import { State as InspectorState } from '@src/inspector/reducer'
+import { State as SettingsState } from '@src/settings/reducer'
 import { DispatchProp } from 'react-redux'
 import { Action, Dispatch } from 'redux'
 
@@ -8,6 +9,7 @@ import { Action, Dispatch } from 'redux'
 export interface RootState {
   torrents: TorrentsState
   inspector: InspectorState
+  settings: SettingsState
 }
 
 /**

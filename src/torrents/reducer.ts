@@ -23,11 +23,12 @@ const initialState: State = {
   fields: new Set(['id']),
 }
 
-function normalizeTorrent(torrent: TransmissionTorrent) {
+function normalizeTorrent(torrent: TransmissionTorrent): TransmissionTorrent {
   return {
     trackerStats: [],
     peers: [],
     ...torrent,
+    files: (torrent.files || []).sort((a, b) => a.name.localeCompare(b.name)),
   }
 }
 

@@ -18,4 +18,6 @@ export default applyNamespace('torrents', {
 
   addTorrent: 0,
   removeTorrent: 0,
+
+  getCustomSettings: 0,
 })

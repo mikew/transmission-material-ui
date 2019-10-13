@@ -1,25 +1,22 @@
 import { default as MuiAppBar } from '@material-ui/core/AppBar/AppBar'
 import Icon from '@material-ui/core/Icon/Icon'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 import Toolbar from '@material-ui/core/Toolbar/Toolbar'
 import Typography from '@material-ui/core/Typography/Typography'
 import { RootState } from '@src/redux/types'
-import { appStyles, AppStyles } from '@src/styles'
+import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import CheckAllTorrents from '@src/torrents/CheckAllTorrents'
 import DeleteAllTorrents from '@src/torrents/DeleteAllTorrents'
 import * as selectors from '@src/torrents/selectors'
 import StartAllTorrents from '@src/torrents/StartAllTorrents'
 import React from 'react'
-import { connect } from 'react-redux'
 
-function TopAppBar(
-  props: ReturnType<typeof mapState> & AppStyles<typeof styles>,
-) {
+function TopAppBar() {
+  const mappedState = useShallowEqualSelector(mapState)
+  const classes = useStyles()
+
   return (
-    <MuiAppBar
-      position="fixed"
-      color="primary"
-      className={props.classes.appBar}
-    >
+    <MuiAppBar position="fixed" color="primary" className={classes.appBar}>
       <Toolbar variant="dense">
         <div style={{ flexGrow: 1 }}>
           <CheckAllTorrents color="inherit" />
@@ -28,7 +25,7 @@ function TopAppBar(
         </div>
         <div>
           <Typography color="inherit">
-            {formatBytes(props.rateDownload)}/s{' '}
+            {formatBytes(mappedState.rateDownload)}/s{' '}
             <Icon fontSize="inherit" style={{ verticalAlign: 'text-bottom' }}>
               arrow_downward
             </Icon>
@@ -36,7 +33,7 @@ function TopAppBar(
             <Icon fontSize="inherit" style={{ verticalAlign: 'text-bottom' }}>
               arrow_upward
             </Icon>{' '}
-            {formatBytes(props.rateUpload)}/s
+            {formatBytes(mappedState.rateUpload)}/s
           </Typography>
         </div>
       </Toolbar>
@@ -64,10 +61,10 @@ const mapState = (state: RootState) => ({
   rateDownload: selectors.getRateDownload(state),
 })
 
-const styles = appStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
 }))
 
-export default connect(mapState)(styles(TopAppBar))
+export default React.memo(TopAppBar)

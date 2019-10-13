@@ -1,27 +1,31 @@
 import Drawer from '@material-ui/core/Drawer/Drawer'
 import Icon from '@material-ui/core/Icon/Icon'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 import Tab from '@material-ui/core/Tab/Tab'
 import Tabs from '@material-ui/core/Tabs/Tabs'
-import InspectorTabPeers from '@src/inspector/InspectorTabPeers'
-import InspectorTabTrackers from '@src/inspector/InspectorTabTrackers'
-import { AppDispatch, RootState } from '@src/redux/types'
-import { AppStyles, appStyles } from '@src/styles'
+import { RootState } from '@src/redux/types'
+import useDispatch from '@src/redux/useDispatch'
+import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
 import React from 'react'
-import { connect } from 'react-redux'
 
 import * as actions from './actions'
 import InspectorTabFiles from './InspectorTabFiles'
+import InspectorTabInfo from './InspectorTabInfo'
+import InspectorTabPeers from './InspectorTabPeers'
 import InspectorTabs from './InspectorTabs'
+import InspectorTabTrackers from './InspectorTabTrackers'
 
-type Props = ReturnType<typeof mapState> &
-  ReturnType<typeof mapDispatch> &
-  AppStyles<typeof styles>
+function Inspector() {
+  const dispatch = useDispatch()
+  const setTab = (_event: any, value: InspectorTabs) =>
+    dispatch(actions.setTab(value))
+  const mappedState = useShallowEqualSelector(mapState)
+  const classes = useStyles()
 
-function Inspector(props: Props) {
   return (
     <Drawer
-      open={props.isInspectorOpen}
+      open={mappedState.isInspectorOpen}
       variant="persistent"
       anchor="right"
       PaperProps={{
@@ -29,46 +33,40 @@ function Inspector(props: Props) {
         // PaperProps.className
         // className: props.classes.paper,
         classes: {
-          root: props.classes.paper,
+          root: classes.paper,
         },
       }}
     >
       <FloatingBarSpacer />
-      <Tabs
-        value={props.currentTab}
-        onChange={props.setTab}
-        centered={true}
-        // fullWidth={true}
-        className={props.classes.tabs}
-      >
+      <Tabs value={mappedState.currentTab} onChange={setTab} centered={true}>
         <Tab
           value={InspectorTabs.info}
           // label="Info"
           icon={<Icon color="action">info</Icon>}
-          className={props.classes.tab}
+          className={classes.tab}
         />
         <Tab
           value={InspectorTabs.files}
           // label="Files"
           icon={<Icon color="action">folder</Icon>}
-          className={props.classes.tab}
+          className={classes.tab}
         />
         <Tab
           value={InspectorTabs.trackers}
           // label="Trackers"
           icon={<Icon color="action">rss_feed</Icon>}
-          className={props.classes.tab}
+          className={classes.tab}
         />
         <Tab
           value={InspectorTabs.peers}
           // label="Peers"
           icon={<Icon color="action">group</Icon>}
-          className={props.classes.tab}
+          className={classes.tab}
         />
       </Tabs>
-      {props.isInspectorOpen
+      {mappedState.isInspectorOpen
         ? renderCurrentTab({
-            currentTab: props.currentTab,
+            currentTab: mappedState.currentTab,
           })
         : undefined}
       <FloatingBarSpacer />
@@ -86,6 +84,8 @@ function renderCurrentTab(props: { currentTab: InspectorTabs }) {
       return <InspectorTabPeers />
     case InspectorTabs.files:
       return <InspectorTabFiles />
+    case InspectorTabs.info:
+      return <InspectorTabInfo />
   }
 
   return null
@@ -96,15 +96,7 @@ const mapState = (state: RootState) => ({
   isInspectorOpen: state.inspector.isInspectorOpen,
 })
 
-const mapDispatch = (dispatch: AppDispatch) => ({
-  setTab: (_event: any, value: InspectorTabs) =>
-    dispatch(actions.setTab(value)),
-})
-
-const styles = appStyles((theme) => ({
-  tabs: {
-    minHeight: 72,
-  },
+const useStyles = makeStyles((theme) => ({
   tab: {
     minWidth: 48,
   },
@@ -116,7 +108,4 @@ const styles = appStyles((theme) => ({
   },
 }))
 
-export default connect(
-  mapState,
-  mapDispatch,
-)(React.memo(styles(Inspector)))
+export default React.memo(Inspector)

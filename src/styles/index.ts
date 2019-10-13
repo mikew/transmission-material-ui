@@ -1,7 +1,5 @@
-import withStyles, {
-  StyleRules,
-  StyleRulesCallback,
-} from '@material-ui/core/styles/withStyles'
+import { Theme } from '@material-ui/core/styles/createMuiTheme'
+import withStyles, { Styles } from '@material-ui/core/styles/withStyles'
 import { PropInjector } from '@material-ui/types'
 
 export { Theme } from '@material-ui/core/styles/createMuiTheme'
@@ -49,9 +47,7 @@ export {
 //
 //     export default styles(MyComponent)
 
-export function appStyles<C extends string>(
-  style: StyleRules<C> | StyleRulesCallback<C>,
-) {
+export function appStyles<C extends string>(style: Styles<Theme, {}, C>) {
   return withStyles(style)
 }
 

@@ -1,37 +1,31 @@
-import { RootState } from '@src/redux/types'
+import useDispatch from '@src/redux/useDispatch'
+import useSelector from '@src/redux/useSelector'
 import * as actions from '@src/torrents/actions'
-import PeerList from '@src/torrents/PeerList'
 import * as selectors from '@src/torrents/selectors'
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
 
-type Props = ReturnType<typeof mapState> & typeof actions
+import TorrentPeerList from './TorrentPeerList'
 
 const fields = new Set<keyof TransmissionTorrent>(['peers'])
 
-function InspectorTabPeers(props: Props) {
+function InspectorTabPeers() {
+  const dispatch = useDispatch()
+  const checkedTorrents = useSelector(selectors.getCheckedTorrents)
   useEffect(() => {
-    props.addFields(fields)
+    dispatch(actions.addFields(fields))
 
     return () => {
-      props.removeFields(fields)
+      dispatch(actions.removeFields(fields))
     }
   }, [])
 
   return (
     <React.Fragment>
-      {props.checkedTorrents.map((x) => (
-        <PeerList torrent={x} key={x.id} />
+      {checkedTorrents.map((x) => (
+        <TorrentPeerList torrent={x} key={x.id} />
       ))}
     </React.Fragment>
   )
 }
 
-const mapState = (state: RootState) => ({
-  checkedTorrents: selectors.getCheckedTorrents(state),
-})
-
-export default connect(
-  mapState,
-  actions,
-)(React.memo(InspectorTabPeers))
+export default React.memo(InspectorTabPeers)

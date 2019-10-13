@@ -1,32 +1,39 @@
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 import Typography from '@material-ui/core/Typography/Typography'
-import { AppStyles, appStyles } from '@src/styles'
 import React from 'react'
 
 interface Props {
   tracker: TransmissionTrackerStat
 }
 
-function TrackerListItem(props: Props & AppStyles<typeof styles>) {
-  const { tracker: x } = props
+function TrackerListItem(props: Props) {
+  const classes = useStyles()
 
   const secondary = (
     <React.Fragment>
-      <div className={props.classes.left}>
-        Announce: {x.lastAnnounceResult}
+      <div className={classes.left}>
+        Announce: {props.tracker.lastAnnounceResult}
         <br />
-        Scrape: {x.lastScrapeResult}
+        Scrape: {props.tracker.lastScrapeResult}
         <br />
       </div>
-      <Typography variant="caption" className={props.classes.right}>
-        Seeds: <AlignedNumber>{x.seederCount.toLocaleString()}</AlignedNumber>
+      <Typography variant="caption" className={classes.right}>
+        Seeds:{' '}
+        <AlignedNumber>
+          {props.tracker.seederCount.toLocaleString()}
+        </AlignedNumber>
         <br />
         Downloads:{' '}
-        <AlignedNumber>{x.downloadCount.toLocaleString()}</AlignedNumber>
+        <AlignedNumber>
+          {props.tracker.downloadCount.toLocaleString()}
+        </AlignedNumber>
         <br />
         Leechers:{' '}
-        <AlignedNumber>{x.leecherCount.toLocaleString()}</AlignedNumber>
+        <AlignedNumber>
+          {props.tracker.leecherCount.toLocaleString()}
+        </AlignedNumber>
         <br />
       </Typography>
     </React.Fragment>
@@ -35,7 +42,7 @@ function TrackerListItem(props: Props & AppStyles<typeof styles>) {
   return (
     <ListItem divider={true}>
       <ListItemText
-        primary={x.host}
+        primary={props.tracker.host}
         secondary={secondary}
         secondaryTypographyProps={{ component: 'div' }}
       />
@@ -43,7 +50,7 @@ function TrackerListItem(props: Props & AppStyles<typeof styles>) {
   )
 }
 
-const styles = appStyles({
+const useStyles = makeStyles({
   left: {
     float: 'left',
     width: 'calc(100% - 120px)',
@@ -54,7 +61,7 @@ const styles = appStyles({
   },
 })
 
-export default React.memo(styles(TrackerListItem))
+export default React.memo(TrackerListItem)
 
 // tslint:disable-next-line:variable-name
 const AlignedNumber: React.SFC = (props) => (

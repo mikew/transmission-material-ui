@@ -1,38 +1,32 @@
-import { RootState } from '@src/redux/types'
+import useDispatch from '@src/redux/useDispatch'
+import useSelector from '@src/redux/useSelector'
 import * as actions from '@src/torrents/actions'
 import * as selectors from '@src/torrents/selectors'
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
 
 import TorrentFileList from './TorrentFileList'
 
-type Props = ReturnType<typeof mapState> & typeof actions
-
 const fields = new Set<keyof TransmissionTorrent>(['files'])
 
-function InspectorTabFiles(props: Props) {
+function InspectorTabFiles() {
+  const dispatch = useDispatch()
+  const checkedTorrents = useSelector(selectors.getCheckedTorrents)
+
   useEffect(() => {
-    props.addFields(fields)
+    dispatch(actions.addFields(fields))
 
     return () => {
-      props.removeFields(fields)
+      dispatch(actions.removeFields(fields))
     }
-  }, [])
+  }, [dispatch])
 
   return (
     <React.Fragment>
-      {props.checkedTorrents.map((x) => (
+      {checkedTorrents.map((x) => (
         <TorrentFileList torrent={x} key={x.id} />
       ))}
     </React.Fragment>
   )
 }
 
-const mapState = (state: RootState) => ({
-  checkedTorrents: selectors.getCheckedTorrents(state),
-})
-
-export default connect(
-  mapState,
-  actions,
-)(React.memo(InspectorTabFiles))
+export default React.memo(InspectorTabFiles)

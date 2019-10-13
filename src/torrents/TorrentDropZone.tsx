@@ -1,26 +1,29 @@
 import { AppDispatch } from '@src/redux/types'
+import useDispatch from '@src/redux/useDispatch'
 import getFilesFromEvent from '@src/util/getFilesFromEvent'
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
 
 import * as actions from './actions'
 
-type Props = ReturnType<typeof mapDispatch> & {
+interface Props {
   children?: React.ReactNode
 }
 
 function TorrentDropZone(props: Props) {
+  const dispatch = useDispatch()
+  const onDrop = (event: React.DragEvent) =>
+    handleDataTransfer(dispatch, event.dataTransfer)
   useEffect(() => {
     document.addEventListener('paste', (event) => {
       if (event.target && (event.target as HTMLElement).tagName === 'INPUT') {
         return
       }
 
-      handleDataTransfer(props.dispatch, event.clipboardData)
+      handleDataTransfer(dispatch, event.clipboardData)
     })
   }, [])
 
-  return <div onDrop={props.onDrop} children={props.children} />
+  return <div onDrop={onDrop} children={props.children} />
 }
 
 function handleDataTransfer(
@@ -58,14 +61,4 @@ function handleDataTransfer(
   })
 }
 
-const mapDispatch = (dispatch: AppDispatch) => ({
-  dispatch,
-  onDrop: (event: React.DragEvent) => {
-    handleDataTransfer(dispatch, event.dataTransfer)
-  },
-})
-
-export default connect(
-  undefined,
-  mapDispatch,
-)(TorrentDropZone)
+export default React.memo(TorrentDropZone)

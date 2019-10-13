@@ -31,6 +31,7 @@ export const stopWatching = createAction(constants.stopWatching)
 export const addTorrent = createAction<{
   mode: 'magnet' | 'base64'
   data: string
+  location?: string
 }>(constants.addTorrent)
 
 export const removeTorrent = createAction<{
@@ -47,6 +48,17 @@ export const get = createAction(
     return apiInstance.callServer('torrent-get', {
       ids,
       fields: [...getState().torrents.fields],
+    })
+  },
+)
+
+export const torrentSetLocation = createAction(
+  'torrentSet',
+  (payload: { ids: TransmissionIdLookup; location: string }) => {
+    return apiInstance.callServer('torrent-set-location', {
+      ids: payload.ids,
+      location: payload.location,
+      move: true,
     })
   },
 )

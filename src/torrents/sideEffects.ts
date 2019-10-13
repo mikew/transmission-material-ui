@@ -63,6 +63,7 @@ sideEffect(
       case 'base64':
         response = await apiInstance.addTorrentDataSrc({
           filename: action.payload.data,
+          'download-dir': action.payload.location,
         })
         break
     }

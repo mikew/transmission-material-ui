@@ -4,26 +4,41 @@ import DialogActions from '@material-ui/core/DialogActions/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle/DialogTitle'
 import TextField from '@material-ui/core/TextField/TextField'
-import { RootState } from '@src/redux/types'
-import React, { useCallback, useEffect, useState } from 'react'
-import { connect } from 'react-redux'
+import useDispatch from '@src/redux/useDispatch'
+import useSelector from '@src/redux/useSelector'
+import GroupSelect from '@src/settings/GroupSelect'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import * as actions from './actions'
 
-function AddTorrentDialog(props: ReturnType<typeof mapState> & typeof actions) {
+function AddTorrentDialog() {
+  const dispatch = useDispatch()
+  const isAddDialogVisible = useSelector(
+    (state) => state.torrents.isAddDialogVisible,
+  )
+  const inputRef = useRef<HTMLInputElement>()
   const [magnetUrl, setMagnetUrl] = useState('')
+  const [current, updateCurrent] = useState<
+    TorrentGroupDefinition | undefined
+  >()
 
   const handleBackdropClick = useCallback(() => {
-    props.toggleAddDialog()
+    dispatch(actions.toggleAddDialog())
   }, [])
 
   const handleAddClick = useCallback(() => {
     if (magnetUrl) {
-      props.addTorrent({ mode: 'magnet', data: magnetUrl })
+      dispatch(
+        actions.addTorrent({
+          mode: 'magnet',
+          data: magnetUrl,
+          location: current ? current.location : undefined,
+        }),
+      )
     }
 
     handleBackdropClick()
-  }, [magnetUrl])
+  }, [magnetUrl, current])
 
   const handleSubmit = useCallback(
     (event: React.FormEvent) => {
@@ -34,25 +49,41 @@ function AddTorrentDialog(props: ReturnType<typeof mapState> & typeof actions) {
   )
 
   useEffect(() => {
-    if (!props.isAddDialogVisible) {
+    if (!isAddDialogVisible) {
       setMagnetUrl('')
+      updateCurrent(undefined)
     }
-  }, [props.isAddDialogVisible])
+  }, [isAddDialogVisible])
 
   return (
-    <Dialog open={props.isAddDialogVisible} onClose={handleBackdropClick}>
+    <Dialog
+      maxWidth="xs"
+      fullWidth={true}
+      onEntered={() => {
+        // console.log(inputRef)
+        setTimeout(() => {
+          inputRef.current!.focus()
+        }, 50)
+      }}
+      open={isAddDialogVisible}
+      onClose={handleBackdropClick}
+    >
       <DialogTitle>Add Torrent</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <TextField
+            inputRef={inputRef}
             fullWidth={true}
-            autoFocus={true}
             label="Magnet"
             onChange={(event) => {
               setMagnetUrl(event.target.value)
             }}
           />
-          <TextField fullWidth={true} type="file" />
+          {/* <TextField fullWidth={true} type="file" /> */}
+          <GroupSelect
+            value={current}
+            onChange={(group) => updateCurrent(group)}
+          />
         </form>
       </DialogContent>
       <DialogActions>
@@ -64,11 +95,4 @@ function AddTorrentDialog(props: ReturnType<typeof mapState> & typeof actions) {
   )
 }
 
-const mapState = (state: RootState) => ({
-  isAddDialogVisible: state.torrents.isAddDialogVisible,
-})
-
-export default connect(
-  mapState,
-  actions,
-)(AddTorrentDialog)
+export default React.memo(AddTorrentDialog)
