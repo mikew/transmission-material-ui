@@ -9,11 +9,15 @@ jobs:
     - uses: actions/checkout@v1
     - name: prepare-env
       run: ./script/prepare-env
+    - name: Compresss workspace
+      run: |
+        rm -f workspace-cache.tar.gz
+        tar czf workspace-cache.tar.gz .
     - name: Cache workspace
       uses: actions/upload-artifact@v1
       with:
         name: workspace-cache
-        path: .
+        path: workspace-cache.tar.gz
 
   build:
     needs: prepare-env
@@ -23,6 +27,8 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: workspace-cache
+    - name: Extract cache
+      run: tar zxf workspace-cache.tar.gz
     - name: build
       run: ./script/build
       
@@ -34,5 +40,7 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: workspace-cache
+    - name: Extract cache
+      run: tar zxf workspace-cache.tar.gz
     - name: test
       run: ./script/test
