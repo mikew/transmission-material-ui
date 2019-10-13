@@ -17,7 +17,7 @@ jobs:
     - name: Cache workspace
       uses: actions/upload-artifact@v1
       with:
-        name: workspace-cache
+        name: workspace-cache.tar.gz
         path: workspace-cache.tar.gz
 
   build:
@@ -27,7 +27,7 @@ jobs:
     - name: Download workspace cache
       uses: actions/download-artifact@v1
       with:
-        name: workspace-cache
+        name: workspace-cache.tar.gz
     - name: Extract cache
       run: tar zxf workspace-cache.tar.gz
     - name: build
@@ -40,7 +40,7 @@ jobs:
     - name: Download workspace cache
       uses: actions/download-artifact@v1
       with:
-        name: workspace-cache
+        name: workspace-cache.tar.gz
     - name: Extract cache
       run: tar zxf workspace-cache.tar.gz
     - name: test
