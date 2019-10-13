@@ -41,10 +41,6 @@ jobs:
       - name: build
         run: ./script/build
 
-      - name: Cleanup build
-        run: |
-          find build/ -iname '*.map' -print -exec rm {} \;
-
       - name: Cache build
         uses: actions/upload-artifact@v1
         with:
@@ -65,3 +61,52 @@ jobs:
 
       - name: test
         run: ./script/test
+
+  deploy:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build
+        if: endsWith(github.ref, '/master')
+        uses: actions/download-artifact@v1
+        with:
+          name: build
+
+      - name: Cleanup build
+        if: endsWith(github.ref, '/master')
+        run: |
+          find build/ -iname '*.map' -print -exec rm {} \;
+
+      - name: Create release artifact
+        if: endsWith(github.ref, '/master')
+        run: |
+          rm -f build.zip
+          zip -r build.zip build/
+
+      - name: Create release
+        if: endsWith(github.ref, '/master')
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: release-${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          draft: false
+          prerelease: false
+
+      - name: Upload release asset
+        if: endsWith(github.ref, '/master')
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # This pulls from the CREATE RELEASE step above, referencing it's ID
+          # to get its outputs object, which include a `upload_url`. See this
+          # blog post for more info:
+          # https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build.zip
+          asset_name: build.zip
+          asset_content_type: application/zip
