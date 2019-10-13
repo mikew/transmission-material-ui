@@ -90,6 +90,12 @@ jobs:
           rm -f build.zip
           zip -r build.zip build/
 
+      - name: Debug
+        # if: endsWith(github.ref, '/master')
+        run: |
+          env | sort
+          ls -lahR
+
       - name: Create release
         # if: endsWith(github.ref, '/master')
         id: create_release
