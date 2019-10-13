@@ -13,7 +13,7 @@ jobs:
       run: |
         rm -f workspace-cache.tar.gz
         touch workspace-cache.tar.gz
-        tar czf --exclude=workspace-cache.tar.gz workspace-cache.tar.gz .
+        tar --exclude=workspace-cache.tar.gz -czf workspace-cache.tar.gz .
     - name: Cache workspace
       uses: actions/upload-artifact@v1
       with:
