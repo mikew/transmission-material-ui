@@ -3,5 +3,8 @@ set -ex
 
 ./script/create-proxy "${REACT_APP_PROXY_URL}" &
 
-./script/prepare-env
+if [ -z "$CI" ]; then
+  ./script/prepare-env
+fi
+
 exec ./node_modules/.bin/react-scripts-ts start
