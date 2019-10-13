@@ -3,10 +3,10 @@
 // If you want something to run when the app launches, put it here.
 
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { MuiThemeProvider } from '@material-ui/core/styles'
 import createMuiTheme, {
   ThemeOptions,
 } from '@material-ui/core/styles/createMuiTheme'
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
