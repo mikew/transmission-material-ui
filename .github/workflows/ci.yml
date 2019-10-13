@@ -9,47 +9,49 @@ jobs:
   prepare-env:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: prepare-env
-      run: ./script/prepare-env
-    - name: Compresss workspace
-      run: |
-        rm -f workspace-cache.tar.gz
-        touch workspace-cache.tar.gz
-        tar --exclude=workspace-cache.tar.gz -czf workspace-cache.tar.gz .
-    - name: Cache workspace
-      uses: actions/upload-artifact@v1
-      with:
-        name: workspace-cache.tar.gz
-        path: workspace-cache.tar.gz
+      - uses: actions/checkout@v1
+
+      - name: prepare-env
+        run: ./script/prepare-env
+
+      - name: Compresss workspace
+        run: |
+          rm -f workspace-cache.tar.gz
+          touch workspace-cache.tar.gz
+          tar --exclude=workspace-cache.tar.gz -czf workspace-cache.tar.gz .
+
+      - name: Cache workspace
+        uses: actions/upload-artifact@v1
+        with:
+          name: workspace-cache.tar.gz
+          path: workspace-cache.tar.gz
 
   build:
     needs: prepare-env
     runs-on: ubuntu-latest
     steps:
-    - name: Download workspace cache
-      uses: actions/download-artifact@v1
-      with:
-        name: workspace-cache.tar.gz
-        
-    - name: Debug
-      run: |
-        ls -laR .
-        env | sort
-    - name: Extract cache
-      run: tar zxf workspace-cache.tar.gz/workspace-cache.tar.gz
-    - name: build
-      run: ./script/build
-      
+      - name: Download workspace cache
+        uses: actions/download-artifact@v1
+        with:
+          name: workspace-cache.tar.gz
+
+      - name: Extract cache
+        run: tar zxf workspace-cache.tar.gz/workspace-cache.tar.gz
+
+      - name: build
+        run: ./script/build
+
   test:
     needs: prepare-env
     runs-on: ubuntu-latest
     steps:
-    - name: Download workspace cache
-      uses: actions/download-artifact@v1
-      with:
-        name: workspace-cache.tar.gz
-    - name: Extract cache
-      run: tar zxf workspace-cache.tar.gz/workspace-cache.tar.gz
-    - name: test
-      run: ./script/test
+      - name: Download workspace cache
+        uses: actions/download-artifact@v1
+        with:
+          name: workspace-cache.tar.gz
+
+      - name: Extract cache
+        run: tar zxf workspace-cache.tar.gz/workspace-cache.tar.gz
+
+      - name: test
+        run: ./script/test
