@@ -41,6 +41,10 @@ jobs:
       - name: build
         run: ./script/build
 
+      - name: Cleanup build
+        run: |
+          find build/ -iname '*.map' -print -exec rm {} \;
+
       - name: Cache build
         uses: actions/upload-artifact@v1
         with:
