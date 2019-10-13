@@ -1,0 +1,25 @@
+name: CI
+
+on: [push]
+
+jobs:
+  prepare-env:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: prepare-env
+      run: ./script/prepare-env
+     
+  build:
+    needs: prepare-env
+    runs-on: ubuntu-latest
+    steps:
+    - name: build
+      run: ./script/build
+      
+  test:
+    needs: prepare-env
+    runs-on: ubuntu-latest
+    steps:
+    - name: test
+      run: ./script/test
