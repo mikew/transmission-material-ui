@@ -73,16 +73,13 @@ jobs:
         with:
           name: build
 
-      - name: Cleanup build
-        if: endsWith(github.ref, '/master')
-        run: |
-          find build/ -iname '*.map' -print -exec rm {} \;
-
       - name: Create release artifact
         if: endsWith(github.ref, '/master')
         run: |
-          rm -f build.zip
-          zip -r build.zip build/
+          find build/ -iname '*.map' -print -exec rm {} \;
+          mv build/ transmission-material-ui/
+          rm -f transmission-material-ui.zip
+          zip -r transmission-material-ui.zip transmission-material-ui/
 
       - name: Create release
         if: endsWith(github.ref, '/master')
