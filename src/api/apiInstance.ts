@@ -1,4 +1,3 @@
-// tslint:disable-next-line:import-name
 import Transmission from '.'
 
 const apiInstance = new Transmission({

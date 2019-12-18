@@ -15,7 +15,6 @@ interface Props {
   value?: TorrentGroupDefinition
 }
 
-// tslint:disable-next-line:function-name
 function GroupSelect(props: Props) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {

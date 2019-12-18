@@ -63,7 +63,6 @@ const useStyles = makeStyles({
 
 export default React.memo(TrackerListItem)
 
-// tslint:disable-next-line:variable-name
 const AlignedNumber: React.SFC = (props) => (
   <span
     style={{ width: 45, display: 'inline-block', textAlign: 'left' }}

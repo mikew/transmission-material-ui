@@ -40,7 +40,6 @@ export default createReducer(initialState, {
     const all = { ...state.all }
     action.payload.torrents.forEach((x) => {
       if (!x.id) {
-        // tslint:disable-next-line:no-console
         console.error(x, 'has no `id` property')
 
         return

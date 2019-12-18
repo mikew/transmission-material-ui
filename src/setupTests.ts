@@ -15,7 +15,6 @@
 }
 
 // Needed for some components that use material-ui
-// tslint:disable-next-line:max-line-length
 // https://github.com/mui-org/material-ui/blob/c0afa64dbc7e331cbf13ab30ee58ffb71958c40b/test/utils/createDOM.js#L21-L28
 ;(global as any).document.createRange = () => ({
   setStart: () => void 0,
@@ -26,9 +25,7 @@
   },
 })
 
-// tslint:disable-next-line:import-name
 import Enzyme from 'enzyme'
-// tslint:disable-next-line:import-name
 import Adapter from 'enzyme-adapter-react-16'
 
 Enzyme.configure({

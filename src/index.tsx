@@ -36,7 +36,6 @@ ignoreRootDrag()
 
 function renderApp() {
   // Importing this strange way is needed for hot loading.
-  // tslint:disable-next-line:variable-name
   const App = require('./app/App').default
 
   ReactDOM.render(

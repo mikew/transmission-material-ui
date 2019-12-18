@@ -47,7 +47,6 @@ function formatBytes(bytes: number | string, decimals = 2) {
     return '0 B'
   }
 
-  // tslint:disable-next-line:no-parameter-reassignment
   bytes = Number(bytes)
   const k = 1024
   const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
