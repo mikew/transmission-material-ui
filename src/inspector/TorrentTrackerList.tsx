@@ -1,6 +1,7 @@
 import List from '@material-ui/core/List/List'
-import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
 import React from 'react'
+
+import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
 
 import TrackerListItem from './TrackerListItem'
 

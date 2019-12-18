@@ -1,6 +1,7 @@
+import createAction from 'redux-ts-helpers/lib/createAction'
+
 import apiInstance from '@src/api/apiInstance'
 import { AppDispatch, AppGetState } from '@src/redux/types'
-import createAction from 'redux-ts-helpers/lib/createAction'
 
 import constants from './constants'
 

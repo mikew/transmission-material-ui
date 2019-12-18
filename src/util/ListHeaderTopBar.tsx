@@ -1,6 +1,7 @@
 import ListSubheader from '@material-ui/core/ListSubheader'
-import { appStyles } from '@src/styles'
 import React from 'react'
+
+import { appStyles } from '@src/styles'
 
 const styles = appStyles((theme) => ({
   root: {

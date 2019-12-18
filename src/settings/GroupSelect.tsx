@@ -4,8 +4,9 @@ import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import Menu from '@material-ui/core/Menu/Menu'
 import MenuItem from '@material-ui/core/MenuItem/MenuItem'
-import useSelector from '@src/redux/useSelector'
 import React, { useState } from 'react'
+
+import useSelector from '@src/redux/useSelector'
 
 import * as selectors from './selectors'
 

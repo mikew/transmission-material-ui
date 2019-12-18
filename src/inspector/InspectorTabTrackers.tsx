@@ -1,8 +1,9 @@
+import React, { useEffect } from 'react'
+
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
 import * as actions from '@src/torrents/actions'
 import * as selectors from '@src/torrents/selectors'
-import React, { useEffect } from 'react'
 
 import TorrentTrackerList from './TorrentTrackerList'
 
@@ -18,7 +19,7 @@ function InspectorTabTrackers() {
     return () => {
       dispatch(actions.removeFields(fields))
     }
-  }, [])
+  }, [dispatch])
 
   return (
     <React.Fragment>

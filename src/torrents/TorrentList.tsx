@@ -1,11 +1,12 @@
 import List from '@material-ui/core/List'
+import React, { useEffect } from 'react'
+
 import { TorrentStatus } from '@src/api'
 import { RootState } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import * as settingsSelectors from '@src/settings/selectors'
 import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
-import React, { useEffect } from 'react'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
@@ -94,7 +95,7 @@ function TorrentList() {
       dispatch(actions.removeFields(fields))
       dispatch(actions.stopWatching())
     }
-  }, [])
+  }, [dispatch])
 
   const isChecked = (id: number | string) =>
     mappedState.checkedTorrents.indexOf(Number(id)) > -1

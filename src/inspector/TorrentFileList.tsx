@@ -4,12 +4,13 @@ import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
+import React, { useState } from 'react'
+
 import convertFilesToGroup, {
   DirSpec,
   FileSpec,
 } from '@src/torrents/convertFilesToGroup'
 import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
-import React, { useState } from 'react'
 
 interface Props {
   torrent: TransmissionTorrent

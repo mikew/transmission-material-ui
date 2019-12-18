@@ -1,11 +1,12 @@
 import Icon from '@material-ui/core/Icon/Icon'
 import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
 import { Omit } from '@material-ui/types'
+import React from 'react'
+
 import { TorrentStatus } from '@src/api'
 import { RootState } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
-import React from 'react'
 
 import * as actions from './actions'
 import * as selectors from './selectors'

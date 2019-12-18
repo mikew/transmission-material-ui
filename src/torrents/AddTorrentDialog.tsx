@@ -4,10 +4,11 @@ import DialogActions from '@material-ui/core/DialogActions/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle/DialogTitle'
 import TextField from '@material-ui/core/TextField/TextField'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
 import GroupSelect from '@src/settings/GroupSelect'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import * as actions from './actions'
 
@@ -24,7 +25,7 @@ function AddTorrentDialog() {
 
   const handleBackdropClick = useCallback(() => {
     dispatch(actions.toggleAddDialog())
-  }, [])
+  }, [dispatch])
 
   const handleAddClick = useCallback(() => {
     if (magnetUrl) {
@@ -38,7 +39,7 @@ function AddTorrentDialog() {
     }
 
     handleBackdropClick()
-  }, [magnetUrl, current])
+  }, [dispatch, handleBackdropClick, magnetUrl, current])
 
   const handleSubmit = useCallback(
     (event: React.FormEvent) => {

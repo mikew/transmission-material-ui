@@ -1,7 +1,8 @@
+import React, { useEffect } from 'react'
+
 import { AppDispatch } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
 import getFilesFromEvent from '@src/util/getFilesFromEvent'
-import React, { useEffect } from 'react'
 
 import * as actions from './actions'
 
@@ -21,7 +22,7 @@ function TorrentDropZone(props: Props) {
 
       handleDataTransfer(dispatch, event.clipboardData)
     })
-  }, [])
+  }, [dispatch])
 
   return <div onDrop={onDrop} children={props.children} />
 }

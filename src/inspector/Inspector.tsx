@@ -3,11 +3,12 @@ import Icon from '@material-ui/core/Icon/Icon'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import Tab from '@material-ui/core/Tab/Tab'
 import Tabs from '@material-ui/core/Tabs/Tabs'
+import React from 'react'
+
 import { RootState } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
-import React from 'react'
 
 import * as actions from './actions'
 import InspectorTabFiles from './InspectorTabFiles'

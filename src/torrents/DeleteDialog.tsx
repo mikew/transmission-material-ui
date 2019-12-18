@@ -8,10 +8,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabe
 import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
+import React, { useCallback, useEffect, useState } from 'react'
+
 import { RootState } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
-import React, { useCallback, useEffect, useState } from 'react'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
@@ -20,7 +21,9 @@ function DeleteDialog() {
   const dispatch = useDispatch()
   const mappedState = useShallowEqualSelector(mapState)
   const [deleteData, setDeleteData] = useState(false)
-  const onClose = () => dispatch(actions.toggleDeleteDialog())
+  const onClose = useCallback(() => dispatch(actions.toggleDeleteDialog()), [
+    dispatch,
+  ])
   const onDeleteClick = () => {
     dispatch(
       actions.removeTorrent({
@@ -32,7 +35,7 @@ function DeleteDialog() {
   }
   const handleBackdropClick = useCallback(() => {
     onClose()
-  }, [dispatch])
+  }, [onClose])
 
   useEffect(() => {
     if (!mappedState.isDeleteDialogVisible) {

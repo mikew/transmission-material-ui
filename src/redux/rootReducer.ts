@@ -2,11 +2,12 @@
 // imported here.
 
 // tslint:disable:import-name
+import { combineReducers } from 'redux'
+
 import inspector from '@src/inspector/reducer'
 import settings from '@src/settings/reducer'
 import torrents from '@src/torrents/reducer'
 // tslint:enable:import-name
-import { combineReducers } from 'redux'
 
 import { RootState } from './types'
 
