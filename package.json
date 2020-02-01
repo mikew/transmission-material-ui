@@ -24,7 +24,7 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-redux": "^7.1.1",
-    "react-scripts-tsc": "^3.3.0-rc.6",
+    "react-scripts-tsc": "^3.4.0-rc.1",
     "redux": "^4.0.4",
     "redux-async-payload": "^3.0.0",
     "redux-logger": "3.0.6",
