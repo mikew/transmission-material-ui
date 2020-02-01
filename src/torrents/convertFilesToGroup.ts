@@ -17,7 +17,11 @@ function convertFilesToGroup(files: TransmissionTorrent['files'] = []) {
 
   files.forEach((file, fileIndex) => {
     const dirParts = file.name.split('/')
-    const fileName = dirParts.pop()!
+    const fileName = dirParts.pop()
+
+    if (!fileName) {
+      return
+    }
 
     for (let i = 0; i < dirParts.length; i += 1) {
       const key = dirParts.slice(0, i + 1).join('/')

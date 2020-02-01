@@ -1,3 +1,5 @@
 import React from 'react'
 
-export default React.memo(() => <div style={{ minHeight: 50 }} />)
+const FloatingBarSpacer = () => <div style={{ minHeight: 50 }} />
+
+export default React.memo(FloatingBarSpacer)

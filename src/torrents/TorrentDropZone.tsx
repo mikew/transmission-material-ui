@@ -24,7 +24,7 @@ function TorrentDropZone(props: Props) {
     })
   }, [dispatch])
 
-  return <div onDrop={onDrop} children={props.children} />
+  return <div onDrop={onDrop}>{props.children}</div>
 }
 
 function handleDataTransfer(

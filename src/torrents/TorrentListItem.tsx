@@ -21,7 +21,7 @@ interface Props {
   rightIconProps?: IconButtonProps
   onClick: (event: React.MouseEvent, torrent: TransmissionTorrent) => void
   onCheckboxChange: (
-    event: React.ChangeEvent,
+    event: React.MouseEvent,
     torrent: TransmissionTorrent,
   ) => void
 }
@@ -46,8 +46,7 @@ function TorrentListItem(props: Props) {
     props.onClick(event, props.torrent)
   }
 
-  // const handleCheckboxClick = (event: React.ChangeEvent) => {
-  const handleCheckboxClick = (event: any) => {
+  const handleCheckboxClick = (event: React.MouseEvent) => {
     props.onCheckboxChange(event, props.torrent)
   }
 

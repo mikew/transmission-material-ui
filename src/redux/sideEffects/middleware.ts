@@ -1,7 +1,7 @@
 import { AnyAction, Dispatch, Middleware, MiddlewareAPI } from 'redux'
 
 interface SideEffectFunction {
-  (action: AnyAction, dispatch: Dispatch<AnyAction>, getState: () => any): void
+  (action: AnyAction, dispatch: Dispatch<AnyAction>, getState: () => unknown): void | Promise<void>
 }
 
 type SideEffectMap = Record<string, SideEffectFunction[]>

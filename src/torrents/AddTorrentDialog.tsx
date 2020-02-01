@@ -63,7 +63,11 @@ function AddTorrentDialog() {
       onEntered={() => {
         // console.log(inputRef)
         setTimeout(() => {
-          inputRef.current!.focus()
+          if (!inputRef.current) {
+            return
+          }
+
+          inputRef.current.focus()
         }, 50)
       }}
       open={isAddDialogVisible}

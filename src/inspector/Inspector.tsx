@@ -19,7 +19,7 @@ import InspectorTabTrackers from './InspectorTabTrackers'
 
 function Inspector() {
   const dispatch = useDispatch()
-  const setTab = (_event: any, value: InspectorTabs) =>
+  const setTab = (_event: unknown, value: InspectorTabs) =>
     dispatch(actions.setTab(value))
   const mappedState = useShallowEqualSelector(mapState)
   const classes = useStyles()

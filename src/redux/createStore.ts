@@ -37,7 +37,7 @@ export default function createStore(initialState?: Partial<RootState>) {
   // Now a cast to Store is needed.
   const store = _createStore(
     getRootReducer(),
-    initialState as any,
+    initialState,
     applyMiddleware(...middleware),
   ) as Store<RootState>
 

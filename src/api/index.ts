@@ -42,9 +42,9 @@ export default class Transmission {
   ): Promise<TransmissionRPC[K]['response']> {
     const headers: Record<string, string> = {}
 
-    const makeRequest = (): Promise<
-      TransmissionResponse<TransmissionRPC[K]['response']>
-    > => {
+    const makeRequest = (): Promise<TransmissionResponse<
+      TransmissionRPC[K]['response']
+    >> => {
       if (this.sessionId) {
         headers['X-Transmission-Session-Id'] = this.sessionId
       }
@@ -89,8 +89,16 @@ export default class Transmission {
    * Adds a new torrent from a variety of sources
    */
   addTorrentDataSrc(options: TorrentAddRequest) {
-    return this.callServer('torrent-add', options).then((x) =>
-      x['torrent-duplicate'] ? x['torrent-duplicate']! : x['torrent-added']!,
-    )
+    return this.callServer('torrent-add', options).then((x) => {
+      const response = x['torrent-duplicate']
+        ? x['torrent-duplicate']
+        : x['torrent-added']
+
+      if (!response) {
+        throw new Error()
+      }
+
+      return response
+    })
   }
 }

@@ -33,9 +33,15 @@ function buildFileReader(file: File | null) {
   return () => {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader()
-      reader.onloadend = () => resolve(reader.result! as string)
-      reader.onabort = () => reject(new Error())
-      reader.onerror = () => reject(new Error())
+      reader.onloadend = () => {
+        if (!reader.result) {
+          return
+        }
+
+        resolve(reader.result as string)
+      }
+      reader.onabort = () => reject(reader.error || new Error())
+      reader.onerror = () => reject(reader.error || new Error())
       // reader.readAsText(file)
       reader.readAsDataURL(file)
     })
