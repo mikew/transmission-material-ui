@@ -34,7 +34,7 @@ const theme = createMuiTheme({
 
 ignoreRootDrag()
 
-function renderApp() {
+function renderApp(store: ReturnType<typeof createStore>) {
   // Importing this strange way is needed for hot loading.
   const App = require('./app/App').default
 
@@ -50,16 +50,17 @@ function renderApp() {
   )
 }
 
-let store: ReturnType<typeof createStore>
-export function getStore() {
-  return store
-}
-
 async function init() {
   serviceWorkerIosHack()
-  store = createStore()
+
+  const store = createStore()
   store.dispatch(settingsActions.getCustomSettings())
-  renderApp()
+
+  renderApp(store)
+
+  if (module.hot) {
+    module.hot.accept('./app/App', () => renderApp(store))
+  }
 }
 
 register({
@@ -69,7 +70,3 @@ register({
 })
 
 init()
-
-if (module.hot) {
-  module.hot.accept('./app/App', renderApp)
-}
