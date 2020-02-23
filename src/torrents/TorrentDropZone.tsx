@@ -14,7 +14,7 @@ interface Props {
 const useStyles = makeStyles(() => ({
   root: {
     height: '100%',
-  }
+  },
 }))
 
 function TorrentDropZone(props: Props) {
@@ -37,7 +37,11 @@ function TorrentDropZone(props: Props) {
   }, [dispatch])
   const classes = useStyles()
 
-  return <div onDrop={onDrop} className={classes.root}>{props.children}</div>
+  return (
+    <div onDrop={onDrop} className={classes.root}>
+      {props.children}
+    </div>
+  )
 }
 
 function handleDataTransfer(

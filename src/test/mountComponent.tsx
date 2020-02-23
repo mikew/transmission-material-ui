@@ -16,12 +16,7 @@ export default function mountComponent<P = {}>(
 ) {
   const store = options.store || createStore()
 
-  const wrapper = mount(
-    <Provider store={store}>
-      {element}
-    </Provider>,
-    options,
-  )
+  const wrapper = mount(<Provider store={store}>{element}</Provider>, options)
 
   return {
     element,

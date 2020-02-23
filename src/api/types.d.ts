@@ -236,7 +236,7 @@ interface TorrentSetRequest {
   /**       ids of trackers to remove */
   trackerRemove: string[]
   /**       pairs of <trackerId/new announce URLs> */
-  trackerReplace: ([string, string])[]
+  trackerReplace: [string, string][]
   /**      maximum upload speed (KBps) */
   uploadLimit: number
   /**     true if "uploadLimit" is honored */
