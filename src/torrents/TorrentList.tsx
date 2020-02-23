@@ -12,13 +12,6 @@ import * as actions from './actions'
 import * as selectors from './selectors'
 import TorrentListItem from './TorrentListItem'
 
-/* interface IFoo {} */
-
-/* const wut: IFoo = {} */
-/* console.log(wut) */
-
-/* ;(0).forEach() */
-
 const fields = new Set<keyof TransmissionTorrent>([
   'error',
   'errorString',
