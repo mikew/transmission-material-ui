@@ -22,13 +22,18 @@ function TorrentDropZone(props: Props) {
   const onDrop = (event: React.DragEvent) =>
     handleDataTransfer(dispatch, event.dataTransfer)
   useEffect(() => {
-    document.addEventListener('paste', (event) => {
+    const handler = (event: ClipboardEvent) => {
       if (event.target && (event.target as HTMLElement).tagName === 'INPUT') {
         return
       }
 
       handleDataTransfer(dispatch, event.clipboardData)
-    })
+    }
+    document.addEventListener('paste', handler)
+
+    return () => {
+      document.removeEventListener('paste', handler)
+    }
   }, [dispatch])
   const classes = useStyles()
 
