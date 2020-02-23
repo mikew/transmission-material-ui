@@ -25,7 +25,7 @@ function TopAppBar() {
           <DeleteAllTorrents color="inherit" />
         </div>
         <div>
-          <Typography color="inherit">
+          <Typography color="inherit" variant="body2">
             {formatBytes(mappedState.rateDownload)}/s{' '}
             <Icon fontSize="inherit" style={{ verticalAlign: 'text-bottom' }}>
               arrow_downward
