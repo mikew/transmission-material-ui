@@ -13,19 +13,17 @@ import TopAppBar from './TopAppBar'
 function App() {
   return (
     <TorrentDropZone>
-      <div className="App">
-        <FloatingBarSpacer />
-        <TorrentList />
-        <FloatingBarSpacer />
+      <FloatingBarSpacer />
+      <TorrentList />
+      <FloatingBarSpacer />
 
-        <Inspector />
+      <Inspector />
 
-        <AppBar />
-        <TopAppBar />
+      <AppBar />
+      <TopAppBar />
 
-        <AddTorrentDialog />
-        <DeleteDialog />
-      </div>
+      <AddTorrentDialog />
+      <DeleteDialog />
     </TorrentDropZone>
   )
 }

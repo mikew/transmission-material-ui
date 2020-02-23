@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 
 import { AppDispatch } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
@@ -9,6 +10,12 @@ import * as actions from './actions'
 interface Props {
   children?: React.ReactNode
 }
+
+const useStyles = makeStyles(() => ({
+  root: {
+    height: '100%',
+  }
+}))
 
 function TorrentDropZone(props: Props) {
   const dispatch = useDispatch()
@@ -23,8 +30,9 @@ function TorrentDropZone(props: Props) {
       handleDataTransfer(dispatch, event.clipboardData)
     })
   }, [dispatch])
+  const classes = useStyles()
 
-  return <div onDrop={onDrop}>{props.children}</div>
+  return <div onDrop={onDrop} className={classes.root}>{props.children}</div>
 }
 
 function handleDataTransfer(
