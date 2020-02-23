@@ -44,7 +44,13 @@ function TrackerListItem(props: Props) {
       <ListItemText
         primary={props.tracker.host}
         secondary={secondary}
-        secondaryTypographyProps={{ component: 'div' }}
+        secondaryTypographyProps={
+          {
+            component: 'div',
+            // https://github.com/mui-org/material-ui/issues/19036
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } as any
+        }
       />
     </ListItem>
   )

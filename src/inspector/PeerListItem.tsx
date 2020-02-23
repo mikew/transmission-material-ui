@@ -19,7 +19,13 @@ function PeerListItem(props: Props) {
       <ListItemText
         primary={props.peer.address}
         secondary={props.peer.clientName}
-        secondaryTypographyProps={{ component: 'div' }}
+        secondaryTypographyProps={
+          {
+            component: 'div',
+            // https://github.com/mui-org/material-ui/issues/19036
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } as any
+        }
       />
       {icon}
     </ListItem>
