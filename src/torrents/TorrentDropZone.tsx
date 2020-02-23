@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { AppDispatch } from '@src/redux/types'
@@ -19,8 +19,12 @@ const useStyles = makeStyles(() => ({
 
 function TorrentDropZone(props: Props) {
   const dispatch = useDispatch()
-  const onDrop = (event: React.DragEvent) =>
-    handleDataTransfer(dispatch, event.dataTransfer)
+  const onDrop = useCallback(
+    (event: React.DragEvent) => {
+      handleDataTransfer(dispatch, event.dataTransfer)
+    },
+    [dispatch],
+  )
   useEffect(() => {
     const handler = (event: ClipboardEvent) => {
       if (event.target && (event.target as HTMLElement).tagName === 'INPUT') {
