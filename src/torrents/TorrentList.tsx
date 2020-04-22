@@ -7,6 +7,7 @@ import useDispatch from '@src/redux/useDispatch'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import * as settingsSelectors from '@src/settings/selectors'
 import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
+import { toggleInspector } from '@src/inspector/actions'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
@@ -58,6 +59,10 @@ function TorrentList() {
         ids: [torrent.id],
       }),
     )
+  }
+
+  const handleDoubleClick = () => {
+    dispatch(toggleInspector())
   }
 
   const handleCheckboxClick = (
@@ -137,6 +142,7 @@ function TorrentList() {
                   key={torrent.id}
                   torrent={torrent}
                   onClick={handleClick}
+                  onDoubleClick={handleDoubleClick}
                   onCheckboxChange={handleCheckboxClick}
                   rightIcon={rightIcon}
                   onRightIconClick={handleRightIconClick}

@@ -20,6 +20,10 @@ interface Props {
   ) => void
   rightIconProps?: IconButtonProps
   onClick: (event: React.MouseEvent, torrent: TransmissionTorrent) => void
+  onDoubleClick?: (
+    event: React.MouseEvent,
+    torrent: TransmissionTorrent,
+  ) => void
   onCheckboxChange: (
     event: React.MouseEvent,
     torrent: TransmissionTorrent,
@@ -50,6 +54,14 @@ function TorrentListItem(props: Props) {
     props.onCheckboxChange(event, props.torrent)
   }
 
+  const handleDoubleClick = (event: React.MouseEvent) => {
+    if (!props.onDoubleClick) {
+      return
+    }
+
+    props.onDoubleClick(event, props.torrent)
+  }
+
   const handleRightIconClick = (event: React.MouseEvent) => {
     if (!props.onRightIconClick) {
       return
@@ -67,7 +79,13 @@ function TorrentListItem(props: Props) {
   )
 
   return (
-    <ListItem button={true} divider={true} onClick={handleClick}>
+    <ListItem
+      button={true}
+      disableRipple
+      divider={true}
+      onClick={handleClick}
+      onDoubleClick={handleDoubleClick}
+    >
       <Checkbox onClickCapture={handleCheckboxClick} checked={props.checked} />
 
       <ListItemText
