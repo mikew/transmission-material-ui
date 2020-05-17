@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
 import * as actions from '@src/torrents/actions'
 import * as selectors from '@src/torrents/selectors'
+import { getGroups } from '@src/settings/selectors'
 
 import GroupSelect from '../settings/GroupSelect'
 
@@ -20,10 +21,35 @@ function InspectorTabInfo() {
     }
   }, [dispatch])
 
+  const groups = useSelector(getGroups)
+  // TODO This could be wrapped up into `findGroupForDirectory`
+  const firstGroup = useMemo(() => {
+    if (checkedTorrents.length === 0) {
+      return
+    }
+
+    const firstTorrent = checkedTorrents[0]
+    for (const groupName in groups) {
+      const found = groups[groupName].find((directory) =>
+        firstTorrent.downloadDir.startsWith(directory),
+      )
+
+      if (found) {
+        const definition: TorrentGroupDefinition = {
+          groupName: groupName,
+          location: found,
+        }
+
+        return definition
+      }
+    }
+  }, [checkedTorrents, groups])
+
   return (
     <React.Fragment>
       {checkedTorrents.length > 0 ? (
         <GroupSelect
+          value={firstGroup}
           onChange={(group) => {
             dispatch(
               actions.torrentSetLocation({
