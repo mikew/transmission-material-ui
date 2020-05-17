@@ -37,7 +37,8 @@ export default createReducer(initialState, {
     state,
     action: ActionSuccessType<typeof actions.get>,
   ) => {
-    const all = { ...state.all }
+    const all = action.meta.isMain ? {} : { ...state.all }
+
     action.payload.torrents.forEach((x) => {
       if (!x.id) {
         console.error(x, 'has no `id` property')
@@ -54,6 +55,9 @@ export default createReducer(initialState, {
     return {
       ...state,
       all,
+      checkedTorrents: action.meta.isMain
+        ? state.checkedTorrents.filter((id) => !!all[id])
+        : state.checkedTorrents,
     }
   },
 

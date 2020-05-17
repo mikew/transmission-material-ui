@@ -42,15 +42,16 @@ export const removeTorrent = createAction<{
 
 export const get = createAction(
   constants.get,
-  (ids?: TransmissionIdLookup) => (
-    _dispatch: AppDispatch,
-    getState: AppGetState,
-  ) => {
-    return apiInstance.callServer('torrent-get', {
-      ids,
-      fields: [...getState().torrents.fields],
-    })
-  },
+  (ids?: TransmissionIdLookup, isMain?: boolean) => ({
+    payload: (_dispatch: AppDispatch, getState: AppGetState) =>
+      apiInstance.callServer('torrent-get', {
+        ids,
+        fields: [...getState().torrents.fields],
+      }),
+    meta: {
+      isMain,
+    },
+  }),
 )
 
 export const torrentSetLocation = createAction(
