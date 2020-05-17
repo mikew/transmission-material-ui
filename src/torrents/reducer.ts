@@ -76,9 +76,7 @@ export default createReducer(initialState, {
     return {
       ...state,
       all,
-      checkedTorrents: state.checkedTorrents.filter(
-        (id) => !action.payload.ids.includes(id),
-      ),
+      checkedTorrents: state.checkedTorrents.filter((id) => !!all[id]),
     }
   },
 
