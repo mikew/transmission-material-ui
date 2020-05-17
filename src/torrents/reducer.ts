@@ -10,6 +10,7 @@ export interface State {
   isAddDialogVisible: boolean
   isDeleteDialogVisible: boolean
   fields: Set<keyof TransmissionTorrent>
+  lastCommunication: Date
 }
 
 const initialState: State = {
@@ -18,6 +19,7 @@ const initialState: State = {
   checkedTorrents: [],
   isDeleteDialogVisible: false,
   fields: new Set(['id']),
+  lastCommunication: new Date(),
 }
 
 function normalizeTorrent(torrent: TransmissionTorrent): TransmissionTorrent {
@@ -55,6 +57,9 @@ export default createReducer(initialState, {
       checkedTorrents: action.meta.isMain
         ? state.checkedTorrents.filter((id) => !!all[id])
         : state.checkedTorrents,
+      lastCommunication: action.meta.isMain
+        ? new Date()
+        : state.lastCommunication,
     }
   },
 
