@@ -84,7 +84,6 @@ function AddTorrentDialog() {
               setMagnetUrl(event.target.value)
             }}
           />
-          {/* <TextField fullWidth={true} type="file" /> */}
           <GroupSelect
             value={current}
             onChange={(group) => updateCurrent(group)}

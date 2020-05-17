@@ -5,10 +5,7 @@ import * as actions from './actions'
 import constants from './constants'
 
 export interface State {
-  all: {
-    [id: number]: TransmissionTorrent
-    [id: string]: TransmissionTorrent
-  }
+  all: Record<string | number, TransmissionTorrent>
   checkedTorrents: number[]
   isAddDialogVisible: boolean
   isDeleteDialogVisible: boolean
@@ -46,10 +43,10 @@ export default createReducer(initialState, {
         return
       }
 
-      all[x.id] = {
+      all[x.id] = normalizeTorrent({
         ...all[x.id],
-        ...normalizeTorrent(x),
-      }
+        ...x,
+      })
     })
 
     return {
@@ -66,21 +63,17 @@ export default createReducer(initialState, {
     action: ReturnType<typeof actions.removeTorrent>,
   ) => {
     const all = { ...state.all }
-    const checkedTorrents = [...state.checkedTorrents]
 
     action.payload.ids.forEach((x) => {
       delete all[x]
-
-      const checkedIndex = checkedTorrents.indexOf(Number(x))
-      if (checkedIndex !== -1) {
-        checkedTorrents.splice(checkedIndex, 1)
-      }
     })
 
     return {
       ...state,
       all,
-      checkedTorrents,
+      checkedTorrents: state.checkedTorrents.filter(
+        (id) => !action.payload.ids.includes(id),
+      ),
     }
   },
 
