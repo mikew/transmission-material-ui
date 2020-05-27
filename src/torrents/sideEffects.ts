@@ -59,8 +59,13 @@ sideEffect(
     let response: { id: number } | undefined
 
     switch (action.payload.mode) {
-      case 'magnet':
       case 'base64':
+        response = await apiInstance.addTorrentDataSrc({
+          metainfo: action.payload.data,
+          'download-dir': action.payload.location,
+        })
+        break
+      case 'magnet':
         response = await apiInstance.addTorrentDataSrc({
           filename: action.payload.data,
           'download-dir': action.payload.location,
