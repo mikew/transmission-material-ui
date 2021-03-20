@@ -56,6 +56,18 @@ function AddTorrentDialog() {
     }
   }, [isAddDialogVisible])
 
+  useEffect(() => {
+    if (navigator.registerProtocolHandler) {
+      const currentUrl = new URL(window.location.toString())
+      currentUrl.search = ''
+      navigator.registerProtocolHandler(
+        'magnet',
+        `${currentUrl}?magnetUrl=%s`,
+        'Transmission',
+      )
+    }
+  }, [])
+
   return (
     <Dialog
       maxWidth="xs"
