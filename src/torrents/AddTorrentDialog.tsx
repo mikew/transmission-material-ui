@@ -17,6 +17,8 @@ function AddTorrentDialog() {
   const isAddDialogVisible = useSelector(
     (state) => state.torrents.isAddDialogVisible,
   )
+  const params = new URLSearchParams(window.location.search)
+  const magnetUrlFromParams = params.get('magnetUrl')
   const inputRef = useRef<HTMLInputElement>()
   const [magnetUrl, setMagnetUrl] = useState('')
   const [current, updateCurrent] = useState<
@@ -57,6 +59,13 @@ function AddTorrentDialog() {
   }, [isAddDialogVisible])
 
   useEffect(() => {
+    if (magnetUrlFromParams) {
+      setMagnetUrl(magnetUrlFromParams)
+      dispatch(actions.toggleAddDialog())
+    }
+  }, [dispatch, magnetUrlFromParams])
+
+  useEffect(() => {
     if (navigator.registerProtocolHandler) {
       const currentUrl = new URL(window.location.toString())
       currentUrl.search = ''
@@ -90,6 +99,7 @@ function AddTorrentDialog() {
         <form onSubmit={handleSubmit}>
           <TextField
             inputRef={inputRef}
+            value={magnetUrl}
             fullWidth={true}
             label="Magnet"
             onChange={(event) => {
