@@ -9,12 +9,10 @@ module.exports = {
 
     // disables rules that prettier fixes.
     'prettier',
-    // disable rules that common eslint configs set.
-    'prettier/react',
-    'prettier/@typescript-eslint',
   ],
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-use-before-define': [
       'error',
       {
@@ -42,6 +40,7 @@ module.exports = {
     ],
 
     // '@typescript-eslint/no-explicit-any': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
 
   settings: {
