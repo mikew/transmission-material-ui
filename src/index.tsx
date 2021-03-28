@@ -5,8 +5,7 @@
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
 import './index.css'
@@ -57,7 +56,6 @@ async function init() {
   store.dispatch(settingsActions.getCustomSettings())
 
   renderApp(store)
-
 }
 
 register({
