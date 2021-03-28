@@ -16,6 +16,7 @@ import serviceWorkerIosHack from './serviceWorkerIosHack'
 import * as settingsActions from './settings/actions'
 import './util/disableZoom.css'
 import ignoreRootDrag from './util/ignoreRootDrag'
+import App from './app/App'
 
 const theme = createMuiTheme({
   palette: {
@@ -36,7 +37,6 @@ ignoreRootDrag()
 
 function renderApp(store: ReturnType<typeof createStore>) {
   // Importing this strange way is needed for hot loading.
-  const App = require('./app/App').default
 
   ReactDOM.render(
     <Provider store={store}>
@@ -58,9 +58,6 @@ async function init() {
 
   renderApp(store)
 
-  if (module.hot) {
-    module.hot.accept('./app/App', () => renderApp(store))
-  }
 }
 
 register({

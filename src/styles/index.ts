@@ -47,7 +47,9 @@ export {
 //
 //     export default styles(MyComponent)
 
-export function appStyles<C extends string>(style: Styles<Theme, {}, C>) {
+export function appStyles<C extends string>(
+  style: Styles<Theme, Record<string, unknown>, C>,
+) {
   return withStyles(style)
 }
 

@@ -7,6 +7,7 @@ import {
 } from 'redux'
 import reduxAsyncPayload from 'redux-async-payload'
 
+import failsafeMiddleware from './failsafeMiddleware'
 import sideEffectMiddleware from './sideEffects/middleware'
 import { RootState } from './types'
 
@@ -16,7 +17,6 @@ const IS_PRODUCTION_ENV = process.env.NODE_ENV === 'production'
 const middleware: Middleware[] = []
 
 if (IS_TEST_ENV) {
-  const failsafeMiddleware = require('./failsafeMiddleware').default
   middleware.push(failsafeMiddleware)
 }
 
@@ -25,6 +25,7 @@ middleware.push(sideEffectMiddleware())
 
 function getRootReducer() {
   // Importing this strange way is needed for hot loading.
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require('./rootReducer').default
 }
 
