@@ -61,13 +61,14 @@ function AddTorrentDialog() {
   useEffect(() => {
     if (magnetUrlFromParams) {
       setMagnetUrl(magnetUrlFromParams)
-      dispatch(actions.toggleAddDialog())
+      dispatch(actions.showAddDialog())
     }
   }, [dispatch, magnetUrlFromParams])
 
   useEffect(() => {
     if (navigator.registerProtocolHandler) {
       const currentUrl = new URL(window.location.toString())
+      // Remove any query params.
       currentUrl.search = ''
       navigator.registerProtocolHandler(
         'magnet',

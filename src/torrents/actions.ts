@@ -10,6 +10,8 @@ export const toggleTorrentChecked = createAction<{
   ids: number[]
 }>(constants.toggleTorrentChecked)
 export const toggleAddDialog = createAction(constants.toggleAddDialog)
+export const showAddDialog = createAction(constants.showAddDialog)
+export const hideAddDialog = createAction(constants.hideAddDialog)
 export const toggleDeleteDialog = createAction(constants.toggleDeleteDialog)
 
 export const addFields = createAction<Set<keyof TransmissionTorrent>>(
@@ -55,7 +57,7 @@ export const get = createAction(
 )
 
 export const torrentSetLocation = createAction(
-  'torrentSet',
+  constants.torrentSetLocation,
   (payload: { ids: TransmissionIdLookup; location: string }) => {
     return apiInstance.callServer('torrent-set-location', {
       ids: payload.ids,
