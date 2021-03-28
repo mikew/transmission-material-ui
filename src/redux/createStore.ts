@@ -3,9 +3,9 @@ import {
   createStore as _createStore,
   Middleware,
   Store,
+  compose,
 } from 'redux'
 import reduxAsyncPayload from 'redux-async-payload'
-import { createLogger } from 'redux-logger'
 
 import sideEffectMiddleware from './sideEffects/middleware'
 import { RootState } from './types'
@@ -23,14 +23,22 @@ if (IS_TEST_ENV) {
 middleware.push(reduxAsyncPayload())
 middleware.push(sideEffectMiddleware())
 
-if (!IS_PRODUCTION_ENV && !IS_TEST_ENV) {
-  middleware.push(createLogger())
-}
-
 function getRootReducer() {
   // Importing this strange way is needed for hot loading.
   return require('./rootReducer').default
 }
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
+  }
+}
+
+const composeEnhancers =
+  (!IS_PRODUCTION_ENV &&
+    !IS_TEST_ENV &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose
 
 export default function createStore(initialState?: Partial<RootState>) {
   // Type errors came in after upgrading to redux@4 + typescript@2.8.
@@ -38,7 +46,7 @@ export default function createStore(initialState?: Partial<RootState>) {
   const store = _createStore(
     getRootReducer(),
     initialState,
-    applyMiddleware(...middleware),
+    composeEnhancers(applyMiddleware(...middleware)),
   ) as Store<RootState>
 
   if (module.hot) {

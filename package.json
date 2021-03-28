@@ -25,7 +25,6 @@
     "react-scripts-tsc": "^3.4.1-rc.3",
     "redux": "^4.0.5",
     "redux-async-payload": "^3.0.0",
-    "redux-logger": "3.0.6",
     "redux-ts-helpers": "^3.2.0",
     "reselect": "4.0.0",
     "tslint-config-sst": "2.0.0",
