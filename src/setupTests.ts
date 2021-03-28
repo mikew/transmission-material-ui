@@ -1,3 +1,5 @@
+import '@testing-library/jest-dom'
+
 // This shim needs to be first to avoid React complaining about rAF:
 // https://github.com/facebook/jest/issues/4545#issuecomment-342424086
 ;(global as any).requestAnimationFrame = (callback: () => void) => {
@@ -23,11 +25,4 @@
     nodeName: 'BODY',
     ownerDocument: document,
   },
-})
-
-import Enzyme from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-Enzyme.configure({
-  adapter: new Adapter(),
 })
