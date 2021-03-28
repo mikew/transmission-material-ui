@@ -5,6 +5,8 @@ export default applyNamespace('torrents', {
   toggleTorrentChecked: 0,
 
   toggleAddDialog: 0,
+  showAddDialog: 0,
+  hideAddDialog: 0,
   toggleDeleteDialog: 0,
 
   addFields: 0,
@@ -20,4 +22,6 @@ export default applyNamespace('torrents', {
   removeTorrent: 0,
 
   getCustomSettings: 0,
+
+  torrentSetLocation: 0,
 })

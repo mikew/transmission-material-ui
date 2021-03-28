@@ -24,9 +24,9 @@ const initialState: State = {
 
 function normalizeTorrent(torrent: TransmissionTorrent): TransmissionTorrent {
   return {
-    trackerStats: [],
-    peers: [],
     ...torrent,
+    trackerStats: torrent.trackerStats || [],
+    peers: torrent.peers || [],
     files: (torrent.files || []).sort((a, b) => a.name.localeCompare(b.name)),
   }
 }
@@ -123,6 +123,20 @@ export default createReducer(initialState, {
     return {
       ...state,
       isAddDialogVisible: !state.isAddDialogVisible,
+    }
+  },
+
+  [constants.showAddDialog]: (state) => {
+    return {
+      ...state,
+      isAddDialogVisible: true,
+    }
+  },
+
+  [constants.hideAddDialog]: (state) => {
+    return {
+      ...state,
+      isAddDialogVisible: false,
     }
   },
 
