@@ -2,7 +2,7 @@ import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import Typography from '@material-ui/core/Typography/Typography'
-import React from 'react'
+import { memo } from 'react'
 
 interface Props {
   tracker: TransmissionTrackerStat
@@ -12,7 +12,7 @@ function TrackerListItem(props: Props) {
   const classes = useStyles()
 
   const secondary = (
-    <React.Fragment>
+    <>
       <div className={classes.left}>
         Announce: {props.tracker.lastAnnounceResult}
         <br />
@@ -36,7 +36,7 @@ function TrackerListItem(props: Props) {
         </AlignedNumber>
         <br />
       </Typography>
-    </React.Fragment>
+    </>
   )
 
   return (
@@ -67,7 +67,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default React.memo(TrackerListItem)
+export default memo(TrackerListItem)
 
 const AlignedNumber: React.SFC = (props) => (
   <span

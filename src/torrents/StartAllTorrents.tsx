@@ -1,7 +1,7 @@
 import Icon from '@material-ui/core/Icon/Icon'
 import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
 import { Omit } from '@material-ui/types'
-import React from 'react'
+import { memo } from 'react'
 
 import { TorrentStatus } from '@src/api'
 import { RootState } from '@src/redux/types'
@@ -41,4 +41,4 @@ const mapState = (state: RootState) => ({
   contextIds: selectors.getSelectedOrAllIds(state),
 })
 
-export default React.memo(StartAllTorrents)
+export default memo(StartAllTorrents)

@@ -8,7 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabe
 import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
-import React, { useCallback, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 
 import { RootState } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
@@ -81,4 +81,4 @@ const mapState = (state: RootState) => ({
   isDeleteDialogVisible: state.torrents.isDeleteDialogVisible,
 })
 
-export default React.memo(DeleteDialog)
+export default memo(DeleteDialog)

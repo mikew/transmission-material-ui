@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { AppDispatch } from '@src/redux/types'
@@ -83,4 +83,4 @@ function handleDataTransfer(
   })
 }
 
-export default React.memo(TorrentDropZone)
+export default memo(TorrentDropZone)

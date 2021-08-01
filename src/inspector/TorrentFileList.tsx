@@ -4,7 +4,7 @@ import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import convertFilesToGroup, {
   DirSpec,
@@ -30,7 +30,7 @@ function D(props: { d: DirSpec }) {
   const icon = open ? 'folder_open' : 'folder'
 
   return (
-    <React.Fragment>
+    <>
       <ListItem divider={true} button={true} onClick={() => setIsOpen(!open)}>
         <ListItemIcon>
           <Icon color="action">{icon}</Icon>
@@ -40,7 +40,7 @@ function D(props: { d: DirSpec }) {
       <Collapse in={open} timeout="auto" unmountOnExit={true}>
         <List dense={true}>{props.d.children.map(renderItem)}</List>
       </Collapse>
-    </React.Fragment>
+    </>
   )
 }
 

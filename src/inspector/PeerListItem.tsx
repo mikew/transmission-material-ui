@@ -1,7 +1,7 @@
 import Icon from '@material-ui/core/Icon/Icon'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
-import React from 'react'
+import { memo } from 'react'
 
 interface Props {
   peer: TransmissionPeer
@@ -10,9 +10,7 @@ interface Props {
 function PeerListItem(props: Props) {
   const icon = props.peer.isEncrypted ? (
     <Icon fontSize="inherit">lock</Icon>
-  ) : (
-    undefined
-  )
+  ) : undefined
 
   return (
     <ListItem divider={true}>
@@ -32,4 +30,4 @@ function PeerListItem(props: Props) {
   )
 }
 
-export default React.memo(PeerListItem)
+export default memo(PeerListItem)

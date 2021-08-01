@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
@@ -22,12 +22,12 @@ function InspectorTabTrackers() {
   }, [dispatch])
 
   return (
-    <React.Fragment>
+    <>
       {checkedTorrents.map((x) => (
         <TorrentTrackerList torrent={x} key={x.id} />
       ))}
-    </React.Fragment>
+    </>
   )
 }
 
-export default React.memo(InspectorTabTrackers)
+export default memo(InspectorTabTrackers)

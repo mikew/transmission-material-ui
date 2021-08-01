@@ -1,4 +1,3 @@
-import React from 'react'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
 import { render, RenderOptions, screen } from '@testing-library/react'

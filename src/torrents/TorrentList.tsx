@@ -1,5 +1,5 @@
 import List from '@material-ui/core/List'
-import React, { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 
 import { TorrentStatus } from '@src/api'
 import { RootState } from '@src/redux/types'
@@ -7,9 +7,9 @@ import useDispatch from '@src/redux/useDispatch'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import * as settingsSelectors from '@src/settings/selectors'
 import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
-import { toggleInspector } from '@src/inspector/actions'
+import inspectorActions from '@src/inspector/actions'
 
-import * as actions from './actions'
+import actions from './actions'
 import * as selectors from './selectors'
 import TorrentListItem from './TorrentListItem'
 
@@ -62,7 +62,7 @@ function TorrentList() {
   }
 
   const handleDoubleClick = () => {
-    dispatch(toggleInspector())
+    dispatch(inspectorActions.toggleInspector())
   }
 
   const handleCheckboxClick = (
@@ -164,4 +164,4 @@ const mapState = (state: RootState) => ({
   groups: settingsSelectors.getGroups(state),
 })
 
-export default React.memo(TorrentList)
+export default memo(TorrentList)

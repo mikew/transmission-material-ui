@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 
 import Inspector from '@src/inspector/Inspector'
 import AddTorrentDialog from '@src/torrents/AddTorrentDialog'
@@ -28,4 +28,4 @@ function App() {
   )
 }
 
-export default React.memo(App)
+export default memo(App)

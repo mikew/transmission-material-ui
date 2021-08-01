@@ -4,7 +4,7 @@ import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import Menu from '@material-ui/core/Menu/Menu'
 import MenuItem from '@material-ui/core/MenuItem/MenuItem'
-import React, { useState } from 'react'
+import { memo, useState } from 'react'
 
 import useSelector from '@src/redux/useSelector'
 
@@ -32,7 +32,7 @@ function GroupSelect(props: Props) {
   }
 
   return (
-    <React.Fragment>
+    <>
       <List>
         <ListItem button={true} onClick={handleClickListItem}>
           <ListItemText
@@ -70,8 +70,8 @@ function GroupSelect(props: Props) {
           )
         })}
       </Menu>
-    </React.Fragment>
+    </>
   )
 }
 
-export default React.memo(GroupSelect)
+export default memo(GroupSelect)

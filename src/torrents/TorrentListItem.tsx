@@ -6,7 +6,7 @@ import LinearProgress, {
 } from '@material-ui/core/LinearProgress'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import React from 'react'
+import { memo } from 'react'
 
 import { TorrentStatus } from '@src/api'
 
@@ -74,9 +74,7 @@ function TorrentListItem(props: Props) {
     <IconButton {...props.rightIconProps} onClickCapture={handleRightIconClick}>
       <Icon>{props.rightIcon}</Icon>
     </IconButton>
-  ) : (
-    undefined
-  )
+  ) : undefined
 
   return (
     <ListItem
@@ -92,10 +90,10 @@ function TorrentListItem(props: Props) {
         primary={props.torrent.name}
         primaryTypographyProps={{ style: { wordBreak: 'break-all' } }}
         secondary={
-          <React.Fragment>
+          <>
             {progress}
             {status ? status.message : undefined}
-          </React.Fragment>
+          </>
         }
         secondaryTypographyProps={
           {
@@ -123,7 +121,7 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
         progress: torrent.percentDone * 100,
         progressColor: 'secondary',
         message: (
-          <React.Fragment>
+          <>
             <Icon fontSize="small" style={{ verticalAlign: 'middle' }}>
               group
             </Icon>{' '}
@@ -133,7 +131,7 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
               timer
             </Icon>{' '}
             {eta}
-          </React.Fragment>
+          </>
         ),
         // message: `Downloading from ${torrent.peersSendingToUs} of ${
         //   torrent.peersConnected
@@ -145,12 +143,12 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
         progress: (torrent.uploadRatio / torrent.seedRatioLimit) * 100,
         progressColor: 'primary',
         message: (
-          <React.Fragment>
+          <>
             <Icon fontSize="small" style={{ verticalAlign: 'middle' }}>
               group
             </Icon>{' '}
             {torrent.peersGettingFromUs} / {torrent.peersConnected}
-          </React.Fragment>
+          </>
         ),
         // message: `Seeding to ${torrent.peersGettingFromUs} of ${
         //   torrent.peersConnected
@@ -175,4 +173,4 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
   return null
 }
 
-export default React.memo(TorrentListItem)
+export default memo(TorrentListItem)
