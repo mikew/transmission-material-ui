@@ -1,50 +1,41 @@
-import createAction from 'redux-ts-helpers/lib/createAction'
+import { createActions } from 'redux-easy-mode'
 
 import apiInstance from '@src/api/apiInstance'
 import { AppDispatch, AppGetState } from '@src/redux/types'
+import identityPayloadCreator from '@src/redux/identityPayloadCreator'
 
-import constants from './constants'
+export default createActions('torrents', {
+  toggleTorrentChecked: identityPayloadCreator<{
+    action: 'toggle' | 'exclusive' | 'checkAll' | 'unCheckAll'
+    ids: number[]
+  }>(),
 
-export const toggleTorrentChecked = createAction<{
-  action: 'toggle' | 'exclusive' | 'checkAll' | 'unCheckAll'
-  ids: number[]
-}>(constants.toggleTorrentChecked)
-export const toggleAddDialog = createAction(constants.toggleAddDialog)
-export const showAddDialog = createAction(constants.showAddDialog)
-export const hideAddDialog = createAction(constants.hideAddDialog)
-export const toggleDeleteDialog = createAction(constants.toggleDeleteDialog)
+  toggleAddDialog: () => undefined,
+  showAddDialog: () => undefined,
+  hideAddDialog: () => undefined,
+  toggleDeleteDialog: () => undefined,
 
-export const addFields = createAction<Set<keyof TransmissionTorrent>>(
-  constants.addFields,
-)
-export const removeFields = createAction<Set<keyof TransmissionTorrent>>(
-  constants.removeFields,
-)
+  addFields: identityPayloadCreator<Set<keyof TransmissionTorrent>>(),
+  removeFields: identityPayloadCreator<Set<keyof TransmissionTorrent>>(),
 
-export const startTorrent = createAction<TransmissionIdLookup>(
-  constants.startTorrent,
-)
-export const stopTorrent = createAction<TransmissionIdLookup>(
-  constants.stopTorrent,
-)
+  startTorrent: identityPayloadCreator<TransmissionIdLookup>(),
+  stopTorrent: identityPayloadCreator<TransmissionIdLookup>(),
 
-export const startWatching = createAction(constants.startWatching)
-export const stopWatching = createAction(constants.stopWatching)
+  startWatching: () => undefined,
+  stopWatching: () => undefined,
 
-export const addTorrent = createAction<{
-  mode: 'magnet' | 'base64'
-  data: string
-  location?: string
-}>(constants.addTorrent)
+  addTorrent: identityPayloadCreator<{
+    mode: 'magnet' | 'base64'
+    data: string
+    location?: string
+  }>(),
 
-export const removeTorrent = createAction<{
-  deleteData: boolean
-  ids: TransmissionIdLookup
-}>(constants.removeTorrent)
+  removeTorrent: identityPayloadCreator<{
+    deleteData: boolean
+    ids: TransmissionIdLookup
+  }>(),
 
-export const get = createAction(
-  constants.get,
-  (ids?: TransmissionIdLookup, isMain?: boolean) => ({
+  get: (ids?: TransmissionIdLookup, isMain?: boolean) => ({
     payload: (_dispatch: AppDispatch, getState: AppGetState) =>
       apiInstance.callServer('torrent-get', {
         ids,
@@ -54,15 +45,15 @@ export const get = createAction(
       isMain,
     },
   }),
-)
 
-export const torrentSetLocation = createAction(
-  constants.torrentSetLocation,
-  (payload: { ids: TransmissionIdLookup; location: string }) => {
+  torrentSetLocation: (payload: {
+    ids: TransmissionIdLookup
+    location: string
+  }) => {
     return apiInstance.callServer('torrent-set-location', {
       ids: payload.ids,
       location: payload.location,
       move: true,
     })
   },
-)
+})

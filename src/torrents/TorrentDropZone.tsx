@@ -5,7 +5,7 @@ import { AppDispatch } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
 import getFilesFromEvent from '@src/util/getFilesFromEvent'
 
-import * as actions from './actions'
+import actions from './actions'
 
 interface Props {
   children?: React.ReactNode

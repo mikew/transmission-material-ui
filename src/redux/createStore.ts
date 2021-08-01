@@ -5,10 +5,9 @@ import {
   Store,
   compose,
 } from 'redux'
-import reduxAsyncPayload from 'redux-async-payload'
+import { asyncMiddleware, sideEffectMiddleware } from 'redux-easy-mode'
 
 import failsafeMiddleware from './failsafeMiddleware'
-import sideEffectMiddleware from './sideEffects/middleware'
 import { RootState } from './types'
 
 const IS_TEST_ENV = typeof describe !== 'undefined'
@@ -20,7 +19,7 @@ if (IS_TEST_ENV) {
   middleware.push(failsafeMiddleware)
 }
 
-middleware.push(reduxAsyncPayload())
+middleware.push(asyncMiddleware())
 middleware.push(sideEffectMiddleware())
 
 function getRootReducer() {

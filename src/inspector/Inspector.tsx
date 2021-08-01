@@ -10,7 +10,7 @@ import useDispatch from '@src/redux/useDispatch'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
 
-import * as actions from './actions'
+import actions from './actions'
 import InspectorTabFiles from './InspectorTabFiles'
 import InspectorTabInfo from './InspectorTabInfo'
 import InspectorTabPeers from './InspectorTabPeers'

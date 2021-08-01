@@ -10,7 +10,7 @@ import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
 import GroupSelect from '@src/settings/GroupSelect'
 
-import * as actions from './actions'
+import actions from './actions'
 
 function AddTorrentDialog() {
   const dispatch = useDispatch()

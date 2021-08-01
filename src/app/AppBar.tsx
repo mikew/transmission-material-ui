@@ -6,10 +6,10 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import Toolbar from '@material-ui/core/Toolbar/Toolbar'
 import React from 'react'
 
-import * as inspectorActions from '@src/inspector/actions'
+import inspectorActions from '@src/inspector/actions'
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
-import * as torrentsActions from '@src/torrents/actions'
+import torrentsActions from '@src/torrents/actions'
 
 function AppBar() {
   const classes = useStyles()

@@ -1,7 +1,10 @@
-import createAction from 'redux-ts-helpers/lib/createAction'
+import { createActions } from 'redux-easy-mode'
 
-import constants from './constants'
-import InspectorTabs from './InspectorTabs'
+import identityPayloadCreator from '@src/redux/identityPayloadCreator'
 
-export const setTab = createAction<InspectorTabs>(constants.setTab)
-export const toggleInspector = createAction(constants.toggleInspector)
+import InspectorTab from './InspectorTabs'
+
+export default createActions('inspector', {
+  setTab: identityPayloadCreator<InspectorTab>(),
+  toggleInspector: () => undefined,
+})

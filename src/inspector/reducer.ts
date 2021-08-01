@@ -1,7 +1,6 @@
-import createReducer from 'redux-ts-helpers/lib/createReducer'
+import { createReducer } from 'redux-easy-mode'
 
-import * as actions from './actions'
-import constants from './constants'
+import actions from './actions'
 import InspectorTabs from './InspectorTabs'
 
 export interface State {
@@ -14,14 +13,14 @@ const initialState: State = {
   isInspectorOpen: false,
 }
 
-export default createReducer(initialState, {
-  [constants.setTab]: (state, action: ReturnType<typeof actions.setTab>) => ({
-    ...state,
-    currentTab: action.payload,
-  }),
-
-  [constants.toggleInspector]: (state) => ({
-    ...state,
-    isInspectorOpen: !state.isInspectorOpen,
-  }),
+export default createReducer(initialState, (builder) => {
+  builder
+    .addHandler(actions.setTab, (state, action) => ({
+      ...state,
+      currentTab: action.payload,
+    }))
+    .addHandler(actions.toggleInspector, (state) => ({
+      ...state,
+      isInspectorOpen: !state.isInspectorOpen,
+    }))
 })

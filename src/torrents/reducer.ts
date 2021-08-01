@@ -1,8 +1,6 @@
-import { ActionSuccessType } from 'redux-async-payload'
-import createReducer from 'redux-ts-helpers/lib/createReducer'
+import { createReducer } from 'redux-easy-mode'
 
-import * as actions from './actions'
-import constants from './constants'
+import actions from './actions'
 
 export interface State {
   all: Record<string | number, TransmissionTorrent>
@@ -31,145 +29,115 @@ function normalizeTorrent(torrent: TransmissionTorrent): TransmissionTorrent {
   }
 }
 
-export default createReducer(initialState, {
-  [`${constants.get}/success`]: (
-    state,
-    action: ActionSuccessType<typeof actions.get>,
-  ) => {
-    const all = action.meta.isMain ? {} : { ...state.all }
+export default createReducer(initialState, (builder) => {
+  builder
+    .addSuccessHandler(actions.get, (state, action) => {
+      const all = action.meta.isMain ? {} : { ...state.all }
 
-    action.payload.torrents.forEach((x) => {
-      if (!x.id) {
-        console.error(x, 'has no `id` property')
+      action.payload.torrents.forEach((x) => {
+        if (!x.id) {
+          console.error(x, 'has no `id` property')
 
-        return
+          return
+        }
+
+        all[x.id] = normalizeTorrent({
+          ...all[x.id],
+          ...x,
+        })
+      })
+
+      return {
+        ...state,
+        all,
+        checkedTorrents: action.meta.isMain
+          ? state.checkedTorrents.filter((id) => !!all[id])
+          : state.checkedTorrents,
+        lastCommunication: action.meta.isMain
+          ? new Date()
+          : state.lastCommunication,
+      }
+    })
+    .addHandler(actions.removeTorrent, (state, action) => {
+      const all = { ...state.all }
+
+      action.payload.ids.forEach((x) => {
+        delete all[x]
+      })
+
+      return {
+        ...state,
+        all,
+        checkedTorrents: state.checkedTorrents.filter((id) => !!all[id]),
+      }
+    })
+    .addHandler(actions.toggleTorrentChecked, (state, action) => {
+      let checkedTorrents = state.checkedTorrents
+
+      switch (action.payload.action) {
+        case 'exclusive':
+          checkedTorrents = action.payload.ids
+
+          break
+        case 'toggle':
+          const setCurrent = new Set(checkedTorrents)
+          const toCheck = new Set(action.payload.ids)
+
+          toCheck.forEach((x) =>
+            setCurrent.has(x) ? setCurrent.delete(x) : setCurrent.add(x),
+          )
+
+          checkedTorrents = Array.from(setCurrent)
+
+          break
+
+        case 'checkAll':
+          checkedTorrents = Object.keys(state.all).map((x) => state.all[x].id)
+
+          break
+        case 'unCheckAll':
+          checkedTorrents = []
+
+          break
       }
 
-      all[x.id] = normalizeTorrent({
-        ...all[x.id],
-        ...x,
-      })
+      return {
+        ...state,
+        checkedTorrents,
+      }
     })
-
-    return {
-      ...state,
-      all,
-      checkedTorrents: action.meta.isMain
-        ? state.checkedTorrents.filter((id) => !!all[id])
-        : state.checkedTorrents,
-      lastCommunication: action.meta.isMain
-        ? new Date()
-        : state.lastCommunication,
-    }
-  },
-
-  [constants.removeTorrent]: (
-    state,
-    action: ReturnType<typeof actions.removeTorrent>,
-  ) => {
-    const all = { ...state.all }
-
-    action.payload.ids.forEach((x) => {
-      delete all[x]
-    })
-
-    return {
-      ...state,
-      all,
-      checkedTorrents: state.checkedTorrents.filter((id) => !!all[id]),
-    }
-  },
-
-  [constants.toggleTorrentChecked]: (
-    state,
-    action: ActionSuccessType<typeof actions.toggleTorrentChecked>,
-  ) => {
-    let checkedTorrents = state.checkedTorrents
-
-    switch (action.payload.action) {
-      case 'exclusive':
-        checkedTorrents = action.payload.ids
-
-        break
-      case 'toggle':
-        const setCurrent = new Set(checkedTorrents)
-        const toCheck = new Set(action.payload.ids)
-
-        toCheck.forEach((x) =>
-          setCurrent.has(x) ? setCurrent.delete(x) : setCurrent.add(x),
-        )
-
-        checkedTorrents = Array.from(setCurrent)
-
-        break
-
-      case 'checkAll':
-        checkedTorrents = Object.keys(state.all).map((x) => state.all[x].id)
-
-        break
-      case 'unCheckAll':
-        checkedTorrents = []
-
-        break
-    }
-
-    return {
-      ...state,
-      checkedTorrents,
-    }
-  },
-
-  [constants.toggleAddDialog]: (state) => {
-    return {
+    .addHandler(actions.toggleAddDialog, (state) => ({
       ...state,
       isAddDialogVisible: !state.isAddDialogVisible,
-    }
-  },
-
-  [constants.showAddDialog]: (state) => {
-    return {
+    }))
+    .addHandler(actions.showAddDialog, (state) => ({
       ...state,
       isAddDialogVisible: true,
-    }
-  },
-
-  [constants.hideAddDialog]: (state) => {
-    return {
+    }))
+    .addHandler(actions.hideAddDialog, (state) => ({
       ...state,
       isAddDialogVisible: false,
-    }
-  },
-
-  [constants.toggleDeleteDialog]: (state) => {
-    return {
+    }))
+    .addHandler(actions.toggleDeleteDialog, (state) => ({
       ...state,
       isDeleteDialogVisible: !state.isDeleteDialogVisible,
-    }
-  },
+    }))
+    .addHandler(actions.addFields, (state, action) => {
+      const newFields = new Set(state.fields)
+      action.payload.forEach((x) => newFields.add(x))
 
-  [constants.addFields]: (
-    state,
-    action: ReturnType<typeof actions.addFields>,
-  ) => {
-    const newFields = new Set(state.fields)
-    action.payload.forEach((x) => newFields.add(x))
+      return {
+        ...state,
+        fields: newFields,
+      }
+    })
+    .addHandler(actions.removeFields, (state, action) => {
+      const newFields = new Set(state.fields)
+      action.payload.forEach((x) => newFields.delete(x))
 
-    return {
-      ...state,
-      fields: newFields,
-    }
-  },
-
-  [constants.removeFields]: (
-    state,
-    action: ReturnType<typeof actions.removeFields>,
-  ) => {
-    const newFields = new Set(state.fields)
-    action.payload.forEach((x) => newFields.delete(x))
-
-    return {
-      ...state,
-      fields: newFields,
-    }
-  },
+      return {
+        ...state,
+        fields: newFields,
+      }
+    })
 })

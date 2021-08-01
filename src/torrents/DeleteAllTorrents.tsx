@@ -6,7 +6,7 @@ import React from 'react'
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
 
-import * as actions from './actions'
+import actions from './actions'
 import * as selectors from './selectors'
 
 type Props = Omit<IconButtonProps, 'onClick'>

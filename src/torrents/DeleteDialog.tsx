@@ -14,7 +14,7 @@ import { RootState } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 
-import * as actions from './actions'
+import actions from './actions'
 import * as selectors from './selectors'
 
 function DeleteDialog() {
