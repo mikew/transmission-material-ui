@@ -42,9 +42,9 @@ export default class Transmission {
   ): Promise<TransmissionRPC[K]['response']> {
     const headers: Record<string, string> = {}
 
-    const makeRequest = (): Promise<TransmissionResponse<
-      TransmissionRPC[K]['response']
-    >> => {
+    const makeRequest = (): Promise<
+      TransmissionResponse<TransmissionRPC[K]['response']>
+    > => {
       if (this.sessionId) {
         headers['X-Transmission-Session-Id'] = this.sessionId
       }

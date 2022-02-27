@@ -1,9 +1,9 @@
+import { render, RenderOptions, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
-import { render, RenderOptions, screen } from '@testing-library/react'
 
-import { RootState } from '@src/redux/types'
 import createStore from '@src/redux/createStore'
+import { RootState } from '@src/redux/types'
 
 export interface MountComponentOptions extends RenderOptions {
   store?: Store<RootState>

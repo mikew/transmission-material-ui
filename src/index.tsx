@@ -8,13 +8,11 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
 import './index.css'
+import App from './app/App'
 import createStore from './redux/createStore'
-import { register, unregister } from './serviceWorker'
-import serviceWorkerIosHack from './serviceWorkerIosHack'
 import settingsActions from './settings/actions'
 import './util/disableZoom.css'
 import ignoreRootDrag from './util/ignoreRootDrag'
-import App from './app/App'
 
 const theme = createTheme({
   palette: {
@@ -49,18 +47,10 @@ function renderApp(store: ReturnType<typeof createStore>) {
 }
 
 async function init() {
-  serviceWorkerIosHack()
-
   const store = createStore()
   store.dispatch(settingsActions.getCustomSettings())
 
   renderApp(store)
 }
-
-register({
-  onUpdate: () => {
-    unregister().then(() => window.location.reload())
-  },
-})
 
 init()

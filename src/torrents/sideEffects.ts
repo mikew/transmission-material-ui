@@ -1,9 +1,9 @@
-import { reduxActionSideEffect, reduxSelectorSideEffect } from 'redux-easy-mode'
 import { shallowEqual } from 'react-redux'
+import { reduxActionSideEffect, reduxSelectorSideEffect } from 'redux-easy-mode'
 
 import apiInstance from '@src/api/apiInstance'
-import wait from '@src/util/wait'
 import { RootState } from '@src/redux/types'
+import wait from '@src/util/wait'
 
 import actions from './actions'
 
@@ -146,7 +146,7 @@ reduxActionSideEffect(actions.addTorrent, (action, dispatch) => {
 
 reduxActionSideEffect(actions.removeTorrent, (action) => {
   apiInstance.callServer('torrent-remove', {
-    ids: action.payload.ids,
+    'ids': action.payload.ids,
     'delete-local-data': action.payload.deleteData,
   })
 })

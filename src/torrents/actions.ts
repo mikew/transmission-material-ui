@@ -1,8 +1,8 @@
 import { createActions } from 'redux-easy-mode'
 
 import apiInstance from '@src/api/apiInstance'
-import { AppDispatch, AppGetState } from '@src/redux/types'
 import identityPayloadCreator from '@src/redux/identityPayloadCreator'
+import { AppDispatch, AppGetState } from '@src/redux/types'
 
 export default createActions('torrents', {
   toggleTorrentChecked: identityPayloadCreator<{

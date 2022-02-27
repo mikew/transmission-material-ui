@@ -2,9 +2,9 @@ import { memo, useEffect, useMemo } from 'react'
 
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
+import { getGroups } from '@src/settings/selectors'
 import actions from '@src/torrents/actions'
 import * as selectors from '@src/torrents/selectors'
-import { getGroups } from '@src/settings/selectors'
 
 import GroupSelect from '../settings/GroupSelect'
 
@@ -36,7 +36,7 @@ function InspectorTabInfo() {
 
       if (found) {
         const definition: TorrentGroupDefinition = {
-          groupName: groupName,
+          groupName,
           location: found,
         }
 

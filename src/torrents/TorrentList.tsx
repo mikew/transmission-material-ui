@@ -2,12 +2,12 @@ import List from '@material-ui/core/List'
 import { memo, useEffect } from 'react'
 
 import { TorrentStatus } from '@src/api'
+import inspectorActions from '@src/inspector/actions'
 import { RootState } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import * as settingsSelectors from '@src/settings/selectors'
 import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
-import inspectorActions from '@src/inspector/actions'
 
 import actions from './actions'
 import * as selectors from './selectors'

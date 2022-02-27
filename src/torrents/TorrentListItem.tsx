@@ -111,7 +111,7 @@ function TorrentListItem(props: Props) {
 
 const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
   switch (torrent.status) {
-    case TorrentStatus.DOWNLOAD:
+    case TorrentStatus.DOWNLOAD: {
       const eta =
         torrent.eta <= 0
           ? 'Unknown'
@@ -137,6 +137,7 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
         //   torrent.peersConnected
         // } peers`,
       }
+    }
 
     case TorrentStatus.SEED:
       return {

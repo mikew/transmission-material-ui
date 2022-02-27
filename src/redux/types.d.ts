@@ -1,9 +1,9 @@
 import { DispatchProp } from 'react-redux'
 import { Action, Dispatch } from 'redux'
 
-import { State as TorrentsState } from '@src/torrents/reducer'
 import { State as InspectorState } from '@src/inspector/reducer'
 import { State as SettingsState } from '@src/settings/reducer'
+import { State as TorrentsState } from '@src/torrents/reducer'
 
 // The interface must be added to the RootStore, so anything using redux is
 // aware of your state.

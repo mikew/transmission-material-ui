@@ -21,9 +21,10 @@ function DeleteDialog() {
   const dispatch = useDispatch()
   const mappedState = useShallowEqualSelector(mapState)
   const [deleteData, setDeleteData] = useState(false)
-  const onClose = useCallback(() => dispatch(actions.toggleDeleteDialog()), [
-    dispatch,
-  ])
+  const onClose = useCallback(
+    () => dispatch(actions.toggleDeleteDialog()),
+    [dispatch],
+  )
   const onDeleteClick = () => {
     dispatch(
       actions.removeTorrent({
