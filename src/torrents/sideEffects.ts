@@ -94,42 +94,54 @@ reduxSelectorSideEffect(
   },
   shallowEqual,
 )
-reduxActionSideEffect(actions.startTorrent, async (action, dispatch) => {
-  await apiInstance.callServer('torrent-start-now', {
-    ids: action.payload,
-  })
-  dispatch(actions.get(action.payload))
-})
-
-reduxActionSideEffect(actions.stopTorrent, async (action, dispatch) => {
-  await apiInstance.callServer('torrent-stop', { ids: action.payload })
-  await wait(500)
-  dispatch(actions.get(action.payload))
-})
-
-reduxActionSideEffect(actions.addTorrent, async (action, dispatch) => {
-  let response: { id: number } | undefined
-
-  switch (action.payload.mode) {
-    case 'base64':
-      response = await apiInstance.addTorrentDataSrc({
-        metainfo: action.payload.data,
-        'download-dir': action.payload.location,
-      })
-      break
-    case 'magnet':
-      response = await apiInstance.addTorrentDataSrc({
-        filename: action.payload.data,
-        'download-dir': action.payload.location,
-      })
-      break
+reduxActionSideEffect(actions.startTorrent, (action, dispatch) => {
+  async function run() {
+    await apiInstance.callServer('torrent-start-now', {
+      ids: action.payload,
+    })
+    dispatch(actions.get(action.payload))
   }
 
-  if (!response) {
-    return
+  run()
+})
+
+reduxActionSideEffect(actions.stopTorrent, (action, dispatch) => {
+  async function run() {
+    await apiInstance.callServer('torrent-stop', { ids: action.payload })
+    await wait(500)
+    dispatch(actions.get(action.payload))
   }
 
-  dispatch(actions.get([response.id]))
+  run()
+})
+
+reduxActionSideEffect(actions.addTorrent, (action, dispatch) => {
+  async function run() {
+    let response: { id: number } | undefined
+
+    switch (action.payload.mode) {
+      case 'base64':
+        response = await apiInstance.addTorrentDataSrc({
+          'metainfo': action.payload.data,
+          'download-dir': action.payload.location,
+        })
+        break
+      case 'magnet':
+        response = await apiInstance.addTorrentDataSrc({
+          'filename': action.payload.data,
+          'download-dir': action.payload.location,
+        })
+        break
+    }
+
+    if (!response) {
+      return
+    }
+
+    dispatch(actions.get([response.id]))
+  }
+
+  run()
 })
 
 reduxActionSideEffect(actions.removeTorrent, (action) => {
