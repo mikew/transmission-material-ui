@@ -1,53 +1,113 @@
-import { reduxActionSideEffect } from 'redux-easy-mode'
+import { reduxActionSideEffect, reduxSelectorSideEffect } from 'redux-easy-mode'
+import { shallowEqual } from 'react-redux'
 
 import apiInstance from '@src/api/apiInstance'
 import wait from '@src/util/wait'
+import { RootState } from '@src/redux/types'
 
 import actions from './actions'
 
-let timer: number | undefined
+const HEARTBEAT_TIMEOUT = 5_000
 
-reduxActionSideEffect(actions.startWatching, ({ dispatch }) => {
-  if (timer) {
-    return
-  }
+// Keep a heartbeat going that fetches all torrents.
+reduxSelectorSideEffect(
+  (state: RootState) => state.torrents.isWatching,
+  (value, _previousValue, dispatch) => {
+    let timer: number | undefined
 
-  timer = window.setInterval(() => {
-    dispatch(actions.get(undefined, true))
-  }, 5000)
-})
+    if (value) {
+      dispatch(actions.get(undefined, true))
+      timer = window.setInterval(() => {
+        dispatch(actions.get(undefined, true))
+      }, HEARTBEAT_TIMEOUT)
+    }
 
-reduxActionSideEffect(actions.stopWatching, () => {
-  if (!timer) {
-    return
-  }
+    return () => {
+      window.clearInterval(timer)
+    }
+  },
+)
 
-  window.clearInterval(timer)
-  timer = undefined
-})
+// If the api up, set at timer for just longer than the heartbeat to mark it as
+// down.
+reduxSelectorSideEffect(
+  (state: RootState) => state.torrents.lastCommunication,
+  (_value, _previousValue, dispatch) => {
+    const timeout = window.setTimeout(() => {
+      dispatch(actions.setIsApiDown(true))
+    }, HEARTBEAT_TIMEOUT * 1.5)
 
-reduxActionSideEffect(actions.addFields, ({ dispatch }) => {
-  dispatch(actions.get())
-})
+    return () => {
+      window.clearTimeout(timeout)
+    }
+  },
+)
 
-reduxActionSideEffect(actions.removeFields, ({ dispatch }) => {
-  dispatch(actions.get())
-})
+// If the api is considered down, but the lastCommunication has changed,
+// consider it up.
+reduxSelectorSideEffect(
+  (state: RootState) => ({
+    lastCommunication: state.torrents.lastCommunication,
+    isApiDown: state.torrents.isApiDown,
+  }),
+  (value, previousValue, dispatch) => {
+    if (
+      value.isApiDown &&
+      value.lastCommunication !== previousValue?.lastCommunication
+    ) {
+      dispatch(actions.setIsApiDown(false))
+    }
+  },
+  shallowEqual,
+)
 
-reduxActionSideEffect(actions.startTorrent, async ({ action, dispatch }) => {
+// Refetch when the requested torrent fields changes.
+reduxSelectorSideEffect(
+  (state: RootState) => state.torrents.fields,
+  (_value, previousValue, dispatch) => {
+    if (previousValue !== undefined) {
+      dispatch(actions.get())
+    }
+  },
+)
+
+// If the api is considered down but for some reason we are watching, set a long
+// timer to stop watching.
+reduxSelectorSideEffect(
+  (state: RootState) => ({
+    isApiDown: state.torrents.isApiDown,
+    isWatching: state.torrents.isWatching,
+  }),
+  (value, _previousValue, dispatch) => {
+    let timeout: number | undefined
+
+    if (value.isApiDown && value.isWatching) {
+      timeout = window.setTimeout(
+        () => dispatch(actions.stopWatching()),
+        HEARTBEAT_TIMEOUT * 3,
+      )
+    }
+
+    return () => {
+      window.clearTimeout(timeout)
+    }
+  },
+  shallowEqual,
+)
+reduxActionSideEffect(actions.startTorrent, async (action, dispatch) => {
   await apiInstance.callServer('torrent-start-now', {
     ids: action.payload,
   })
   dispatch(actions.get(action.payload))
 })
 
-reduxActionSideEffect(actions.stopTorrent, async ({ action, dispatch }) => {
+reduxActionSideEffect(actions.stopTorrent, async (action, dispatch) => {
   await apiInstance.callServer('torrent-stop', { ids: action.payload })
   await wait(500)
   dispatch(actions.get(action.payload))
 })
 
-reduxActionSideEffect(actions.addTorrent, async ({ action, dispatch }) => {
+reduxActionSideEffect(actions.addTorrent, async (action, dispatch) => {
   let response: { id: number } | undefined
 
   switch (action.payload.mode) {
@@ -72,7 +132,7 @@ reduxActionSideEffect(actions.addTorrent, async ({ action, dispatch }) => {
   dispatch(actions.get([response.id]))
 })
 
-reduxActionSideEffect(actions.removeTorrent, ({ action }) => {
+reduxActionSideEffect(actions.removeTorrent, (action) => {
   apiInstance.callServer('torrent-remove', {
     ids: action.payload.ids,
     'delete-local-data': action.payload.deleteData,
