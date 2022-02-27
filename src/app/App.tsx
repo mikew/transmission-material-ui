@@ -6,6 +6,7 @@ import DeleteDialog from '@src/torrents/DeleteDialog'
 import TorrentDropZone from '@src/torrents/TorrentDropZone'
 import TorrentList from '@src/torrents/TorrentList'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
+import StatusNotifier from '@src/torrents/StatusNotifier'
 
 import AppBar from './AppBar'
 import TopAppBar from './TopAppBar'
@@ -15,6 +16,7 @@ function App() {
     <TorrentDropZone>
       <FloatingBarSpacer />
       <TorrentList />
+      <StatusNotifier />
       <FloatingBarSpacer />
 
       <Inspector />
