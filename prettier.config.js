@@ -1,1 +1,1 @@
-module.exports = require('tslint-config-sst/prettier.config')
+module.exports = require('@promoboxx/eslint-config/prettier.config')
