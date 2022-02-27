@@ -1,9 +1,8 @@
 import ListSubheader from '@material-ui/core/ListSubheader'
+import { withStyles } from '@material-ui/core/styles'
 import { memo } from 'react'
 
-import { appStyles } from '@src/styles'
-
-const styles = appStyles((theme) => ({
+const styles = withStyles((theme) => ({
   root: {
     top: 48,
     wordBreak: 'break-all',
