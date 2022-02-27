@@ -1,12 +1,12 @@
 import Icon from '@material-ui/core/Icon/Icon'
 import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
 import { Omit } from '@material-ui/types'
-import React from 'react'
+import { memo } from 'react'
 
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
 
-import * as actions from './actions'
+import actions from './actions'
 import * as selectors from './selectors'
 
 type Props = Omit<IconButtonProps, 'onClick'>
@@ -34,4 +34,4 @@ function CheckAllTorrents(props: Props) {
   )
 }
 
-export default React.memo(CheckAllTorrents)
+export default memo(CheckAllTorrents)

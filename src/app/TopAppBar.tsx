@@ -3,7 +3,7 @@ import Icon from '@material-ui/core/Icon/Icon'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import Toolbar from '@material-ui/core/Toolbar/Toolbar'
 import Typography from '@material-ui/core/Typography/Typography'
-import React from 'react'
+import { memo } from 'react'
 
 import { RootState } from '@src/redux/types'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
@@ -67,4 +67,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default React.memo(TopAppBar)
+export default memo(TopAppBar)

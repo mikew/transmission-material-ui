@@ -4,12 +4,12 @@ import Icon from '@material-ui/core/Icon/Icon'
 import IconButton from '@material-ui/core/IconButton/IconButton'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import Toolbar from '@material-ui/core/Toolbar/Toolbar'
-import React from 'react'
+import { memo } from 'react'
 
-import * as inspectorActions from '@src/inspector/actions'
+import inspectorActions from '@src/inspector/actions'
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
-import * as torrentsActions from '@src/torrents/actions'
+import torrentsActions from '@src/torrents/actions'
 
 function AppBar() {
   const classes = useStyles()
@@ -70,4 +70,4 @@ const useStyles = makeStyles((theme) => ({
   fabButton: {},
 }))
 
-export default React.memo(AppBar)
+export default memo(AppBar)

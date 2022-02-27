@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo } from 'react'
+import { memo, useEffect, useMemo } from 'react'
 
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
-import * as actions from '@src/torrents/actions'
+import actions from '@src/torrents/actions'
 import * as selectors from '@src/torrents/selectors'
 import { getGroups } from '@src/settings/selectors'
 
@@ -46,7 +46,7 @@ function InspectorTabInfo() {
   }, [checkedTorrents, groups])
 
   return (
-    <React.Fragment>
+    <>
       {checkedTorrents.length > 0 ? (
         <GroupSelect
           value={firstGroup}
@@ -59,13 +59,11 @@ function InspectorTabInfo() {
             )
           }}
         />
-      ) : (
-        undefined
-      )}
+      ) : undefined}
       {/* {props.checkedTorrents.map((x) => (
       ))} */}
-    </React.Fragment>
+    </>
   )
 }
 
-export default React.memo(InspectorTabInfo)
+export default memo(InspectorTabInfo)

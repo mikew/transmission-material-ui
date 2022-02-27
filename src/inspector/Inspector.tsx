@@ -3,14 +3,14 @@ import Icon from '@material-ui/core/Icon/Icon'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import Tab from '@material-ui/core/Tab/Tab'
 import Tabs from '@material-ui/core/Tabs/Tabs'
-import React from 'react'
+import { memo } from 'react'
 
 import { RootState } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
 
-import * as actions from './actions'
+import actions from './actions'
 import InspectorTabFiles from './InspectorTabFiles'
 import InspectorTabInfo from './InspectorTabInfo'
 import InspectorTabPeers from './InspectorTabPeers'
@@ -109,4 +109,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default React.memo(Inspector)
+export default memo(Inspector)

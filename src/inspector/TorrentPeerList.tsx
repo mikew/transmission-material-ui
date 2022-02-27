@@ -1,5 +1,5 @@
 import List from '@material-ui/core/List/List'
-import React from 'react'
+import { memo } from 'react'
 
 import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
 
@@ -20,4 +20,4 @@ function TorrentPeerList(props: Props) {
   )
 }
 
-export default React.memo(TorrentPeerList)
+export default memo(TorrentPeerList)

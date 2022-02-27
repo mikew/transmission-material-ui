@@ -1,5 +1,5 @@
 import ListSubheader from '@material-ui/core/ListSubheader'
-import React from 'react'
+import { memo } from 'react'
 
 import { appStyles } from '@src/styles'
 
@@ -12,4 +12,4 @@ const styles = appStyles((theme) => ({
   },
 }))
 
-export default React.memo(styles(ListSubheader))
+export default memo(styles(ListSubheader))

@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 
 function Ellipsis(
   props: React.DetailedHTMLProps<
@@ -23,4 +23,4 @@ function Ellipsis(
   )
 }
 
-export default React.memo(Ellipsis)
+export default memo(Ellipsis)
