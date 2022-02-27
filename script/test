@@ -5,7 +5,7 @@ if [ -z "$CI" ]; then
   ./script/prepare-env
 fi
 
-exec ./node_modules/.bin/react-scripts-ts \
+exec ./node_modules/.bin/react-scripts \
   --inspect=9243 \
   test \
   --env=jsdom \

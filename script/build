@@ -7,5 +7,4 @@ fi
 
 REACT_APP_BUILD_VERSION="$(date +%s)" \
 REACT_APP_TRANSMISSION_API_URL=/transmission/rpc \
-PUBLIC_URL=/transmission/web/ \
-  ./node_modules/.bin/react-scripts-ts build
+  ./node_modules/.bin/react-scripts build --base /transmission/web/

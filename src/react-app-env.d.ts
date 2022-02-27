@@ -1,1 +1,1 @@
-/// <reference types="react-scripts-tsc" />
+/// <reference types="@promoboxx/react-scripts-vite/dist/client" />

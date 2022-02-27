@@ -8,6 +8,7 @@ import {
 import { asyncMiddleware, sideEffectMiddleware } from 'redux-easy-mode'
 
 import failsafeMiddleware from './failsafeMiddleware'
+import rootReducer from './rootReducer'
 import { RootState } from './types'
 
 const IS_TEST_ENV = typeof describe !== 'undefined'
@@ -21,12 +22,6 @@ if (IS_TEST_ENV) {
 
 middleware.push(asyncMiddleware())
 middleware.push(sideEffectMiddleware())
-
-function getRootReducer() {
-  // Importing this strange way is needed for hot loading.
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  return require('./rootReducer').default
-}
 
 declare global {
   interface Window {
@@ -44,14 +39,14 @@ export default function createStore(initialState?: Partial<RootState>) {
   // Type errors came in after upgrading to redux@4 + typescript@2.8.
   // Now a cast to Store is needed.
   const store = _createStore(
-    getRootReducer(),
+    rootReducer,
     initialState,
     composeEnhancers(applyMiddleware(...middleware)),
   ) as Store<RootState>
 
-  if (module.hot) {
-    module.hot.accept('./rootReducer', () => {
-      store.replaceReducer(getRootReducer())
+  if (import.meta.hot) {
+    import.meta.hot.accept('./rootReducer', (mod) => {
+      store.replaceReducer(mod.default)
     })
   }
 
