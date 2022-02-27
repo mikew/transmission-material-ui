@@ -10,6 +10,7 @@ export interface State {
   fields: Set<keyof TransmissionTorrent>
   lastCommunication: Date
   isApiDown: boolean
+  isWatching: boolean
 }
 
 const initialState: State = {
@@ -20,6 +21,7 @@ const initialState: State = {
   fields: new Set(['id']),
   lastCommunication: new Date(),
   isApiDown: false,
+  isWatching: false,
 }
 
 function normalizeTorrent(torrent: TransmissionTorrent): TransmissionTorrent {
@@ -33,6 +35,14 @@ function normalizeTorrent(torrent: TransmissionTorrent): TransmissionTorrent {
 
 export default createReducer(initialState, (builder) => {
   builder
+    .addHandler(actions.startWatching, (state) => ({
+      ...state,
+      isWatching: true,
+    }))
+    .addHandler(actions.stopWatching, (state) => ({
+      ...state,
+      isWatching: false,
+    }))
     .addHandler(actions.setIsApiDown, (state, action) => ({
       ...state,
       isApiDown: action.payload,
