@@ -70,11 +70,7 @@ function AddTorrentDialog() {
       const currentUrl = new URL(window.location.toString())
       // Remove any query params.
       currentUrl.search = ''
-      navigator.registerProtocolHandler(
-        'magnet',
-        `${currentUrl}?magnetUrl=%s`,
-        'Transmission',
-      )
+      navigator.registerProtocolHandler('magnet', `${currentUrl}?magnetUrl=%s`)
     }
   }, [])
 
