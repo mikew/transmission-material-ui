@@ -6,11 +6,5 @@ if [ -z "$CI" ]; then
 fi
 
 exec ./node_modules/.bin/react-scripts \
-  --inspect=9243 \
   test \
-  --env=jsdom \
-  --runInBand \
-  --clearMocks \
-  --resetMocks \
-  --verbose \
   "$@"

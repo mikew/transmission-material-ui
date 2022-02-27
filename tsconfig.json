@@ -32,7 +32,7 @@
     "acceptance-tests",
     "webpack",
     "jest",
-    "src/setupTests.ts",
+    "src/test/setup.ts",
     "prettier.config.js"
   ],
   "include": ["src"]

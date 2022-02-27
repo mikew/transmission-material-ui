@@ -7,11 +7,11 @@ import '@testing-library/jest-dom'
 }
 ;(global as any).localStorage = {
   // readonly length: number;
-  clear: jest.fn(),
-  getItem: jest.fn(),
-  key: jest.fn(),
-  removeItem: jest.fn(),
-  setItem: jest.fn(),
+  clear: vi.fn(),
+  getItem: vi.fn(),
+  key: vi.fn(),
+  removeItem: vi.fn(),
+  setItem: vi.fn(),
   // [key: string]: any;
   // [index: number]: string;
 }
