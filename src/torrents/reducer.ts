@@ -9,6 +9,7 @@ export interface State {
   isDeleteDialogVisible: boolean
   fields: Set<keyof TransmissionTorrent>
   lastCommunication: Date
+  isApiDown: boolean
 }
 
 const initialState: State = {
@@ -18,6 +19,7 @@ const initialState: State = {
   isDeleteDialogVisible: false,
   fields: new Set(['id']),
   lastCommunication: new Date(),
+  isApiDown: false,
 }
 
 function normalizeTorrent(torrent: TransmissionTorrent): TransmissionTorrent {
@@ -31,6 +33,10 @@ function normalizeTorrent(torrent: TransmissionTorrent): TransmissionTorrent {
 
 export default createReducer(initialState, (builder) => {
   builder
+    .addHandler(actions.setIsApiDown, (state, action) => ({
+      ...state,
+      isApiDown: action.payload,
+    }))
     .addSuccessHandler(actions.get, (state, action) => {
       const all = action.meta.isMain ? {} : { ...state.all }
 

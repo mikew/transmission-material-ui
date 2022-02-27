@@ -56,4 +56,6 @@ export default createActions('torrents', {
       move: true,
     })
   },
+
+  setIsApiDown: identityPayloadCreator<boolean>(),
 })
