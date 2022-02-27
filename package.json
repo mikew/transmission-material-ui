@@ -2,9 +2,6 @@
   "name": "transmission-material-ui",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "eject": "react-scripts-ts eject"
-  },
   "devDependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/lab": "^4.0.0-alpha.60",
