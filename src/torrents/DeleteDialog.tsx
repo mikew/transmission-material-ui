@@ -66,12 +66,15 @@ function DeleteDialog() {
             <Checkbox
               checked={deleteData}
               onChange={(_event, checked) => setDeleteData(checked)}
+              color="error"
             />
           }
           label="Delete Data?"
         />
 
-        <Button onClick={onDeleteClick}>Delete</Button>
+        <Button onClick={onDeleteClick} variant="contained" color="error">
+          Delete
+        </Button>
       </DialogActions>
     </Dialog>
   )
