@@ -6,6 +6,7 @@ describe('convertFilesToGroup', () => {
     // console.log(
     //   JSON.stringify(convertFilesToGroup(demoFilesJson), undefined, 4),
     // )
+    // eslint-disable-next-line no-console
     console.log(JSON.stringify(convertFilesToGroup(data), undefined, 4))
   })
 })

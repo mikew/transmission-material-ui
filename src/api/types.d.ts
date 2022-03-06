@@ -73,7 +73,7 @@ interface TransmissionRPC {
   // 3.5.  Removing a Torrent
   'torrent-remove': {
     request: {
-      ids: TransmissionIdLookup
+      'ids': TransmissionIdLookup
       'delete-local-data'?: boolean
     }
     response: null
@@ -163,7 +163,7 @@ interface TransmissionRPC {
       path: string
     }
     response: {
-      path: string
+      'path': string
       'size-bytes': number
     }
   }
@@ -171,19 +171,19 @@ interface TransmissionRPC {
 
 interface TorrentAddRequest {
   /**       pointer to a string of one or more cookies. */
-  cookies?: string
+  'cookies'?: string
   /**       path to download the torrent to */
   'download-dir'?: string
   /**       filename or URL of the .torrent file */
-  filename?: string
+  'filename'?: string
   /**       base64-encoded .torrent content */
-  metainfo?: string
+  'metainfo'?: string
   /**      if true, don't start the torrent */
-  paused?: boolean
+  'paused'?: boolean
   /**       maximum number of peers */
   'peer-limit'?: number
   /**       torrent's bandwidth tr_priority_t */
-  bandwidthPriority?: number
+  'bandwidthPriority'?: number
   /**        indices of file(s) to download */
   'files-wanted'?: number[]
   /**        indices of file(s) to not download */
@@ -198,21 +198,21 @@ interface TorrentAddRequest {
 
 interface TorrentSetRequest {
   /**      this torrent's bandwidth tr_priority_t */
-  bandwidthPriority: number
+  'bandwidthPriority': number
   /**      maximum download speed (KBps) */
-  downloadLimit: number
+  'downloadLimit': number
   /**     true if "downloadLimit" is honored */
-  downloadLimited: boolean
+  'downloadLimited': boolean
   /**       indices of file(s) to download */
   'files-wanted': number[]
   /**       indices of file(s) to not download */
   'files-unwanted': number[]
   /**     true if session upload limits are honored */
-  honorsSessionLimits: boolean
+  'honorsSessionLimits': boolean
   /**       torrent list, as described in 3.1 */
-  ids: TransmissionIdLookup
+  'ids': TransmissionIdLookup
   /**      new location of the torrent's content */
-  location: string
+  'location': string
   /**      maximum number of peers */
   'peer-limit': number
   /**       indices of high-priority file(s) */
@@ -222,25 +222,25 @@ interface TorrentSetRequest {
   /**       indices of normal-priority file(s) */
   'priority-normal': number[]
   /**      position of this torrent in its queue [0...n) */
-  queuePosition: number
+  'queuePosition': number
   /**      torrent-level number of minutes of seeding inactivity */
-  seedIdleLimit: number
+  'seedIdleLimit': number
   /**      which seeding inactivity to use.  See tr_idlelimit */
-  seedIdleMode: number
+  'seedIdleMode': number
   /**      torrent-level seeding ratio */
-  seedRatioLimit: number
+  'seedRatioLimit': number
   /**      which ratio to use.  See tr_ratiolimit */
-  seedRatioMode: number
+  'seedRatioMode': number
   /**       strings of announce URLs to add */
-  trackerAdd: string[]
+  'trackerAdd': string[]
   /**       ids of trackers to remove */
-  trackerRemove: string[]
+  'trackerRemove': string[]
   /**       pairs of <trackerId/new announce URLs> */
-  trackerReplace: [string, string][]
+  'trackerReplace': [string, string][]
   /**      maximum upload speed (KBps) */
-  uploadLimit: number
+  'uploadLimit': number
   /**     true if "uploadLimit" is honored */
-  uploadLimited: boolean
+  'uploadLimited': boolean
 }
 
 interface TransmissionOptions {
@@ -317,41 +317,41 @@ interface TransmissionTracker {
 }
 
 interface TransmissionTorrent {
-  activityDate: number
-  addedDate: number
-  bandwidthPriority: number
-  comment: string
-  corruptEver: number
-  creator: string
-  dateCreated: number
-  desiredAvailable: number
-  doneDate: number
-  downloadDir: string
-  downloadLimit: number
-  downloadLimited: boolean
-  downloadedEver: number
-  error: number
-  errorString: string
-  eta: number
-  fileStats: TransmissionFileStat[]
-  files: TransmissionFile[]
-  hashString: string
-  haveUnchecked: number
-  haveValid: number
-  honorsSessionLimits: boolean
-  id: number
-  isFinished: boolean
-  isPrivate: boolean
-  leftUntilDone: number
-  magnetLink: string
-  manualAnnounceTime: number
-  maxConnectedPeers: number
-  metadataPercentComplete: number
-  name: string
+  'activityDate': number
+  'addedDate': number
+  'bandwidthPriority': number
+  'comment': string
+  'corruptEver': number
+  'creator': string
+  'dateCreated': number
+  'desiredAvailable': number
+  'doneDate': number
+  'downloadDir': string
+  'downloadLimit': number
+  'downloadLimited': boolean
+  'downloadedEver': number
+  'error': number
+  'errorString': string
+  'eta': number
+  'fileStats': TransmissionFileStat[]
+  'files': TransmissionFile[]
+  'hashString': string
+  'haveUnchecked': number
+  'haveValid': number
+  'honorsSessionLimits': boolean
+  'id': number
+  'isFinished': boolean
+  'isPrivate': boolean
+  'leftUntilDone': number
+  'magnetLink': string
+  'manualAnnounceTime': number
+  'maxConnectedPeers': number
+  'metadataPercentComplete': number
+  'name': string
   'peer-limit': number
-  peers: TransmissionPeer[]
-  peersConnected: number
-  peersFrom: {
+  'peers': TransmissionPeer[]
+  'peersConnected': number
+  'peersFrom': {
     fromCache: number
     fromDht: number
     fromIncoming: number
@@ -360,34 +360,34 @@ interface TransmissionTorrent {
     fromPex: number
     fromTracker: number
   }
-  peersGettingFromUs: number
-  peersSendingToUs: number
-  percentDone: number
-  pieceCount: number
-  pieceSize: number
-  pieces: string
-  priorities: number[]
-  rateDownload: number
-  rateUpload: number
-  recheckProgress: number
-  seedIdleLimit: number
-  seedIdleMode: number
-  seedRatioLimit: number
-  seedRatioMode: number
-  sizeWhenDone: number
-  startDate: number
-  status: number
-  torrentFile: string
-  totalSize: number
-  trackerStats: TransmissionTrackerStat[]
-  trackers: TransmissionTracker[]
-  uploadLimit: number
-  uploadLimited: boolean
-  uploadRatio: number
-  uploadedEver: number
-  wanted: number[]
-  webseeds: string[]
-  webseedsSendingToUs: number
+  'peersGettingFromUs': number
+  'peersSendingToUs': number
+  'percentDone': number
+  'pieceCount': number
+  'pieceSize': number
+  'pieces': string
+  'priorities': number[]
+  'rateDownload': number
+  'rateUpload': number
+  'recheckProgress': number
+  'seedIdleLimit': number
+  'seedIdleMode': number
+  'seedRatioLimit': number
+  'seedRatioMode': number
+  'sizeWhenDone': number
+  'startDate': number
+  'status': number
+  'torrentFile': string
+  'totalSize': number
+  'trackerStats': TransmissionTrackerStat[]
+  'trackers': TransmissionTracker[]
+  'uploadLimit': number
+  'uploadLimited': boolean
+  'uploadRatio': number
+  'uploadedEver': number
+  'wanted': number[]
+  'webseeds': string[]
+  'webseedsSendingToUs': number
 }
 
 interface TransmissionSession {
@@ -408,7 +408,7 @@ interface TransmissionSession {
   'download-dir-free-space'?: number
   'download-queue-enabled'?: boolean
   'download-queue-size'?: number
-  encryption?: string
+  'encryption'?: string
   'idle-seeding-limit'?: number
   'idle-seeding-limit-enabled'?: boolean
   'incomplete-dir'?: string
@@ -429,15 +429,15 @@ interface TransmissionSession {
   'script-torrent-done-filename'?: string
   'seed-queue-enabled'?: boolean
   'seed-queue-size'?: number
-  seedRatioLimit?: number
-  seedRatioLimited?: boolean
+  'seedRatioLimit'?: number
+  'seedRatioLimited'?: boolean
   'speed-limit-down'?: number
   'speed-limit-down-enabled'?: boolean
   'speed-limit-up'?: number
   'speed-limit-up-enabled'?: boolean
   'start-added-torrents'?: boolean
   'trash-original-torrent-files'?: boolean
-  units?: {
+  'units'?: {
     'memory-bytes'?: number
     'memory-units'?: string[]
     'size-bytes'?: number
@@ -446,11 +446,11 @@ interface TransmissionSession {
     'speed-units'?: string[]
   }
   'utp-enabled'?: boolean
-  version?: string
+  'version'?: string
 }
 
 interface TransmissionSessionStats {
-  activeTorrentCount: number
+  'activeTorrentCount': number
   'cumulative-stats': {
     downloadedBytes: number
     filesAdded: number
@@ -465,8 +465,8 @@ interface TransmissionSessionStats {
     sessionCount: number
     uploadedBytes: number
   }
-  downloadSpeed: number
-  pausedTorrentCount: number
-  torrentCount: number
-  uploadSpeed: number
+  'downloadSpeed': number
+  'pausedTorrentCount': number
+  'torrentCount': number
+  'uploadSpeed': number
 }

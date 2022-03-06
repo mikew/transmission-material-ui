@@ -7,4 +7,4 @@ if [ -z "$CI" ]; then
   ./script/prepare-env
 fi
 
-exec ./node_modules/.bin/react-scripts-ts start
+exec ./node_modules/.bin/react-scripts start

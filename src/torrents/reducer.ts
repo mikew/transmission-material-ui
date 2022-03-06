@@ -95,7 +95,7 @@ export default createReducer(initialState, (builder) => {
           checkedTorrents = action.payload.ids
 
           break
-        case 'toggle':
+        case 'toggle': {
           const setCurrent = new Set(checkedTorrents)
           const toCheck = new Set(action.payload.ids)
 
@@ -106,6 +106,7 @@ export default createReducer(initialState, (builder) => {
           checkedTorrents = Array.from(setCurrent)
 
           break
+        }
 
         case 'checkAll':
           checkedTorrents = Object.keys(state.all).map((x) => state.all[x].id)

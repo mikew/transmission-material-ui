@@ -3,12 +3,13 @@ import { memo } from 'react'
 import Inspector from '@src/inspector/Inspector'
 import AddTorrentDialog from '@src/torrents/AddTorrentDialog'
 import DeleteDialog from '@src/torrents/DeleteDialog'
+import StatusNotifier from '@src/torrents/StatusNotifier'
 import TorrentDropZone from '@src/torrents/TorrentDropZone'
 import TorrentList from '@src/torrents/TorrentList'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
-import StatusNotifier from '@src/torrents/StatusNotifier'
 
 import AppBar from './AppBar'
+import ReloadPrompt from './ReloadPrompt'
 import TopAppBar from './TopAppBar'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <TorrentList />
       <StatusNotifier />
       <FloatingBarSpacer />
+      <ReloadPrompt />
 
       <Inspector />
 

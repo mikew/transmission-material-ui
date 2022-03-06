@@ -5,12 +5,6 @@ if [ -z "$CI" ]; then
   ./script/prepare-env
 fi
 
-exec ./node_modules/.bin/react-scripts-ts \
-  --inspect=9243 \
+exec ./node_modules/.bin/react-scripts \
   test \
-  --env=jsdom \
-  --runInBand \
-  --clearMocks \
-  --resetMocks \
-  --verbose \
   "$@"

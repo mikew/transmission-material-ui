@@ -1,5 +1,5 @@
-import { useEffect, useCallback, memo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { useEffect, useCallback, memo } from 'react'
 
 import { AppDispatch } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
