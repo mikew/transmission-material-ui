@@ -1,20 +1,39 @@
-import { createTheme, adaptV4Theme } from '@mui/material'
+import { createTheme } from '@mui/material'
+import { Theme } from '@mui/material/styles'
 
-const theme = createTheme(
-  adaptV4Theme({
-    palette: {
-      primary: {
-        main: '#455a64',
-      },
-      secondary: {
-        main: '#b71c1c',
-      },
-      // type: 'dark',
+declare module '@mui/styles/defaultTheme' {
+  interface DefaultTheme extends Theme {}
+}
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#455a64',
     },
-    typography: {
-      fontSize: 14,
+    secondary: {
+      main: '#b71c1c',
     },
-  }),
-)
+    // type: 'dark',
+  },
+  typography: {
+    fontSize: 14,
+  },
+  components: {
+    // HACK https://github.com/mui/material-ui/issues/29689
+    MuiIcon: {
+      styleOverrides: {
+        fontSizeInherit: () => ({
+          fontSize: 'inherit !important',
+        }),
+        fontSizeSmall: ({ theme }) => ({
+          fontSize: `${theme.typography.pxToRem(20)} !important`,
+        }),
+        fontSizeLarge: ({ theme }) => ({
+          fontSize: `${theme.typography.pxToRem(36)} !important`,
+        }),
+      },
+    },
+  },
+})
 
 export default theme

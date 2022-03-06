@@ -88,7 +88,11 @@ function TorrentListItem(props: Props) {
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
     >
-      <Checkbox onClickCapture={handleCheckboxClick} checked={props.checked} />
+      <Checkbox
+        onClickCapture={handleCheckboxClick}
+        checked={props.checked}
+        color="secondary"
+      />
 
       <ListItemText
         primary={props.torrent.name}
