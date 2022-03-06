@@ -2,11 +2,11 @@ import { default as MuiAppBar } from '@mui/material/AppBar'
 import Icon from '@mui/material/Icon/Icon'
 import Toolbar from '@mui/material/Toolbar/Toolbar'
 import Typography from '@mui/material/Typography/Typography'
-import makeStyles from '@mui/styles/makeStyles'
 import { memo } from 'react'
 
 import { RootState } from '@src/redux/types'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
+import { appMakeStyles } from '@src/styles/helpers'
 import CheckAllTorrents from '@src/torrents/CheckAllTorrents'
 import DeleteAllTorrents from '@src/torrents/DeleteAllTorrents'
 import * as selectors from '@src/torrents/selectors'
@@ -14,7 +14,7 @@ import StartAllTorrents from '@src/torrents/StartAllTorrents'
 
 function TopAppBar() {
   const mappedState = useShallowEqualSelector(mapState)
-  const classes = useStyles()
+  const { classes } = useStyles()
 
   return (
     <MuiAppBar position="fixed" color="primary" className={classes.appBar}>
@@ -61,7 +61,7 @@ const mapState = (state: RootState) => ({
   rateDownload: selectors.getRateDownload(state),
 })
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = appMakeStyles()((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },

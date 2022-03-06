@@ -2,8 +2,10 @@
 // It does the initial render and sets up the store / router.
 // If you want something to run when the app launches, put it here.
 
+import createCache from '@emotion/cache'
+import { CacheProvider } from '@emotion/react'
 import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
@@ -17,18 +19,23 @@ import ignoreRootDrag from './util/ignoreRootDrag'
 
 ignoreRootDrag()
 
+export const muiCache = createCache({
+  key: 'mui',
+  prepend: true,
+})
+
 function renderApp(store: ReturnType<typeof createStore>) {
   // Importing this strange way is needed for hot loading.
 
   ReactDOM.render(
     <Provider store={store}>
-      <StyledEngineProvider injectFirst>
+      <CacheProvider value={muiCache}>
         <ThemeProvider theme={theme}>
           <CssBaseline>
             <App />
           </CssBaseline>
         </ThemeProvider>
-      </StyledEngineProvider>
+      </CacheProvider>
     </Provider>,
     document.getElementById('root'),
   )
