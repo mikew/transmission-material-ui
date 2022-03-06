@@ -1,11 +1,11 @@
-import Checkbox from '@material-ui/core/Checkbox/Checkbox'
-import Icon from '@material-ui/core/Icon/Icon'
-import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
+import Checkbox from '@mui/material/Checkbox/Checkbox'
+import Icon from '@mui/material/Icon/Icon'
+import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import LinearProgress, {
   LinearProgressProps,
-} from '@material-ui/core/LinearProgress'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
+} from '@mui/material/LinearProgress'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 import { memo } from 'react'
 
 import { TorrentStatus } from '@src/api'
@@ -71,7 +71,11 @@ function TorrentListItem(props: Props) {
   }
 
   const rightIcon = props.rightIcon ? (
-    <IconButton {...props.rightIconProps} onClickCapture={handleRightIconClick}>
+    <IconButton
+      {...props.rightIconProps}
+      onClickCapture={handleRightIconClick}
+      size="large"
+    >
       <Icon>{props.rightIcon}</Icon>
     </IconButton>
   ) : undefined
@@ -84,7 +88,11 @@ function TorrentListItem(props: Props) {
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
     >
-      <Checkbox onClickCapture={handleCheckboxClick} checked={props.checked} />
+      <Checkbox
+        onClickCapture={handleCheckboxClick}
+        checked={props.checked}
+        color="secondary"
+      />
 
       <ListItemText
         primary={props.torrent.name}

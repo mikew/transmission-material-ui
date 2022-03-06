@@ -1,8 +1,8 @@
-import Drawer from '@material-ui/core/Drawer/Drawer'
-import Icon from '@material-ui/core/Icon/Icon'
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import Tab from '@material-ui/core/Tab/Tab'
-import Tabs from '@material-ui/core/Tabs/Tabs'
+import Drawer from '@mui/material/Drawer/Drawer'
+import Icon from '@mui/material/Icon/Icon'
+import Tab from '@mui/material/Tab/Tab'
+import Tabs from '@mui/material/Tabs/Tabs'
+import makeStyles from '@mui/styles/makeStyles'
 import { memo } from 'react'
 
 import { RootState } from '@src/redux/types'
@@ -39,29 +39,35 @@ function Inspector() {
       }}
     >
       <FloatingBarSpacer />
-      <Tabs value={mappedState.currentTab} onChange={setTab} centered={true}>
+      <Tabs
+        value={mappedState.currentTab}
+        onChange={setTab}
+        centered={true}
+        indicatorColor="secondary"
+        textColor="secondary"
+      >
         <Tab
           value={InspectorTabs.info}
           // label="Info"
-          icon={<Icon color="action">info</Icon>}
+          icon={<Icon color="inherit">info</Icon>}
           className={classes.tab}
         />
         <Tab
           value={InspectorTabs.files}
           // label="Files"
-          icon={<Icon color="action">folder</Icon>}
+          icon={<Icon color="inherit">folder</Icon>}
           className={classes.tab}
         />
         <Tab
           value={InspectorTabs.trackers}
           // label="Trackers"
-          icon={<Icon color="action">rss_feed</Icon>}
+          icon={<Icon color="inherit">rss_feed</Icon>}
           className={classes.tab}
         />
         <Tab
           value={InspectorTabs.peers}
           // label="Peers"
-          icon={<Icon color="action">group</Icon>}
+          icon={<Icon color="inherit">group</Icon>}
           className={classes.tab}
         />
       </Tabs>
@@ -100,6 +106,10 @@ const mapState = (state: RootState) => ({
 const useStyles = makeStyles((theme) => ({
   tab: {
     minWidth: 48,
+    // TODO This was part of the mui v4 to v5 migration. Styling around tabs
+    // changed and this keeps the previous style. Not sure if it's absolutely
+    // necessary.
+    color: theme.palette.text.disabled,
   },
   paper: {
     [theme.breakpoints.only('xs')]: {

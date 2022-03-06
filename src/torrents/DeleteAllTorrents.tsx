@@ -1,6 +1,6 @@
-import Icon from '@material-ui/core/Icon/Icon'
-import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
-import { Omit } from '@material-ui/types'
+import Icon from '@mui/material/Icon/Icon'
+import IconButton, { IconButtonProps } from '@mui/material/IconButton'
+import { DistributiveOmit } from '@mui/types'
 import { memo } from 'react'
 
 import useDispatch from '@src/redux/useDispatch'
@@ -9,7 +9,7 @@ import useSelector from '@src/redux/useSelector'
 import actions from './actions'
 import * as selectors from './selectors'
 
-type Props = Omit<IconButtonProps, 'onClick'>
+type Props = DistributiveOmit<IconButtonProps, 'onClick'>
 
 function DeleteAllTorrents(props: Props) {
   const dispatch = useDispatch()
@@ -21,7 +21,7 @@ function DeleteAllTorrents(props: Props) {
   }
 
   return (
-    <IconButton {...props} onClick={handleClick}>
+    <IconButton {...props} onClick={handleClick} size="large">
       <Icon>delete</Icon>
     </IconButton>
   )

@@ -1,5 +1,5 @@
-import { Button, CircularProgress, Slide, Snackbar } from '@material-ui/core'
-import Alert, { AlertProps } from '@material-ui/lab/Alert'
+import { Button, CircularProgress, Slide, Snackbar } from '@mui/material'
+import Alert, { AlertProps } from '@mui/material/Alert'
 
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'

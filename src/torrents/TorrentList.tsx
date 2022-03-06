@@ -1,4 +1,4 @@
-import List from '@material-ui/core/List'
+import List from '@mui/material/List'
 import { memo, useEffect } from 'react'
 
 import { TorrentStatus } from '@src/api'

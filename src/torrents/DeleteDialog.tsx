@@ -1,13 +1,13 @@
-import Button from '@material-ui/core/Button/Button'
-import Checkbox from '@material-ui/core/Checkbox/Checkbox'
-import Dialog from '@material-ui/core/Dialog/Dialog'
-import DialogActions from '@material-ui/core/DialogActions/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle/DialogTitle'
-import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel'
-import List from '@material-ui/core/List/List'
-import ListItem from '@material-ui/core/ListItem/ListItem'
-import ListItemText from '@material-ui/core/ListItemText/ListItemText'
+import Button from '@mui/material/Button/Button'
+import Checkbox from '@mui/material/Checkbox/Checkbox'
+import Dialog from '@mui/material/Dialog/Dialog'
+import DialogActions from '@mui/material/DialogActions/DialogActions'
+import DialogContent from '@mui/material/DialogContent/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle/DialogTitle'
+import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel'
+import List from '@mui/material/List/List'
+import ListItem from '@mui/material/ListItem/ListItem'
+import ListItemText from '@mui/material/ListItemText/ListItemText'
 import { memo, useCallback, useEffect, useState } from 'react'
 
 import { RootState } from '@src/redux/types'
@@ -66,12 +66,15 @@ function DeleteDialog() {
             <Checkbox
               checked={deleteData}
               onChange={(_event, checked) => setDeleteData(checked)}
+              color="error"
             />
           }
           label="Delete Data?"
         />
 
-        <Button onClick={onDeleteClick}>Delete</Button>
+        <Button onClick={onDeleteClick} variant="contained" color="error">
+          Delete
+        </Button>
       </DialogActions>
     </Dialog>
   )

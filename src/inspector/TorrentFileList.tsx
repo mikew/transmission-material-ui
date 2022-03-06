@@ -1,9 +1,9 @@
-import Collapse from '@material-ui/core/Collapse/Collapse'
-import Icon from '@material-ui/core/Icon/Icon'
-import List from '@material-ui/core/List/List'
-import ListItem from '@material-ui/core/ListItem/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText/ListItemText'
+import Collapse from '@mui/material/Collapse/Collapse'
+import Icon from '@mui/material/Icon/Icon'
+import List from '@mui/material/List/List'
+import ListItem from '@mui/material/ListItem/ListItem'
+import ListItemIcon from '@mui/material/ListItemIcon/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText/ListItemText'
 import { useState } from 'react'
 
 import convertFilesToGroup, {

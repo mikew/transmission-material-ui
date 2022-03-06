@@ -1,6 +1,6 @@
-import Icon from '@material-ui/core/Icon/Icon'
-import IconButton, { IconButtonProps } from '@material-ui/core/IconButton'
-import { Omit } from '@material-ui/types'
+import Icon from '@mui/material/Icon/Icon'
+import IconButton, { IconButtonProps } from '@mui/material/IconButton'
+import { DistributiveOmit } from '@mui/types'
 import { memo } from 'react'
 
 import { TorrentStatus } from '@src/api'
@@ -11,7 +11,7 @@ import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import actions from './actions'
 import * as selectors from './selectors'
 
-type Props = Omit<IconButtonProps, 'onClick'>
+type Props = DistributiveOmit<IconButtonProps, 'onClick'>
 
 function StartAllTorrents(props: Props) {
   const dispatch = useDispatch()
@@ -30,7 +30,7 @@ function StartAllTorrents(props: Props) {
   }
 
   return (
-    <IconButton {...props} onClick={handleClick}>
+    <IconButton {...props} onClick={handleClick} size="large">
       <Icon>{areAllStopped ? 'play_arrow' : 'stop'}</Icon>
     </IconButton>
   )

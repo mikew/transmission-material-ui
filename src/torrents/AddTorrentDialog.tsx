@@ -1,9 +1,9 @@
-import Button from '@material-ui/core/Button/Button'
-import Dialog from '@material-ui/core/Dialog/Dialog'
-import DialogActions from '@material-ui/core/DialogActions/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle/DialogTitle'
-import TextField from '@material-ui/core/TextField/TextField'
+import Button from '@mui/material/Button/Button'
+import Dialog from '@mui/material/Dialog/Dialog'
+import DialogActions from '@mui/material/DialogActions/DialogActions'
+import DialogContent from '@mui/material/DialogContent/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle/DialogTitle'
+import TextField from '@mui/material/TextField/TextField'
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 
 import useDispatch from '@src/redux/useDispatch'
@@ -78,18 +78,20 @@ function AddTorrentDialog() {
     <Dialog
       maxWidth="xs"
       fullWidth={true}
-      onEntered={() => {
-        // console.log(inputRef)
-        setTimeout(() => {
-          if (!inputRef.current) {
-            return
-          }
-
-          inputRef.current.focus()
-        }, 50)
-      }}
       open={isAddDialogVisible}
       onClose={handleBackdropClick}
+      TransitionProps={{
+        onEntered: () => {
+          // console.log(inputRef)
+          setTimeout(() => {
+            if (!inputRef.current) {
+              return
+            }
+
+            inputRef.current.focus()
+          }, 50)
+        },
+      }}
     >
       <DialogTitle>Add Torrent</DialogTitle>
       <DialogContent>
