@@ -1,8 +1,9 @@
 import ListSubheader from '@mui/material/ListSubheader'
-import withStyles from '@mui/styles/withStyles'
 import { memo } from 'react'
 
-const styles = withStyles((theme) => ({
+import { appWithStyles } from '@src/styles/helpers'
+
+const ListHeaderTopBar = appWithStyles(ListSubheader, (theme) => ({
   root: {
     top: 48,
     wordBreak: 'break-all',
@@ -11,4 +12,4 @@ const styles = withStyles((theme) => ({
   },
 }))
 
-export default memo(styles(ListSubheader))
+export default memo(ListHeaderTopBar)

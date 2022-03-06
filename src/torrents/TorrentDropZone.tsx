@@ -1,8 +1,8 @@
-import makeStyles from '@mui/styles/makeStyles'
 import { useEffect, useCallback, memo } from 'react'
 
 import { AppDispatch } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
+import { appMakeStyles } from '@src/styles/helpers'
 import getFilesFromEvent from '@src/util/getFilesFromEvent'
 
 import actions from './actions'
@@ -11,7 +11,7 @@ interface Props {
   children?: React.ReactNode
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = appMakeStyles()(() => ({
   root: {
     height: '100%',
   },
@@ -39,7 +39,7 @@ function TorrentDropZone(props: Props) {
       document.removeEventListener('paste', handler)
     }
   }, [dispatch])
-  const classes = useStyles()
+  const { classes } = useStyles()
 
   return (
     <div onDrop={onDrop} className={classes.root}>

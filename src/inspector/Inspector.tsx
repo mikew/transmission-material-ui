@@ -2,12 +2,12 @@ import Drawer from '@mui/material/Drawer/Drawer'
 import Icon from '@mui/material/Icon/Icon'
 import Tab from '@mui/material/Tab/Tab'
 import Tabs from '@mui/material/Tabs/Tabs'
-import makeStyles from '@mui/styles/makeStyles'
 import { memo } from 'react'
 
 import { RootState } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
+import { appMakeStyles } from '@src/styles/helpers'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
 
 import actions from './actions'
@@ -22,7 +22,7 @@ function Inspector() {
   const setTab = (_event: unknown, value: InspectorTabs) =>
     dispatch(actions.setTab(value))
   const mappedState = useShallowEqualSelector(mapState)
-  const classes = useStyles()
+  const { classes } = useStyles()
 
   return (
     <Drawer
@@ -103,7 +103,7 @@ const mapState = (state: RootState) => ({
   isInspectorOpen: state.inspector.isInspectorOpen,
 })
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = appMakeStyles()((theme) => ({
   tab: {
     minWidth: 48,
     // TODO This was part of the mui v4 to v5 migration. Styling around tabs

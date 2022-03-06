@@ -3,16 +3,16 @@ import Fab from '@mui/material/Fab/Fab'
 import Icon from '@mui/material/Icon/Icon'
 import IconButton from '@mui/material/IconButton/IconButton'
 import Toolbar from '@mui/material/Toolbar/Toolbar'
-import makeStyles from '@mui/styles/makeStyles'
 import { memo } from 'react'
 
 import inspectorActions from '@src/inspector/actions'
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
+import { appMakeStyles } from '@src/styles/helpers'
 import torrentsActions from '@src/torrents/actions'
 
 function AppBar() {
-  const classes = useStyles()
+  const { classes } = useStyles()
   const dispatch = useDispatch()
   const toggleInspector = () => dispatch(inspectorActions.toggleInspector())
   const toggleAddDialog = () => dispatch(torrentsActions.toggleAddDialog())
@@ -54,7 +54,7 @@ function AppBar() {
   )
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = appMakeStyles()((theme) => ({
   appBar: {
     top: 'auto',
     bottom: 0,

@@ -1,15 +1,16 @@
 import ListItem from '@mui/material/ListItem/ListItem'
 import ListItemText from '@mui/material/ListItemText/ListItemText'
 import Typography from '@mui/material/Typography/Typography'
-import makeStyles from '@mui/styles/makeStyles'
 import { memo } from 'react'
+
+import { appMakeStyles } from '@src/styles/helpers'
 
 interface Props {
   tracker: TransmissionTrackerStat
 }
 
 function TrackerListItem(props: Props) {
-  const classes = useStyles()
+  const { classes } = useStyles()
 
   const secondary = (
     <>
@@ -56,7 +57,7 @@ function TrackerListItem(props: Props) {
   )
 }
 
-const useStyles = makeStyles({
+const useStyles = appMakeStyles()({
   left: {
     float: 'left',
     width: 'calc(100% - 120px)',
