@@ -1,7 +1,7 @@
-import ListItem from '@material-ui/core/ListItem/ListItem'
-import ListItemText from '@material-ui/core/ListItemText/ListItemText'
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import Typography from '@material-ui/core/Typography/Typography'
+import ListItem from '@mui/material/ListItem/ListItem'
+import ListItemText from '@mui/material/ListItemText/ListItemText'
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from '@mui/material/Typography/Typography'
 import { memo } from 'react'
 
 interface Props {

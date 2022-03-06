@@ -1,4 +1,4 @@
-import List from '@material-ui/core/List/List'
+import List from '@mui/material/List/List'
 import { memo } from 'react'
 
 import ListHeaderTopBar from '@src/util/ListHeaderTopBar'

@@ -1,15 +1,15 @@
-import { default as MuiAppBar } from '@material-ui/core/AppBar/AppBar'
-import Fab from '@material-ui/core/Fab/Fab'
-import Icon from '@material-ui/core/Icon/Icon'
-import IconButton from '@material-ui/core/IconButton/IconButton'
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import Toolbar from '@material-ui/core/Toolbar/Toolbar'
+import Fab from '@mui/material/Fab/Fab'
+import Icon from '@mui/material/Icon/Icon'
+import IconButton from '@mui/material/IconButton/IconButton'
+import makeStyles from '@mui/styles/makeStyles';
+import Toolbar from '@mui/material/Toolbar/Toolbar'
 import { memo } from 'react'
-
 import inspectorActions from '@src/inspector/actions'
+
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
 import torrentsActions from '@src/torrents/actions'
+import { default as MuiAppBar } from '@mui/material/AppBar';
 
 function AppBar() {
   const classes = useStyles()
@@ -42,7 +42,7 @@ function AppBar() {
           </Fab>
         </div>
         <div>
-          <IconButton color="inherit" onClick={toggleInspector}>
+          <IconButton color="inherit" onClick={toggleInspector} size="large">
             <Icon>{isInspectorOpen ? 'close' : 'info'}</Icon>
           </IconButton>
           {/* <IconButton color="inherit" aria-label="Open drawer">
@@ -51,7 +51,7 @@ function AppBar() {
         </div>
       </Toolbar>
     </MuiAppBar>
-  )
+  );
 }
 
 const useStyles = makeStyles((theme) => ({

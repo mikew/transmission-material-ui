@@ -1,16 +1,16 @@
-import { default as MuiAppBar } from '@material-ui/core/AppBar/AppBar'
-import Icon from '@material-ui/core/Icon/Icon'
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import Toolbar from '@material-ui/core/Toolbar/Toolbar'
-import Typography from '@material-ui/core/Typography/Typography'
+import Icon from '@mui/material/Icon/Icon'
+import makeStyles from '@mui/styles/makeStyles';
+import Toolbar from '@mui/material/Toolbar/Toolbar'
+import Typography from '@mui/material/Typography/Typography'
 import { memo } from 'react'
-
 import { RootState } from '@src/redux/types'
+
 import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import CheckAllTorrents from '@src/torrents/CheckAllTorrents'
 import DeleteAllTorrents from '@src/torrents/DeleteAllTorrents'
 import * as selectors from '@src/torrents/selectors'
 import StartAllTorrents from '@src/torrents/StartAllTorrents'
+import { default as MuiAppBar } from '@mui/material/AppBar';
 
 function TopAppBar() {
   const mappedState = useShallowEqualSelector(mapState)

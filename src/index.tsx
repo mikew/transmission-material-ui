@@ -2,8 +2,8 @@
 // It does the initial render and sets up the store / router.
 // If you want something to run when the app launches, put it here.
 
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { MuiThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles';
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
@@ -22,11 +22,13 @@ function renderApp(store: ReturnType<typeof createStore>) {
 
   ReactDOM.render(
     <Provider store={store}>
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline>
-          <App />
-        </CssBaseline>
-      </MuiThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <CssBaseline>
+            <App />
+          </CssBaseline>
+        </ThemeProvider>
+      </StyledEngineProvider>
     </Provider>,
     document.getElementById('root'),
   )

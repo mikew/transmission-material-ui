@@ -1,6 +1,6 @@
-import Icon from '@material-ui/core/Icon/Icon'
-import ListItem from '@material-ui/core/ListItem/ListItem'
-import ListItemText from '@material-ui/core/ListItemText/ListItemText'
+import Icon from '@mui/material/Icon/Icon'
+import ListItem from '@mui/material/ListItem/ListItem'
+import ListItemText from '@mui/material/ListItemText/ListItemText'
 import { memo } from 'react'
 
 interface Props {

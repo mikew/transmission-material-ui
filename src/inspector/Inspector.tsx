@@ -1,8 +1,8 @@
-import Drawer from '@material-ui/core/Drawer/Drawer'
-import Icon from '@material-ui/core/Icon/Icon'
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import Tab from '@material-ui/core/Tab/Tab'
-import Tabs from '@material-ui/core/Tabs/Tabs'
+import Drawer from '@mui/material/Drawer/Drawer'
+import Icon from '@mui/material/Icon/Icon'
+import makeStyles from '@mui/styles/makeStyles';
+import Tab from '@mui/material/Tab/Tab'
+import Tabs from '@mui/material/Tabs/Tabs'
 import { memo } from 'react'
 
 import { RootState } from '@src/redux/types'
