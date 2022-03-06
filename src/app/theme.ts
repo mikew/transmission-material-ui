@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material'
+import { grey } from '@mui/material/colors'
 import { Theme } from '@mui/material/styles'
 
 declare module '@mui/styles/defaultTheme' {
@@ -12,6 +13,9 @@ const theme = createTheme({
     },
     secondary: {
       main: '#b71c1c',
+    },
+    background: {
+      default: grey[50],
     },
     // type: 'dark',
   },
