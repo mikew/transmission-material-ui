@@ -1,8 +1,8 @@
 import Drawer from '@mui/material/Drawer/Drawer'
 import Icon from '@mui/material/Icon/Icon'
-import makeStyles from '@mui/styles/makeStyles';
 import Tab from '@mui/material/Tab/Tab'
 import Tabs from '@mui/material/Tabs/Tabs'
+import makeStyles from '@mui/styles/makeStyles'
 import { memo } from 'react'
 
 import { RootState } from '@src/redux/types'

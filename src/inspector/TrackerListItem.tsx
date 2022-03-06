@@ -1,7 +1,7 @@
 import ListItem from '@mui/material/ListItem/ListItem'
 import ListItemText from '@mui/material/ListItemText/ListItemText'
-import makeStyles from '@mui/styles/makeStyles';
 import Typography from '@mui/material/Typography/Typography'
+import makeStyles from '@mui/styles/makeStyles'
 import { memo } from 'react'
 
 interface Props {

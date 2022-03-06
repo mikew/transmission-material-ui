@@ -1,4 +1,4 @@
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 import { useEffect, useCallback, memo } from 'react'
 
 import { AppDispatch } from '@src/redux/types'

@@ -3,7 +3,11 @@
 // If you want something to run when the app launches, put it here.
 
 import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles';
+import {
+  ThemeProvider,
+  Theme,
+  StyledEngineProvider,
+} from '@mui/material/styles'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 

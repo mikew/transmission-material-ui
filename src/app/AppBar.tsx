@@ -1,15 +1,15 @@
+import { default as MuiAppBar } from '@mui/material/AppBar'
 import Fab from '@mui/material/Fab/Fab'
 import Icon from '@mui/material/Icon/Icon'
 import IconButton from '@mui/material/IconButton/IconButton'
-import makeStyles from '@mui/styles/makeStyles';
 import Toolbar from '@mui/material/Toolbar/Toolbar'
+import makeStyles from '@mui/styles/makeStyles'
 import { memo } from 'react'
-import inspectorActions from '@src/inspector/actions'
 
+import inspectorActions from '@src/inspector/actions'
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
 import torrentsActions from '@src/torrents/actions'
-import { default as MuiAppBar } from '@mui/material/AppBar';
 
 function AppBar() {
   const classes = useStyles()
@@ -51,7 +51,7 @@ function AppBar() {
         </div>
       </Toolbar>
     </MuiAppBar>
-  );
+  )
 }
 
 const useStyles = makeStyles((theme) => ({

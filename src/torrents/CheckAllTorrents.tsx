@@ -31,7 +31,7 @@ function CheckAllTorrents(props: Props) {
     <IconButton {...props} onClick={action} size="large">
       <Icon>{icon}</Icon>
     </IconButton>
-  );
+  )
 }
 
 export default memo(CheckAllTorrents)

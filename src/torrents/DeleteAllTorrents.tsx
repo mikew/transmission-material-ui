@@ -24,7 +24,7 @@ function DeleteAllTorrents(props: Props) {
     <IconButton {...props} onClick={handleClick} size="large">
       <Icon>delete</Icon>
     </IconButton>
-  );
+  )
 }
 
 export default memo(DeleteAllTorrents)

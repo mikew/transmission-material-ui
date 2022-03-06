@@ -74,7 +74,8 @@ function TorrentListItem(props: Props) {
     <IconButton
       {...props.rightIconProps}
       onClickCapture={handleRightIconClick}
-      size="large">
+      size="large"
+    >
       <Icon>{props.rightIcon}</Icon>
     </IconButton>
   ) : undefined

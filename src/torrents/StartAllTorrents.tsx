@@ -33,7 +33,7 @@ function StartAllTorrents(props: Props) {
     <IconButton {...props} onClick={handleClick} size="large">
       <Icon>{areAllStopped ? 'play_arrow' : 'stop'}</Icon>
     </IconButton>
-  );
+  )
 }
 
 const mapState = (state: RootState) => ({

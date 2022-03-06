@@ -90,8 +90,9 @@ function AddTorrentDialog() {
 
             inputRef.current.focus()
           }, 50)
-        }
-      }}>
+        },
+      }}
+    >
       <DialogTitle>Add Torrent</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit}>
@@ -116,7 +117,7 @@ function AddTorrentDialog() {
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }
 
 export default memo(AddTorrentDialog)
