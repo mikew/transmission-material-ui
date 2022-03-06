@@ -2,13 +2,13 @@ import { Button, CircularProgress, Slide, Snackbar } from '@mui/material'
 import Alert, { AlertProps } from '@mui/material/Alert'
 
 import useDispatch from '@src/redux/useDispatch'
-import useSelector from '@src/redux/useSelector'
+import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 
 import actions from './actions'
 
 const StatusNotifier = () => {
   const dispatch = useDispatch()
-  const state = useSelector((state) => ({
+  const state = useShallowEqualSelector((state) => ({
     isApiDown: state.torrents.isApiDown,
     isWatching: state.torrents.isWatching,
   }))

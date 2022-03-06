@@ -8,19 +8,6 @@
     'Segoe UI Symbol';
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar * {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #000000;
-  border-radius: 4px;
-}
-
 html,
 body,
 #root {
