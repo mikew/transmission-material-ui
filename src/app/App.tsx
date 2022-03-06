@@ -9,6 +9,7 @@ import TorrentList from '@src/torrents/TorrentList'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
 
 import AppBar from './AppBar'
+import ReloadPrompt from './ReloadPrompt'
 import TopAppBar from './TopAppBar'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <TorrentList />
       <StatusNotifier />
       <FloatingBarSpacer />
+      <ReloadPrompt />
 
       <Inspector />
 
