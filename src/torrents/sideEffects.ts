@@ -61,16 +61,6 @@ reduxSelectorSideEffect(
   shallowEqual,
 )
 
-// Refetch when the requested torrent fields changes.
-reduxSelectorSideEffect(
-  (state: RootState) => state.torrents.fields,
-  (_value, previousValue, dispatch) => {
-    if (previousValue !== undefined) {
-      dispatch(actions.get())
-    }
-  },
-)
-
 // If the api is considered down but for some reason we are watching, set a long
 // timer to stop watching.
 reduxSelectorSideEffect(
@@ -94,6 +84,17 @@ reduxSelectorSideEffect(
   },
   shallowEqual,
 )
+
+// Refetch when the requested torrent fields changes.
+reduxSelectorSideEffect(
+  (state: RootState) => state.torrents.fields,
+  (_value, previousValue, dispatch) => {
+    if (previousValue !== undefined) {
+      dispatch(actions.get())
+    }
+  },
+)
+
 reduxActionSideEffect(actions.startTorrent, (action, dispatch) => {
   async function run() {
     await apiInstance.callServer('torrent-start-now', {
