@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions/DialogActions'
 import DialogContent from '@mui/material/DialogContent/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle/DialogTitle'
 import TextField from '@mui/material/TextField/TextField'
-import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 
 import useDispatch from '@src/redux/useDispatch'
 import useSelector from '@src/redux/useSelector'
@@ -19,7 +19,6 @@ function AddTorrentDialog() {
   )
   const params = new URLSearchParams(window.location.search)
   const magnetUrlFromParams = params.get('magnetUrl')
-  const inputRef = useRef<HTMLInputElement>()
   const [magnetUrl, setMagnetUrl] = useState('')
   const [current, updateCurrent] = useState<
     TorrentGroupDefinition | undefined
@@ -80,24 +79,12 @@ function AddTorrentDialog() {
       fullWidth={true}
       open={isAddDialogVisible}
       onClose={handleBackdropClick}
-      TransitionProps={{
-        onEntered: () => {
-          // console.log(inputRef)
-          setTimeout(() => {
-            if (!inputRef.current) {
-              return
-            }
-
-            inputRef.current.focus()
-          }, 50)
-        },
-      }}
     >
       <DialogTitle>Add Torrent</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <TextField
-            inputRef={inputRef}
+            autoFocus
             value={magnetUrl}
             fullWidth={true}
             label="Magnet"
