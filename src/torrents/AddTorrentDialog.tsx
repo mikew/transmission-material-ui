@@ -101,6 +101,7 @@ function AddTorrentDialog() {
             value={magnetUrl}
             fullWidth={true}
             label="Magnet"
+            margin='normal'
             onChange={(event) => {
               setMagnetUrl(event.target.value)
             }}
