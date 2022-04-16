@@ -1,109 +1,25 @@
 name: CI
-
 on: [push]
 
-env:
-  CI: true
-
 jobs:
-  prepare-env:
+  ci:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v1
 
-      - name: prepare-env
-        run: ./script/prepare-env
-
-      - name: Compress workspace
-        run: |
-          rm -f workspace-cache.tar.gz
-          touch workspace-cache.tar.gz
-          tar --exclude=workspace-cache.tar.gz -czf workspace-cache.tar.gz .
-
-      - name: Cache workspace
-        uses: actions/upload-artifact@v1
+      - name: Cache node modules
+        uses: actions/cache@v2
         with:
-          name: workspace-cache.tar.gz
-          path: workspace-cache.tar.gz
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
 
-  build:
-    needs: prepare-env
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download workspace cache
-        uses: actions/download-artifact@v1
-        with:
-          name: workspace-cache.tar.gz
-
-      - name: Extract cache
-        run: tar zxf workspace-cache.tar.gz/workspace-cache.tar.gz
-
-      - name: build
-        run: ./script/build
-
-      - name: Cache build
-        uses: actions/upload-artifact@v1
-        with:
-          name: build
-          path: build
-
-  test:
-    needs: prepare-env
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download workspace cache
-        uses: actions/download-artifact@v1
-        with:
-          name: workspace-cache.tar.gz
-
-      - name: Extract cache
-        run: tar zxf workspace-cache.tar.gz/workspace-cache.tar.gz
-
-      - name: test
-        run: ./script/test
-
-  deploy:
-    needs: [build, test]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download build
-        if: endsWith(github.ref, '/master')
-        uses: actions/download-artifact@v1
-        with:
-          name: build
-
-      - name: Create release artifact
-        if: endsWith(github.ref, '/master')
-        run: |
-          find build/ -iname '*.map' -print -exec rm {} \;
-          mv build/ transmission-material-ui/
-          rm -f transmission-material-ui.zip
-          zip -r transmission-material-ui.zip transmission-material-ui/
-
-      - name: Create release
-        if: endsWith(github.ref, '/master')
-        id: create_release
-        uses: actions/create-release@v1.0.0
+      - run: ./script/prepare-env
+      - run: ./script/build
+      - run: ./script/test
+      - run: ./script/deploy
+        if: endsWith(github.ref, '/simplify-ci')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: release-${{ github.sha }}
-          release_name: Release ${{ github.sha }}
-          draft: false
-          prerelease: false
-
-      - name: Upload release asset
-        if: endsWith(github.ref, '/master')
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          # This pulls from the CREATE RELEASE step above, referencing it's ID
-          # to get its outputs object, which include a `upload_url`. See this
-          # blog post for more info:
-          # https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./transmission-material-ui.zip
-          asset_name: transmission-material-ui.zip
-          asset_content_type: application/zip
