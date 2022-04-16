@@ -20,6 +20,6 @@ jobs:
       - run: ./script/build
       - run: ./script/test
       - run: ./script/deploy
-        if: endsWith(github.ref, '/simplify-ci')
+        if: endsWith(github.ref, '/master')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
