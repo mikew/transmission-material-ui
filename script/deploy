@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -ex
 
-
 find build/ -iname '*.map' -print -exec rm {} \;
 
 mv build/ transmission-material-ui/
