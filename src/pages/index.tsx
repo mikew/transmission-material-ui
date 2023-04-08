@@ -12,6 +12,7 @@ import DeleteDialog from '@src/torrents/DeleteDialog'
 import TorrentDropZone from '@src/torrents/TorrentDropZone'
 import TorrentList from '@src/torrents/TorrentList'
 
+export default function Home() {
 
   const dispatch = useRootDispatch()
 
