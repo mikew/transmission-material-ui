@@ -35,10 +35,10 @@ export default createActions('torrents', {
   }>(),
 
   get: (ids?: TransmissionIdLookup, isMain?: boolean) => ({
+    payload: (_dispatch: RootDispatch, getState: RootGetState) =>
       apiInstance.callServer('torrent-get', {
         ids,
         fields: [...getState().torrents.fields],
-    payload: (_dispatch: RootDispatch, getState: RootGetState) =>
       }),
     meta: {
       isMain,
