@@ -13,7 +13,6 @@ import TorrentDropZone from '@src/torrents/TorrentDropZone'
 import TorrentList from '@src/torrents/TorrentList'
 
 export default function Home() {
-
   const dispatch = useRootDispatch()
 
   useEffect(() => {
