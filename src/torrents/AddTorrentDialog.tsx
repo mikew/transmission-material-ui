@@ -22,7 +22,7 @@ function AddTorrentDialog() {
   const magnetUrlFromParams = params.get('magnetUrl')
   const inputRef = useRef<HTMLInputElement>()
   const [magnetUrl, setMagnetUrl] = useState('')
-  const [current, updateCurrent] = useState<
+  const [selectedLocation, setSelectedLocation] = useState<
     TorrentGroupDefinition | undefined
   >()
 
@@ -36,13 +36,13 @@ function AddTorrentDialog() {
         actions.addTorrent({
           mode: 'magnet',
           data: magnetUrl,
-          location: current ? current.location : undefined,
+          location: selectedLocation ? selectedLocation.location : undefined,
         }),
       )
     }
 
     handleBackdropClick()
-  }, [dispatch, handleBackdropClick, magnetUrl, current])
+  }, [dispatch, handleBackdropClick, magnetUrl, selectedLocation])
 
   const handleSubmit = useCallback(
     (event: React.FormEvent) => {
@@ -55,7 +55,7 @@ function AddTorrentDialog() {
   useEffect(() => {
     if (!isAddDialogVisible) {
       setMagnetUrl('')
-      updateCurrent(undefined)
+      setSelectedLocation(undefined)
     }
   }, [isAddDialogVisible])
 
@@ -107,8 +107,8 @@ function AddTorrentDialog() {
             }}
           />
           <GroupSelect
-            value={current}
-            onChange={(group) => updateCurrent(group)}
+            value={selectedLocation}
+            onChange={(group) => setSelectedLocation(group)}
           />
         </form>
       </DialogContent>
