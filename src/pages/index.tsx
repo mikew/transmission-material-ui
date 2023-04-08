@@ -16,7 +16,7 @@ import TorrentDropZone from '@src/torrents/TorrentDropZone'
 
   useEffect(() => {
     dispatch(actions.getCustomSettings())
-  }, [])
+  }, [dispatch])
 
   return (
     <>
