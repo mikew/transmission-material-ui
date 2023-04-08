@@ -1,5 +1,7 @@
 import { createTheme } from '@mui/material/styles'
 
+const ROUNDED_BORDER_RADIUS = 9999
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -33,6 +35,38 @@ const theme = createTheme({
     fontSize: 14,
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  },
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        // Looks a little more modern than outlined.
+        variant: 'filled',
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          // There's no need for buttons to yell at everyone.
+          textTransform: 'initial',
+        },
+        contained: {
+          borderRadius: ROUNDED_BORDER_RADIUS,
+        },
+        outlined: {
+          borderRadius: ROUNDED_BORDER_RADIUS,
+        },
+      },
+    },
+    MuiLinearProgress: {
+      styleOverrides: {
+        root: {
+          borderRadius: ROUNDED_BORDER_RADIUS,
+        },
+        bar: {
+          borderRadius: ROUNDED_BORDER_RADIUS,
+        },
+      },
+    },
   },
 })
 
