@@ -86,6 +86,7 @@ function AddTorrentDialog() {
         <form onSubmit={handleSubmit}>
           <TextField
             autoFocus
+            margin="dense"
             value={magnetUrl}
             fullWidth
             label="Magnet"
