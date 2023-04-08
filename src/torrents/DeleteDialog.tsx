@@ -52,8 +52,9 @@ function DeleteDialog() {
       onClose={handleBackdropClick}
     >
       <DialogTitle>Delete {mappedState.checked.length} torrents</DialogTitle>
-      <DialogContent>
-        <List dense={true}>
+
+      <DialogContent sx={{ padding: 0 }}>
+        <List dense disablePadding>
           {mappedState.checked.map((x) => (
             <ListItem divider={true} key={x.id}>
               <ListItemText primary={x.name} />
@@ -61,6 +62,7 @@ function DeleteDialog() {
           ))}
         </List>
       </DialogContent>
+
       <DialogActions>
         <FormControlLabel
           control={
