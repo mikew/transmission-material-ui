@@ -133,7 +133,7 @@ function TorrentList() {
   }, [isInitialLoad, mappedState.isLoading])
 
   return (
-    <List dense={true}>
+    <List dense disablePadding>
       {isInitialLoad ? (
         <>
           <ListItem divider dense>
@@ -156,8 +156,22 @@ function TorrentList() {
           <div key={groupName}>
             <ListHeaderTopBar>{groupName}</ListHeaderTopBar>
             {groups[groupName].map((torrent) => {
-              const rightIcon =
-                torrent.status === TorrentStatus.STOPPED ? 'play_arrow' : 'stop'
+              const secondaryAction =
+                torrent.status === TorrentStatus.STOPPED ? (
+                  <IconButton
+                    edge="end"
+                    onClick={(event) => handleRightIconClick(event, torrent)}
+                  >
+                    <PlayArrow />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    edge="end"
+                    onClick={(event) => handleRightIconClick(event, torrent)}
+                  >
+                    <Stop />
+                  </IconButton>
+                )
 
               return (
                 <TorrentListItem
@@ -166,8 +180,7 @@ function TorrentList() {
                   onClick={handleClick}
                   onDoubleClick={handleDoubleClick}
                   onCheckboxChange={handleCheckboxClick}
-                  rightIcon={rightIcon}
-                  onRightIconClick={handleRightIconClick}
+                  secondaryAction={secondaryAction}
                   checked={isChecked(torrent.id)}
                 />
               )
@@ -182,8 +195,8 @@ function TorrentList() {
 const mapState = (state: RootState) => ({
   torrents: selectors.getAllFiltered(state),
   checkedTorrents: selectors.getCheckedIds(state),
-  fields: state.torrents.fields,
   groups: settingsSelectors.getGroups(state),
+  isLoading: state.torrents.isLoading,
 })
 
 export default memo(TorrentList)
