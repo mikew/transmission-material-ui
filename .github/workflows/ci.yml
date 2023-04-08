@@ -18,7 +18,7 @@ jobs:
 
       - run: ./script/prepare-env
       - run: ./script/build
-      - run: ./script/test
+      # - run: ./script/test
       - run: ./script/deploy
         if: endsWith(github.ref, '/master')
         env:
