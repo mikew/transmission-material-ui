@@ -20,7 +20,6 @@ function AddTorrentDialog() {
     typeof window === 'undefined' ? undefined : window.location.search,
   )
   const magnetUrlFromParams = params.get('magnetUrl')
-  const inputRef = useRef<HTMLInputElement>()
   const [magnetUrl, setMagnetUrl] = useState('')
   const [selectedLocation, setSelectedLocation] = useState<
     TorrentGroupDefinition | undefined
@@ -78,27 +77,15 @@ function AddTorrentDialog() {
   return (
     <Dialog
       maxWidth="xs"
-      fullWidth={true}
+      fullWidth
       open={isAddDialogVisible}
       onClose={handleBackdropClick}
-      TransitionProps={{
-        onEntered: () => {
-          // console.log(inputRef)
-          setTimeout(() => {
-            if (!inputRef.current) {
-              return
-            }
-
-            inputRef.current.focus()
-          }, 50)
-        },
-      }}
     >
       <DialogTitle>Add Torrent</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <TextField
-            inputRef={inputRef}
+            autoFocus
             value={magnetUrl}
             fullWidth
             label="Magnet"
