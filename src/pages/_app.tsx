@@ -6,6 +6,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react'
 import createEmotionCache from '@src/mui/createEmotionCache'
 import theme from '@src/mui/theme'
 import Head from 'next/head'
+import { Provider } from 'react-redux'
 import { useRootStore } from '@src/redux/helpers'
 import { GlobalStyles } from '@mui/material'
 
@@ -18,9 +19,11 @@ export interface MyAppProps extends AppProps {
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+  const store = useRootStore(pageProps.initialReduxState)
 
   return (
     <CacheProvider value={emotionCache}>
+      <Provider store={store}>
         <Head>
           {/*
           There's a lot of words spent saying that this _has_ to live in _app.
@@ -44,6 +47,7 @@ export default function MyApp(props: MyAppProps) {
           />
           <Component {...pageProps} />
         </ThemeProvider>
+      </Provider>
     </CacheProvider>
   )
 }
