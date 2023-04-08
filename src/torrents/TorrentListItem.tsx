@@ -1,14 +1,21 @@
-import Checkbox from '@mui/material/Checkbox/Checkbox'
-import Icon from '@mui/material/Icon/Icon'
-import IconButton, { IconButtonProps } from '@mui/material/IconButton'
+import Group from '@mui/icons-material/Group'
+import Timer from '@mui/icons-material/Timer'
+import {
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  Stack,
+  Typography,
+} from '@mui/material'
+import Checkbox from '@mui/material/Checkbox'
 import LinearProgress, {
   LinearProgressProps,
 } from '@mui/material/LinearProgress'
-import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
-import { memo } from 'react'
+import React, { memo } from 'react'
 
-import { TorrentStatus } from '@src/api'
+import { TorrentStatus } from '@src/api/helpers'
 
 interface Props {
   torrent: TransmissionTorrent

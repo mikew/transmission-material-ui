@@ -1,6 +1,6 @@
-import Icon from '@mui/material/Icon/Icon'
-import ListItem from '@mui/material/ListItem/ListItem'
-import ListItemText from '@mui/material/ListItemText/ListItemText'
+import Lock from '@mui/icons-material/Lock'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 import { memo } from 'react'
 
 interface Props {

@@ -1,7 +1,9 @@
-import Drawer from '@mui/material/Drawer/Drawer'
-import Icon from '@mui/material/Icon/Icon'
-import Tab from '@mui/material/Tab/Tab'
-import Tabs from '@mui/material/Tabs/Tabs'
+import { Folder, Group, Info, RssFeed } from '@mui/icons-material'
+import { Toolbar } from '@mui/material'
+import Drawer from '@mui/material/Drawer'
+import { styled } from '@mui/material/styles'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
 import { memo } from 'react'
 
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'

@@ -1,9 +1,8 @@
-import ListItem from '@mui/material/ListItem/ListItem'
-import ListItemText from '@mui/material/ListItemText/ListItemText'
-import Typography from '@mui/material/Typography/Typography'
-import { memo } from 'react'
-
-import { appMakeStyles } from '@src/styles/helpers'
+import { Box } from '@mui/material'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import Typography from '@mui/material/Typography'
+import React, { memo } from 'react'
 
 interface Props {
   tracker: TransmissionTrackerStat

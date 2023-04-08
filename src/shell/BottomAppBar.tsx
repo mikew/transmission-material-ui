@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Fab from '@mui/material/Fab'
 import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
+
 import inspectorActions from '@src/inspector/actions'
 import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 import actions from '@src/torrents/actions'

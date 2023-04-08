@@ -1,8 +1,8 @@
+import { Box } from '@mui/material'
 import { useEffect, useCallback, memo } from 'react'
 
-import { AppDispatch } from '@src/redux/types'
-import useDispatch from '@src/redux/useDispatch'
-import getFilesFromEvent from '@src/util/getFilesFromEvent'
+import getFilesFromEvent from '@src/lib/getFilesFromEvent'
+import { useRootDispatch } from '@src/redux/helpers'
 
 import actions from './actions'
 

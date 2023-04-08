@@ -1,14 +1,17 @@
+import PlayArrow from '@mui/icons-material/PlayArrow'
+import Stop from '@mui/icons-material/Stop'
+import { IconButton, ListItem, ListItemText, Skeleton } from '@mui/material'
 import List from '@mui/material/List'
-import { memo, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 
-import { TorrentStatus } from '@src/api'
+import { TorrentStatus } from '@src/api/helpers'
 import inspectorActions from '@src/inspector/actions'
+import ListHeaderTopBar from '@src/lib/ListHeaderTopBar'
 import {
   useRootDispatch,
   useRootSelectorShallowEqual,
 } from '@src/redux/helpers'
 import * as settingsSelectors from '@src/settings/selectors'
-import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
 
 import actions from './actions'
 import * as selectors from './selectors'

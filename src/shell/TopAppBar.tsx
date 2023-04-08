@@ -1,13 +1,14 @@
-import Typography from '@mui/material/Typography'
+import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
+import { Box, Divider, Stack } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+
 import { useRootSelectorShallowEqual } from '@src/redux/helpers'
 import CheckAllTorrents from '@src/torrents/CheckAllTorrents'
 import DeleteAllTorrents from '@src/torrents/DeleteAllTorrents'
-import StartAllTorrents from '@src/torrents/StartAllTorrents'
 import * as selectors from '@src/torrents/selectors'
-import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
-import { Box, Divider, Stack } from '@mui/material'
+import StartAllTorrents from '@src/torrents/StartAllTorrents'
 
 const TopAppBar: React.FC = () => {
   const mappedState = useRootSelectorShallowEqual(mapState)
