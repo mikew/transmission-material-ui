@@ -3,8 +3,7 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import { DistributiveOmit } from '@mui/types'
 import { memo } from 'react'
 
-import useDispatch from '@src/redux/useDispatch'
-import useSelector from '@src/redux/useSelector'
+import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 
 import actions from './actions'
 import * as selectors from './selectors'
@@ -12,8 +11,8 @@ import * as selectors from './selectors'
 type Props = DistributiveOmit<IconButtonProps, 'onClick'>
 
 function CheckAllTorrents(props: Props) {
-  const dispatch = useDispatch()
-  const checkIds = useSelector(selectors.getCheckedIds)
+  const dispatch = useRootDispatch()
+  const checkIds = useRootSelector(selectors.getCheckedIds)
   const checkAll = () =>
     dispatch(actions.toggleTorrentChecked({ action: 'checkAll', ids: [] }))
   const unCheckAll = () =>

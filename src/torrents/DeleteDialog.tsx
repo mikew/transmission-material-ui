@@ -10,16 +10,17 @@ import ListItem from '@mui/material/ListItem/ListItem'
 import ListItemText from '@mui/material/ListItemText/ListItemText'
 import { memo, useCallback, useEffect, useState } from 'react'
 
-import { RootState } from '@src/redux/types'
-import useDispatch from '@src/redux/useDispatch'
-import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
+import {
+  useRootDispatch,
+  useRootSelectorShallowEqual,
+} from '@src/redux/helpers'
 
 import actions from './actions'
 import * as selectors from './selectors'
 
 function DeleteDialog() {
-  const dispatch = useDispatch()
-  const mappedState = useShallowEqualSelector(mapState)
+  const dispatch = useRootDispatch()
+  const mappedState = useRootSelectorShallowEqual(mapState)
   const [deleteData, setDeleteData] = useState(false)
   const onClose = useCallback(
     () => dispatch(actions.toggleDeleteDialog()),

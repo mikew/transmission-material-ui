@@ -1,7 +1,5 @@
 import { createSelector } from 'reselect'
 
-import { RootState } from '@src/redux/types'
-
 export const getCheckedIds = (state: RootState) =>
   state.torrents.checkedTorrents
 export const getAll = (state: RootState) => state.torrents.all

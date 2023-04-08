@@ -6,7 +6,7 @@ import Menu from '@mui/material/Menu/Menu'
 import MenuItem from '@mui/material/MenuItem/MenuItem'
 import { memo, useState } from 'react'
 
-import useSelector from '@src/redux/useSelector'
+import { useRootSelector } from '@src/redux/helpers'
 
 import * as selectors from './selectors'
 
@@ -20,7 +20,7 @@ function GroupSelect(props: Props) {
   const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
-  const groups = useSelector(selectors.getGroups)
+  const groups = useRootSelector(selectors.getGroups)
 
   const handleMenuItemClick = (group: TorrentGroupDefinition) => {
     props.onChange(group)

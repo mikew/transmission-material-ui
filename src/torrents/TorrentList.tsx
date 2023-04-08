@@ -3,9 +3,10 @@ import { memo, useEffect } from 'react'
 
 import { TorrentStatus } from '@src/api'
 import inspectorActions from '@src/inspector/actions'
-import { RootState } from '@src/redux/types'
-import useDispatch from '@src/redux/useDispatch'
-import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
+import {
+  useRootDispatch,
+  useRootSelectorShallowEqual,
+} from '@src/redux/helpers'
 import * as settingsSelectors from '@src/settings/selectors'
 import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
 
@@ -42,7 +43,7 @@ const fields = new Set<keyof TransmissionTorrent>([
 const NO_GROUP = '__NO_GROUP'
 
 function TorrentList() {
-  const dispatch = useDispatch()
+  const dispatch = useRootDispatch()
   const handleClick = (
     event: React.MouseEvent,
     torrent: TransmissionTorrent,
@@ -90,7 +91,7 @@ function TorrentList() {
     }
   }
 
-  const mappedState = useShallowEqualSelector(mapState)
+  const mappedState = useRootSelectorShallowEqual(mapState)
 
   useEffect(() => {
     dispatch(actions.addFields(fields))

@@ -1,7 +1,6 @@
 import { memo, useEffect, useMemo } from 'react'
 
-import useDispatch from '@src/redux/useDispatch'
-import useSelector from '@src/redux/useSelector'
+import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 import { getGroups } from '@src/settings/selectors'
 import actions from '@src/torrents/actions'
 import * as selectors from '@src/torrents/selectors'
@@ -11,8 +10,8 @@ import GroupSelect from '../settings/GroupSelect'
 const fields = new Set<keyof TransmissionTorrent>([])
 
 function InspectorTabInfo() {
-  const checkedTorrents = useSelector(selectors.getCheckedTorrents)
-  const dispatch = useDispatch()
+  const checkedTorrents = useRootSelector(selectors.getCheckedTorrents)
+  const dispatch = useRootDispatch()
   useEffect(() => {
     dispatch(actions.addFields(fields))
 
@@ -21,7 +20,7 @@ function InspectorTabInfo() {
     }
   }, [dispatch])
 
-  const groups = useSelector(getGroups)
+  const groups = useRootSelector(getGroups)
   // TODO This could be wrapped up into `findGroupForDirectory`
   const firstGroup = useMemo(() => {
     if (checkedTorrents.length === 0) {

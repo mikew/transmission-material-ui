@@ -4,11 +4,12 @@ import Tab from '@mui/material/Tab/Tab'
 import Tabs from '@mui/material/Tabs/Tabs'
 import { memo } from 'react'
 
-import { RootState } from '@src/redux/types'
-import useDispatch from '@src/redux/useDispatch'
-import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
 import { appMakeStyles } from '@src/styles/helpers'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
+import {
+  useRootDispatch,
+  useRootSelectorShallowEqual,
+} from '@src/redux/helpers'
 
 import actions from './actions'
 import InspectorTabFiles from './InspectorTabFiles'
@@ -18,11 +19,11 @@ import InspectorTabs from './InspectorTabs'
 import InspectorTabTrackers from './InspectorTabTrackers'
 
 function Inspector() {
-  const dispatch = useDispatch()
+  const dispatch = useRootDispatch()
   const setTab = (_event: unknown, value: InspectorTabs) =>
     dispatch(actions.setTab(value))
-  const mappedState = useShallowEqualSelector(mapState)
   const { classes } = useStyles()
+  const mappedState = useRootSelectorShallowEqual(mapState)
 
   return (
     <Drawer

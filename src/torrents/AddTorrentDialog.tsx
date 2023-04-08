@@ -6,15 +6,14 @@ import DialogTitle from '@mui/material/DialogTitle/DialogTitle'
 import TextField from '@mui/material/TextField/TextField'
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 
-import useDispatch from '@src/redux/useDispatch'
-import useSelector from '@src/redux/useSelector'
+import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 import GroupSelect from '@src/settings/GroupSelect'
 
 import actions from './actions'
 
 function AddTorrentDialog() {
-  const dispatch = useDispatch()
-  const isAddDialogVisible = useSelector(
+  const dispatch = useRootDispatch()
+  const isAddDialogVisible = useRootSelector(
     (state) => state.torrents.isAddDialogVisible,
   )
   const params = new URLSearchParams(

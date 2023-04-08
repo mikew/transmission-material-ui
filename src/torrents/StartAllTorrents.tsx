@@ -4,9 +4,10 @@ import { DistributiveOmit } from '@mui/types'
 import { memo } from 'react'
 
 import { TorrentStatus } from '@src/api'
-import { RootState } from '@src/redux/types'
-import useDispatch from '@src/redux/useDispatch'
-import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
+import {
+  useRootDispatch,
+  useRootSelectorShallowEqual,
+} from '@src/redux/helpers'
 
 import actions from './actions'
 import * as selectors from './selectors'
@@ -14,8 +15,8 @@ import * as selectors from './selectors'
 type Props = DistributiveOmit<IconButtonProps, 'onClick'>
 
 function StartAllTorrents(props: Props) {
-  const dispatch = useDispatch()
-  const mappedState = useShallowEqualSelector(mapState)
+  const dispatch = useRootDispatch()
+  const mappedState = useRootSelectorShallowEqual(mapState)
 
   const areAllStopped = mappedState.contextIds.every(
     (x) => mappedState.torrents[x].status === TorrentStatus.STOPPED,
