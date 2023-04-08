@@ -4,7 +4,6 @@ import Tab from '@mui/material/Tab/Tab'
 import Tabs from '@mui/material/Tabs/Tabs'
 import { memo } from 'react'
 
-import { appMakeStyles } from '@src/styles/helpers'
 import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
 import {
   useRootDispatch,
@@ -22,7 +21,6 @@ function Inspector() {
   const dispatch = useRootDispatch()
   const setTab = (_event: unknown, value: InspectorTabs) =>
     dispatch(actions.setTab(value))
-  const { classes } = useStyles()
   const mappedState = useRootSelectorShallowEqual(mapState)
 
   return (
@@ -31,12 +29,14 @@ function Inspector() {
       variant="persistent"
       anchor="right"
       PaperProps={{
-        // Seems to be an issue with variant="persistent" and
-        // PaperProps.className
-        // className: props.classes.paper,
-        classes: {
-          root: classes.paper,
-        },
+        sx: (theme) => ({
+          [theme.breakpoints.only('xs')]: {
+            width: '100%',
+            borderWidth: 0,
+          },
+          zIndex: theme.zIndex.appBar - 1,
+          width: 400,
+        }),
       }}
     >
       <FloatingBarSpacer />
@@ -47,29 +47,25 @@ function Inspector() {
         indicatorColor="secondary"
         textColor="secondary"
       >
-        <Tab
+        <StyledTab
           value={InspectorTabs.info}
           // label="Info"
           icon={<Icon color="inherit">info</Icon>}
-          className={classes.tab}
         />
-        <Tab
+        <StyledTab
           value={InspectorTabs.files}
           // label="Files"
           icon={<Icon color="inherit">folder</Icon>}
-          className={classes.tab}
         />
-        <Tab
+        <StyledTab
           value={InspectorTabs.trackers}
           // label="Trackers"
           icon={<Icon color="inherit">rss_feed</Icon>}
-          className={classes.tab}
         />
-        <Tab
+        <StyledTab
           value={InspectorTabs.peers}
           // label="Peers"
           icon={<Icon color="inherit">group</Icon>}
-          className={classes.tab}
         />
       </Tabs>
       {mappedState.isInspectorOpen
@@ -104,20 +100,12 @@ const mapState = (state: RootState) => ({
   isInspectorOpen: state.inspector.isInspectorOpen,
 })
 
-const useStyles = appMakeStyles()((theme) => ({
-  tab: {
-    minWidth: 48,
-    // TODO This was part of the mui v4 to v5 migration. Styling around tabs
-    // changed and this keeps the previous style. Not sure if it's absolutely
-    // necessary.
-    color: theme.palette.text.disabled,
-  },
-  paper: {
-    [theme.breakpoints.only('xs')]: {
-      width: '100%',
-    },
-    width: 400,
-  },
+const StyledTab = styled(Tab)(({ theme }) => ({
+  minWidth: 48,
+  // TODO This was part of the mui v4 to v5 migration. Styling around tabs
+  // changed and this keeps the previous style. Not sure if it's absolutely
+  // necessary.
+  color: theme.palette.text.disabled,
 }))
 
 export default memo(Inspector)

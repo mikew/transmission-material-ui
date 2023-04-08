@@ -2,7 +2,6 @@ import { useEffect, useCallback, memo } from 'react'
 
 import { AppDispatch } from '@src/redux/types'
 import useDispatch from '@src/redux/useDispatch'
-import { appMakeStyles } from '@src/styles/helpers'
 import getFilesFromEvent from '@src/util/getFilesFromEvent'
 
 import actions from './actions'
@@ -10,12 +9,6 @@ import actions from './actions'
 interface Props {
   children?: React.ReactNode
 }
-
-const useStyles = appMakeStyles()(() => ({
-  root: {
-    height: '100%',
-  },
-}))
 
 function TorrentDropZone(props: Props) {
   const dispatch = useDispatch()
