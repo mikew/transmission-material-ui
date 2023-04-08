@@ -1,9 +1,7 @@
 import Transmission from '.'
 
 const apiInstance = new Transmission({
-  url:
-    process.env.REACT_APP_TRANSMISSION_API_URL ||
-    'http://localhost:8080/transmission/rpc',
+  url: process.env.NEXT_PUBLIC_TRANSMISSION_RPC_PATH,
 })
 
 export default apiInstance
