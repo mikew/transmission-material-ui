@@ -124,8 +124,28 @@ function TorrentList() {
     groups[group.groupName].push(torrent)
   })
 
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
+  useEffect(() => {
+    if (isInitialLoad && !mappedState.isLoading) {
+      setIsInitialLoad(false)
+    }
+  }, [isInitialLoad, mappedState.isLoading])
+
   return (
     <List dense={true}>
+      {isInitialLoad ? (
+        <>
+          <ListItem divider dense>
+            <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
+          </ListItem>
+          <ListItem divider dense>
+            <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
+          </ListItem>
+          <ListItem divider dense>
+            <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
+          </ListItem>
+        </>
+      ) : undefined}
       {Object.keys(groups).map((groupName) => {
         if (groups[groupName].length === 0) {
           return null
