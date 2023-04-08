@@ -3,7 +3,7 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import { DistributiveOmit } from '@mui/types'
 import { memo } from 'react'
 
-import { TorrentStatus } from '@src/api/helpers'
+import { TorrentStatus } from '@src/api'
 import {
   useRootDispatch,
   useRootSelectorShallowEqual,

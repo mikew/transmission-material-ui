@@ -15,7 +15,7 @@ import LinearProgress, {
 import ListItemText from '@mui/material/ListItemText'
 import React, { memo } from 'react'
 
-import { TorrentStatus } from '@src/api/helpers'
+import { TorrentStatus } from '@src/api'
 
 interface Props {
   torrent: TransmissionTorrent
