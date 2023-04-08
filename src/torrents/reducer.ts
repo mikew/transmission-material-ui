@@ -11,6 +11,7 @@ export interface State {
   lastCommunication: Date
   isApiDown: boolean
   isWatching: boolean
+  isLoading: boolean
 }
 
 const initialState: State = {
@@ -22,6 +23,7 @@ const initialState: State = {
   lastCommunication: new Date(),
   isApiDown: false,
   isWatching: false,
+  isLoading: true,
 }
 
 function normalizeTorrent(torrent: TransmissionTorrent): TransmissionTorrent {
@@ -47,6 +49,18 @@ export default createReducer(initialState, (builder) => {
       ...state,
       isApiDown: action.payload,
     }))
+    .addStartHandler(actions.get, (state) => {
+      return {
+        ...state,
+        isLoading: true,
+      }
+    })
+    .addErrorHandler(actions.get, (state) => {
+      return {
+        ...state,
+        isLoading: false,
+      }
+    })
     .addSuccessHandler(actions.get, (state, action) => {
       const all = action.meta.isMain ? {} : { ...state.all }
 
@@ -66,6 +80,7 @@ export default createReducer(initialState, (builder) => {
       return {
         ...state,
         all,
+        isLoading: false,
         checkedTorrents: action.meta.isMain
           ? state.checkedTorrents.filter((id) => !!all[id])
           : state.checkedTorrents,
