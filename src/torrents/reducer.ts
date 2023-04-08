@@ -19,7 +19,7 @@ const initialState: State = {
   isAddDialogVisible: false,
   checkedTorrents: [],
   isDeleteDialogVisible: false,
-  fields: new Set(['id']),
+  fields: new Set<keyof TransmissionTorrent>(['id']),
   lastCommunication: new Date(),
   isApiDown: false,
   isWatching: false,

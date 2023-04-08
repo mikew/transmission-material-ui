@@ -6,11 +6,11 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { useState } from 'react'
 
+import ListHeaderTopBar from '@src/lib/ListHeaderTopBar'
 import convertFilesToGroup, {
   DirSpec,
   FileSpec,
 } from '@src/torrents/convertFilesToGroup'
-import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
 
 interface Props {
   torrent: TransmissionTorrent
@@ -27,14 +27,12 @@ function TorrentFileList(props: Props) {
 
 function D(props: { d: DirSpec }) {
   const [open, setIsOpen] = useState(false)
-  const icon = open ? 'folder_open' : 'folder'
+  const icon = open ? <FolderOpen color="action" /> : <Folder color="action" />
 
   return (
     <>
       <ListItem divider={true} button={true} onClick={() => setIsOpen(!open)}>
-        <ListItemIcon>
-          <Icon color="action">{icon}</Icon>
-        </ListItemIcon>
+        <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={props.d.name} />
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit={true}>

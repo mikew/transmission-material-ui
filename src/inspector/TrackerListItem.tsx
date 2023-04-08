@@ -58,7 +58,9 @@ function TrackerListItem(props: Props) {
 
 export default memo(TrackerListItem)
 
-const AlignedNumber: React.SFC = (props) => (
+const AlignedNumber: React.FC<
+  React.PropsWithChildren<JSX.IntrinsicElements['span']>
+> = (props) => (
   <span
     style={{ width: 45, display: 'inline-block', textAlign: 'left' }}
     {...props}

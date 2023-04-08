@@ -2,7 +2,7 @@ import { shallowEqual } from 'react-redux'
 import { reduxActionSideEffect, reduxSelectorSideEffect } from 'redux-easy-mode'
 
 import apiInstance from '@src/api/apiInstance'
-import wait from '@src/util/wait'
+import wait from '@src/lib/wait'
 
 import actions from './actions'
 

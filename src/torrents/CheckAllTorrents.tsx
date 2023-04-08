@@ -1,5 +1,5 @@
-import Icon from '@mui/material/Icon/Icon'
-import IconButton, { IconButtonProps } from '@mui/material/IconButton'
+import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material'
+import { IconButton, IconButtonProps } from '@mui/material'
 import { DistributiveOmit } from '@mui/types'
 import { memo } from 'react'
 
@@ -18,17 +18,19 @@ function CheckAllTorrents(props: Props) {
   const unCheckAll = () =>
     dispatch(actions.toggleTorrentChecked({ action: 'unCheckAll', ids: [] }))
 
-  let icon = 'check_box_outline_blank'
+  // We want to use the same color as the rest of the icons in TopAppBar, so use
+  // the icon instead of the form component.
+  let icon = <CheckBoxOutlineBlank />
   let action = checkAll
 
   if (checkIds.length) {
-    icon = 'check_box'
+    icon = <CheckBox />
     action = unCheckAll
   }
 
   return (
-    <IconButton {...props} onClick={action} size="large">
-      <Icon>{icon}</Icon>
+    <IconButton {...props} onClick={action}>
+      {icon}
     </IconButton>
   )
 }

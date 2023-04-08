@@ -1,4 +1,4 @@
-import Icon from '@mui/material/Icon/Icon'
+import { Delete } from '@mui/icons-material'
 import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import { DistributiveOmit } from '@mui/types'
 import { memo } from 'react'
@@ -20,8 +20,8 @@ function DeleteAllTorrents(props: Props) {
   }
 
   return (
-    <IconButton {...props} onClick={handleClick} size="large">
-      <Icon>delete</Icon>
+    <IconButton {...props} onClick={handleClick}>
+      <Delete />
     </IconButton>
   )
 }

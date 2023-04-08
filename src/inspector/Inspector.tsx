@@ -6,7 +6,6 @@ import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import { memo } from 'react'
 
-import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
 import {
   useRootDispatch,
   useRootSelectorShallowEqual,
@@ -41,7 +40,7 @@ function Inspector() {
         }),
       }}
     >
-      <FloatingBarSpacer />
+      <Toolbar variant="dense" />
       <Tabs
         value={mappedState.currentTab}
         onChange={setTab}
@@ -52,22 +51,22 @@ function Inspector() {
         <StyledTab
           value={InspectorTabs.info}
           // label="Info"
-          icon={<Icon color="inherit">info</Icon>}
+          icon={<Info />}
         />
         <StyledTab
           value={InspectorTabs.files}
           // label="Files"
-          icon={<Icon color="inherit">folder</Icon>}
+          icon={<Folder />}
         />
         <StyledTab
           value={InspectorTabs.trackers}
           // label="Trackers"
-          icon={<Icon color="inherit">rss_feed</Icon>}
+          icon={<RssFeed />}
         />
         <StyledTab
           value={InspectorTabs.peers}
           // label="Peers"
-          icon={<Icon color="inherit">group</Icon>}
+          icon={<Group />}
         />
       </Tabs>
       {mappedState.isInspectorOpen
@@ -75,7 +74,7 @@ function Inspector() {
             currentTab: mappedState.currentTab,
           })
         : undefined}
-      <FloatingBarSpacer />
+      <Toolbar variant="dense" />
     </Drawer>
   )
 }

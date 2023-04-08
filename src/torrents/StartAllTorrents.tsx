@@ -1,9 +1,9 @@
-import Icon from '@mui/material/Icon/Icon'
+import { PlayArrow, Stop } from '@mui/icons-material'
 import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import { DistributiveOmit } from '@mui/types'
 import { memo } from 'react'
 
-import { TorrentStatus } from '@src/api'
+import { TorrentStatus } from '@src/api/helpers'
 import {
   useRootDispatch,
   useRootSelectorShallowEqual,
@@ -31,8 +31,8 @@ function StartAllTorrents(props: Props) {
   }
 
   return (
-    <IconButton {...props} onClick={handleClick} size="large">
-      <Icon>{areAllStopped ? 'play_arrow' : 'stop'}</Icon>
+    <IconButton {...props} onClick={handleClick}>
+      {areAllStopped ? <PlayArrow /> : <Stop />}
     </IconButton>
   )
 }

@@ -100,7 +100,7 @@ function AddTorrentDialog() {
           <TextField
             inputRef={inputRef}
             value={magnetUrl}
-            fullWidth={true}
+            fullWidth
             label="Magnet"
             onChange={(event) => {
               setMagnetUrl(event.target.value)

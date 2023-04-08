@@ -11,7 +11,7 @@ interface Props {
 }
 
 function TorrentDropZone(props: Props) {
-  const dispatch = useDispatch()
+  const dispatch = useRootDispatch()
   const onDrop = useCallback(
     (event: React.DragEvent) => {
       handleDataTransfer(dispatch, event.dataTransfer)
@@ -32,17 +32,16 @@ function TorrentDropZone(props: Props) {
       document.removeEventListener('paste', handler)
     }
   }, [dispatch])
-  const { classes } = useStyles()
 
   return (
-    <div onDrop={onDrop} className={classes.root}>
+    <Box onDrop={onDrop} sx={{ height: '100%' }}>
       {props.children}
-    </div>
+    </Box>
   )
 }
 
 function handleDataTransfer(
-  dispatch: AppDispatch,
+  dispatch: RootDispatch,
   dataTransfer: DataTransfer | null,
 ) {
   if (dataTransfer == null) {
