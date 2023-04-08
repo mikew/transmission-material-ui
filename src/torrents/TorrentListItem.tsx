@@ -31,21 +31,13 @@ interface Props {
 }
 
 interface StatusResult {
-  progress: number
+  progress?: number
   message: React.ReactNode
   progressColor: NonNullable<LinearProgressProps['color']>
 }
 
 function TorrentListItem(props: Props) {
   const status = getStatus(props.torrent)
-  const progress = status ? (
-    <LinearProgress
-      variant="determinate"
-      color={status.progressColor}
-      value={Math.min(status.progress, 100)}
-    />
-  ) : null
-
   const handleClick = (event: React.MouseEvent) => {
     props.onClick(event, props.torrent)
   }
@@ -79,6 +71,17 @@ function TorrentListItem(props: Props) {
       <Icon>{props.rightIcon}</Icon>
     </IconButton>
   ) : undefined
+  const progress =
+    status?.progress != null ? (
+      <LinearProgress
+        variant="determinate"
+        color={status.progressColor}
+        value={Math.min(status.progress, 100)}
+        sx={(theme) => ({
+          height: theme.spacing(1),
+        })}
+      />
+    ) : null
 
   return (
     <ListItem
@@ -162,6 +165,12 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
         // message: `Seeding to ${torrent.peersGettingFromUs} of ${
         //   torrent.peersConnected
         // } peers`,
+      }
+    case TorrentStatus.CHECK:
+      return {
+        message: 'Verifying ...',
+        progressColor: 'warning',
+        progress: torrent.recheckProgress,
       }
     case TorrentStatus.STOPPED:
       if (torrent.error) {

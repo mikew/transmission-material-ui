@@ -28,6 +28,7 @@ const fields = new Set<keyof TransmissionTorrent>([
   'percentDone',
   'uploadRatio',
   'seedRatioLimit',
+  'recheckProgress',
 
   'startDate',
   'addedDate',
