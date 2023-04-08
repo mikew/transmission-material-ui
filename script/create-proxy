@@ -30,10 +30,6 @@ server {
   set $allow_headers "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,X-Transmission-Session-Id,Authorization";
   set $expose_headers "Content-Length,Content-Range,X-Transmission-Session-Id";
 
-  add_header "Access-Control-Allow-Origin" $allow_origin always;
-  add_header "Access-Control-Allow-Methods" $allow_methods always;
-  add_header "Access-Control-Allow-Headers" $allow_headers always;
-  add_header "Access-Control-Expose-Headers" $expose_headers always;
 
   location / {
     if ($request_method = OPTIONS) {
