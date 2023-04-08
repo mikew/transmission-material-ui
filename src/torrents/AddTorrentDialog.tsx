@@ -17,7 +17,9 @@ function AddTorrentDialog() {
   const isAddDialogVisible = useSelector(
     (state) => state.torrents.isAddDialogVisible,
   )
-  const params = new URLSearchParams(window.location.search)
+  const params = new URLSearchParams(
+    typeof window === 'undefined' ? undefined : window.location.search,
+  )
   const magnetUrlFromParams = params.get('magnetUrl')
   const inputRef = useRef<HTMLInputElement>()
   const [magnetUrl, setMagnetUrl] = useState('')
@@ -66,7 +68,7 @@ function AddTorrentDialog() {
   }, [dispatch, magnetUrlFromParams])
 
   useEffect(() => {
-    if (navigator.registerProtocolHandler) {
+    if (typeof window !== 'undefined' && navigator.registerProtocolHandler) {
       const currentUrl = new URL(window.location.toString())
       // Remove any query params.
       currentUrl.search = ''

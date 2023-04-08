@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 set -ex
 
-./script/create-proxy "${REACT_APP_PROXY_URL}" &
+if [ -n "$NEXT_PUBLIC_TRANSMISSION_RPC_PROXY" ]; then
+  ./script/create-proxy "${NEXT_PUBLIC_TRANSMISSION_RPC_PROXY}" &
+fi
 
 if [ -z "$CI" ]; then
   ./script/prepare-env
 fi
 
-exec ./node_modules/.bin/react-scripts start
+exec ./node_modules/.bin/next dev
