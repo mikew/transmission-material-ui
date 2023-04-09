@@ -115,6 +115,16 @@ reduxActionSideEffect(actions.stopTorrent, (action, dispatch) => {
   run()
 })
 
+reduxActionSideEffect(actions.verifyTorrents, (action, dispatch) => {
+  async function run() {
+    await apiInstance.callServer('torrent-verify', { ids: action.payload })
+    await wait(500)
+    dispatch(actions.get(action.payload))
+  }
+
+  run()
+})
+
 reduxActionSideEffect(actions.addTorrent, (action, dispatch) => {
   async function run() {
     let response: { id: number } | undefined

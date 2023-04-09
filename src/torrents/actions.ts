@@ -19,6 +19,7 @@ export default createActions('torrents', {
 
   startTorrent: identityPayloadCreator<TransmissionIdLookup>(),
   stopTorrent: identityPayloadCreator<TransmissionIdLookup>(),
+  verifyTorrents: identityPayloadCreator<TransmissionIdLookup>(),
 
   startWatching: () => undefined,
   stopWatching: () => undefined,

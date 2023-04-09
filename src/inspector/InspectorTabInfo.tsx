@@ -1,3 +1,4 @@
+import { Button, Stack } from '@mui/material'
 import { memo, useEffect, useMemo } from 'react'
 
 import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
@@ -47,17 +48,32 @@ function InspectorTabInfo() {
   return (
     <>
       {checkedTorrents.length > 0 ? (
-        <GroupSelect
-          value={firstGroup}
-          onChange={(group) => {
-            dispatch(
-              actions.torrentSetLocation({
-                ids: checkedTorrents.map((x) => x.id),
-                location: group.location,
-              }),
-            )
-          }}
-        />
+        <>
+          <GroupSelect
+            value={firstGroup}
+            onChange={(group) => {
+              dispatch(
+                actions.torrentSetLocation({
+                  ids: checkedTorrents.map((x) => x.id),
+                  location: group.location,
+                }),
+              )
+            }}
+          />
+          <Stack spacing={1} paddingX={1}>
+            <Button
+              variant="outlined"
+              color="warning"
+              onClick={() => {
+                dispatch(
+                  actions.verifyTorrents(checkedTorrents.map((x) => x.id)),
+                )
+              }}
+            >
+              Verify Selected Torrents
+            </Button>
+          </Stack>
+        </>
       ) : undefined}
       {/* {props.checkedTorrents.map((x) => (
       ))} */}
