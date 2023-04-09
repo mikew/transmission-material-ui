@@ -37,6 +37,7 @@ function Inspector() {
           },
           zIndex: theme.zIndex.appBar - 1,
           width: 400,
+          backgroundColor: theme.palette.background.default,
         }),
       }}
     >
