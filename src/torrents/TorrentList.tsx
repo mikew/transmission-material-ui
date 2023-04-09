@@ -134,28 +134,28 @@ function TorrentList() {
     }
   }, [isInitialLoad, mappedState.isLoading])
 
-  return (
+  return isInitialLoad ? (
     <List dense disablePadding>
-      {isInitialLoad ? (
-        <>
-          <ListItem divider dense>
-            <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
-          </ListItem>
-          <ListItem divider dense>
-            <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
-          </ListItem>
-          <ListItem divider dense>
-            <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
-          </ListItem>
-        </>
-      ) : undefined}
+      <ListHeaderTopBar>...</ListHeaderTopBar>
+      <ListItem divider dense>
+        <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
+      </ListItem>
+      <ListItem divider dense>
+        <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
+      </ListItem>
+      <ListItem divider dense>
+        <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
+      </ListItem>
+    </List>
+  ) : (
+    <>
       {Object.keys(groups).map((groupName) => {
         if (groups[groupName].length === 0) {
           return null
         }
 
         return (
-          <div key={groupName}>
+          <List dense disablePadding key={groupName}>
             <ListHeaderTopBar>{groupName}</ListHeaderTopBar>
             {groups[groupName].map((torrent) => {
               const secondaryAction =
@@ -187,10 +187,10 @@ function TorrentList() {
                 />
               )
             })}
-          </div>
+          </List>
         )
       })}
-    </List>
+    </>
   )
 }
 
