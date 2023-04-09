@@ -17,7 +17,8 @@ import actions from './actions'
 import * as selectors from './selectors'
 import TorrentListItem from './TorrentListItem'
 
-const fields = new Set<keyof TransmissionTorrent>([
+export const fields = new Set<keyof TransmissionTorrent>([
+  'id',
   'error',
   'errorString',
 
@@ -98,11 +99,9 @@ function TorrentList() {
   const mappedState = useRootSelectorShallowEqual(mapState)
 
   useEffect(() => {
-    dispatch(actions.addFields(fields))
     dispatch(actions.startWatching())
 
     return () => {
-      dispatch(actions.removeFields(fields))
       dispatch(actions.stopWatching())
     }
   }, [dispatch])

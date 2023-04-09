@@ -1,6 +1,7 @@
 import { createReducer } from 'redux-easy-mode'
 
 import actions from './actions'
+import { fields } from './TorrentList'
 
 export interface State {
   all: Record<string | number, TransmissionTorrent>
@@ -19,7 +20,7 @@ const initialState: State = {
   isAddDialogVisible: false,
   checkedTorrents: [],
   isDeleteDialogVisible: false,
-  fields: new Set<keyof TransmissionTorrent>(['id']),
+  fields: new Set<keyof TransmissionTorrent>(fields),
   lastCommunication: new Date(),
   isApiDown: false,
   isWatching: false,
