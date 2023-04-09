@@ -1,8 +1,10 @@
 function convertFilesToGroup(files: TransmissionTorrent['files'] = []) {
+  // Shortcut: If there's no files, return something consistent.
   if (files.length === 0) {
     return emptyDirSpec
   }
 
+  // Shortcut: If there's only one file, just return that.
   if (files.length === 1 && !files[0].name.includes('/')) {
     const fileSpec: FileSpec = {
       ...files[0],
