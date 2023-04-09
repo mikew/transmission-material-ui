@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -ex
 
-find build/ -iname '*.map' -print -exec rm {} \;
+find out/ -iname '*.map' -print -exec rm {} \;
 
-mv build/ transmission-material-ui/
-rm -f transmission-material-ui.zip
+rm -rf transmission-material-ui/ transmission-material-ui.zip
+mv out/ transmission-material-ui/
 zip -r transmission-material-ui.zip transmission-material-ui/
 
 RELEASE_TAG="release-$(date "+%F-%H-%M")"
