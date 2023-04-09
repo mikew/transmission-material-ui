@@ -146,7 +146,7 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
       return {
         message: 'Verifying ...',
         progressColor: 'warning',
-        progress: torrent.recheckProgress,
+        progress: torrent.recheckProgress * 100,
       }
     case TorrentStatus.STOPPED:
       if (torrent.error) {
@@ -162,6 +162,22 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
         // progress: 0,
         progressColor: 'inherit',
       }
+    case TorrentStatus.CHECK_WAIT:
+      return {
+        message: 'Waiting to verify ...',
+        progressColor: 'inherit',
+      }
+    case TorrentStatus.DOWNLOAD_WAIT:
+      return {
+        message: 'Waiting to start ...',
+        progressColor: 'inherit',
+      }
+    case TorrentStatus.SEED_WAIT: {
+      return {
+        message: 'Waiting to seed ...',
+        progressColor: 'inherit',
+      }
+    }
   }
 
   return null
