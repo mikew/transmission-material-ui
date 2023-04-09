@@ -11,12 +11,15 @@ import Document, {
 import * as React from 'react'
 
 import createEmotionCache from '@src/mui/createEmotionCache'
+import theme from '@src/mui/theme'
 
 import { MyAppProps } from './_app'
 
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: JSX.Element[]
 }
+
+const FAVICON_BASE_PATH = `${process.env.NEXT_PUBLIC_BASE_PATH}/favicon`
 
 export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
@@ -27,9 +30,15 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
           appDescription=""
           appLink=""
           appTitle="Transmission"
+          manifestPath={`${process.env.NEXT_PUBLIC_BASE_PATH}/manifest.webmanifest`}
           // This is theme.palette.background.paper mixed with an overlay that
           // mui adds.
           themeColor="#302a31"
+          faviconPath={`${FAVICON_BASE_PATH}/favicon.ico`}
+          favicon32Path={`${FAVICON_BASE_PATH}/favicon-32x32.png`}
+          iconPath={`${FAVICON_BASE_PATH}/android-chrome-192x192.png`}
+          pinnedTabPath={`${FAVICON_BASE_PATH}/safari-pinned-tab.svg`}
+          pinnedTabColor={theme.palette.primary.main}
         />
 
         <link rel="shortcut icon" href="/favicon.ico" />
@@ -50,6 +59,13 @@ const PwaMeta: React.FC<{
   appAuthor: string
   appLink: string
   themeColor: string
+  manifestPath: string
+
+  iconPath?: string
+  favicon32Path?: string
+  faviconPath?: string
+  pinnedTabPath?: string
+  pinnedTabColor?: string
 }> = (props) => {
   return (
     <>
@@ -67,54 +83,37 @@ const PwaMeta: React.FC<{
       <meta name="msapplication-TileColor" content={props.themeColor} />
       <meta name="msapplication-tap-highlight" content="no" />
 
-      {/* <link rel="apple-touch-icon" href="/icons/touch-icon-iphone.png" /> */}
-      {/* <link
-        rel="apple-touch-icon"
-        sizes="152x152"
-        href="/icons/touch-icon-ipad.png"
-      /> */}
-      {/* <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href="/icons/touch-icon-iphone-retina.png"
-      /> */}
-      {/* <link
-        rel="apple-touch-icon"
-        sizes="167x167"
-        href="/icons/touch-icon-ipad-retina.png"
-      /> */}
+      {props.iconPath ? (
+        <link rel="apple-touch-icon" href={props.iconPath} />
+      ) : undefined}
 
-      {/* <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="/icons/favicon-32x32.png"
-      /> */}
-      {/* <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="/icons/favicon-16x16.png"
-      /> */}
-      <link
-        rel="manifest"
-        href={`${process.env.NEXT_PUBLIC_BASE_PATH}/manifest.webmanifest`}
-      />
-      {/* <link
-        rel="mask-icon"
-        href="/icons/safari-pinned-tab.svg"
-        color="#5bbad5"
-      /> */}
-      {/* <link rel="shortcut icon" href="/favicon.ico" /> */}
+      {props.favicon32Path ? (
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href={props.favicon32Path}
+        />
+      ) : undefined}
+      <link rel="manifest" href={props.manifestPath} />
+      {props.pinnedTabPath ? (
+        <link
+          rel="mask-icon"
+          href={props.pinnedTabPath}
+          color={props.pinnedTabColor}
+        />
+      ) : undefined}
+      {props.faviconPath ? (
+        <link rel="shortcut icon" href={props.faviconPath} />
+      ) : undefined}
 
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:url" content={props.appLink} />
       <meta name="twitter:title" content={props.appTitle} />
       <meta name="twitter:description" content={props.appDescription} />
-      {/* <meta
-        name="twitter:image"
-        content="https://yourdomain.com/icons/android-chrome-192x192.png"
-      /> */}
+      {props.iconPath ? (
+        <meta name="twitter:image" content={props.iconPath} />
+      ) : undefined}
       <meta name="twitter:creator" content={props.appAuthor} />
 
       <meta property="og:type" content="website" />
@@ -122,10 +121,9 @@ const PwaMeta: React.FC<{
       <meta property="og:description" content={props.appDescription} />
       <meta property="og:site_name" content={props.appTitle} />
       <meta property="og:url" content={props.appLink} />
-      {/* <meta
-        property="og:image"
-        content="https://yourdomain.com/icons/apple-touch-icon.png"
-      /> */}
+      {props.iconPath ? (
+        <meta property="og:image" content={props.iconPath} />
+      ) : undefined}
     </>
   )
 }
