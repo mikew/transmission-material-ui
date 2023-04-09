@@ -1,4 +1,3 @@
-import { ListSubheader } from '@mui/material'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
@@ -50,11 +49,11 @@ function GroupSelect(props: Props) {
         {Object.keys(groups).map((groupName) => {
           return (
             <div key={groupName}>
-              <ListSubheader>{groupName}</ListSubheader>
               {groups[groupName].map((location) => {
                 return (
                   <MenuItem
                     key={location}
+                    divider
                     onClick={() => handleMenuItemClick({ groupName, location })}
                     selected={
                       props.value
@@ -62,7 +61,7 @@ function GroupSelect(props: Props) {
                         : undefined
                     }
                   >
-                    <ListItemText primary={location} />
+                    <ListItemText primary={location} secondary={groupName} />
                   </MenuItem>
                 )
               })}
