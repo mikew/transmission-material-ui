@@ -13,7 +13,7 @@ import LinearProgress, {
   LinearProgressProps,
 } from '@mui/material/LinearProgress'
 import ListItemText from '@mui/material/ListItemText'
-import React, { memo } from 'react'
+import { memo } from 'react'
 
 import { TorrentStatus } from '@src/api'
 

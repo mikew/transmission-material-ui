@@ -2,7 +2,7 @@ import { Box } from '@mui/material'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
-import React, { memo } from 'react'
+import { memo } from 'react'
 
 interface Props {
   tracker: TransmissionTrackerStat
