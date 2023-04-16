@@ -1,7 +1,7 @@
+import { Button, Stack } from '@mui/material'
 import { memo, useEffect, useMemo } from 'react'
 
-import useDispatch from '@src/redux/useDispatch'
-import useSelector from '@src/redux/useSelector'
+import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 import { getGroups } from '@src/settings/selectors'
 import actions from '@src/torrents/actions'
 import * as selectors from '@src/torrents/selectors'
@@ -11,8 +11,8 @@ import GroupSelect from '../settings/GroupSelect'
 const fields = new Set<keyof TransmissionTorrent>([])
 
 function InspectorTabInfo() {
-  const checkedTorrents = useSelector(selectors.getCheckedTorrents)
-  const dispatch = useDispatch()
+  const checkedTorrents = useRootSelector(selectors.getCheckedTorrents)
+  const dispatch = useRootDispatch()
   useEffect(() => {
     dispatch(actions.addFields(fields))
 
@@ -21,7 +21,7 @@ function InspectorTabInfo() {
     }
   }, [dispatch])
 
-  const groups = useSelector(getGroups)
+  const groups = useRootSelector(getGroups)
   // TODO This could be wrapped up into `findGroupForDirectory`
   const firstGroup = useMemo(() => {
     if (checkedTorrents.length === 0) {
@@ -48,17 +48,32 @@ function InspectorTabInfo() {
   return (
     <>
       {checkedTorrents.length > 0 ? (
-        <GroupSelect
-          value={firstGroup}
-          onChange={(group) => {
-            dispatch(
-              actions.torrentSetLocation({
-                ids: checkedTorrents.map((x) => x.id),
-                location: group.location,
-              }),
-            )
-          }}
-        />
+        <>
+          <GroupSelect
+            value={firstGroup}
+            onChange={(group) => {
+              dispatch(
+                actions.torrentSetLocation({
+                  ids: checkedTorrents.map((x) => x.id),
+                  location: group.location,
+                }),
+              )
+            }}
+          />
+          <Stack spacing={1} paddingX={1}>
+            <Button
+              variant="outlined"
+              color="warning"
+              onClick={() => {
+                dispatch(
+                  actions.verifyTorrents(checkedTorrents.map((x) => x.id)),
+                )
+              }}
+            >
+              Verify Selected Torrents
+            </Button>
+          </Stack>
+        </>
       ) : undefined}
       {/* {props.checkedTorrents.map((x) => (
       ))} */}

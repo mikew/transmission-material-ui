@@ -1,19 +1,24 @@
+import PlayArrow from '@mui/icons-material/PlayArrow'
+import Stop from '@mui/icons-material/Stop'
+import { IconButton, ListItem, ListItemText, Skeleton } from '@mui/material'
 import List from '@mui/material/List'
-import { memo, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 
 import { TorrentStatus } from '@src/api'
 import inspectorActions from '@src/inspector/actions'
-import { RootState } from '@src/redux/types'
-import useDispatch from '@src/redux/useDispatch'
-import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
+import ListHeaderTopBar from '@src/lib/ListHeaderTopBar'
+import {
+  useRootDispatch,
+  useRootSelectorShallowEqual,
+} from '@src/redux/helpers'
 import * as settingsSelectors from '@src/settings/selectors'
-import ListHeaderTopBar from '@src/util/ListHeaderTopBar'
 
 import actions from './actions'
 import * as selectors from './selectors'
 import TorrentListItem from './TorrentListItem'
 
-const fields = new Set<keyof TransmissionTorrent>([
+export const fields = new Set<keyof TransmissionTorrent>([
+  'id',
   'error',
   'errorString',
 
@@ -27,6 +32,7 @@ const fields = new Set<keyof TransmissionTorrent>([
   'percentDone',
   'uploadRatio',
   'seedRatioLimit',
+  'recheckProgress',
 
   'startDate',
   'addedDate',
@@ -42,7 +48,7 @@ const fields = new Set<keyof TransmissionTorrent>([
 const NO_GROUP = '__NO_GROUP'
 
 function TorrentList() {
-  const dispatch = useDispatch()
+  const dispatch = useRootDispatch()
   const handleClick = (
     event: React.MouseEvent,
     torrent: TransmissionTorrent,
@@ -90,14 +96,12 @@ function TorrentList() {
     }
   }
 
-  const mappedState = useShallowEqualSelector(mapState)
+  const mappedState = useRootSelectorShallowEqual(mapState)
 
   useEffect(() => {
-    dispatch(actions.addFields(fields))
     dispatch(actions.startWatching())
 
     return () => {
-      dispatch(actions.removeFields(fields))
       dispatch(actions.stopWatching())
     }
   }, [dispatch])
@@ -123,19 +127,53 @@ function TorrentList() {
     groups[group.groupName].push(torrent)
   })
 
-  return (
-    <List dense={true}>
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
+  useEffect(() => {
+    if (isInitialLoad && !mappedState.isLoading) {
+      setIsInitialLoad(false)
+    }
+  }, [isInitialLoad, mappedState.isLoading])
+
+  return isInitialLoad ? (
+    <List dense disablePadding>
+      <ListHeaderTopBar>...</ListHeaderTopBar>
+      <ListItem divider dense>
+        <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
+      </ListItem>
+      <ListItem divider dense>
+        <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
+      </ListItem>
+      <ListItem divider dense>
+        <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
+      </ListItem>
+    </List>
+  ) : (
+    <>
       {Object.keys(groups).map((groupName) => {
         if (groups[groupName].length === 0) {
           return null
         }
 
         return (
-          <div key={groupName}>
+          <List dense disablePadding key={groupName}>
             <ListHeaderTopBar>{groupName}</ListHeaderTopBar>
             {groups[groupName].map((torrent) => {
-              const rightIcon =
-                torrent.status === TorrentStatus.STOPPED ? 'play_arrow' : 'stop'
+              const secondaryAction =
+                torrent.status === TorrentStatus.STOPPED ? (
+                  <IconButton
+                    edge="end"
+                    onClick={(event) => handleRightIconClick(event, torrent)}
+                  >
+                    <PlayArrow />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    edge="end"
+                    onClick={(event) => handleRightIconClick(event, torrent)}
+                  >
+                    <Stop />
+                  </IconButton>
+                )
 
               return (
                 <TorrentListItem
@@ -144,24 +182,23 @@ function TorrentList() {
                   onClick={handleClick}
                   onDoubleClick={handleDoubleClick}
                   onCheckboxChange={handleCheckboxClick}
-                  rightIcon={rightIcon}
-                  onRightIconClick={handleRightIconClick}
+                  secondaryAction={secondaryAction}
                   checked={isChecked(torrent.id)}
                 />
               )
             })}
-          </div>
+          </List>
         )
       })}
-    </List>
+    </>
   )
 }
 
 const mapState = (state: RootState) => ({
   torrents: selectors.getAllFiltered(state),
   checkedTorrents: selectors.getCheckedIds(state),
-  fields: state.torrents.fields,
   groups: settingsSelectors.getGroups(state),
+  isLoading: state.torrents.isLoading,
 })
 
 export default memo(TorrentList)

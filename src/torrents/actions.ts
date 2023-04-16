@@ -2,7 +2,6 @@ import { createActions } from 'redux-easy-mode'
 
 import apiInstance from '@src/api/apiInstance'
 import identityPayloadCreator from '@src/redux/identityPayloadCreator'
-import { AppDispatch, AppGetState } from '@src/redux/types'
 
 export default createActions('torrents', {
   toggleTorrentChecked: identityPayloadCreator<{
@@ -20,6 +19,7 @@ export default createActions('torrents', {
 
   startTorrent: identityPayloadCreator<TransmissionIdLookup>(),
   stopTorrent: identityPayloadCreator<TransmissionIdLookup>(),
+  verifyTorrents: identityPayloadCreator<TransmissionIdLookup>(),
 
   startWatching: () => undefined,
   stopWatching: () => undefined,
@@ -36,7 +36,7 @@ export default createActions('torrents', {
   }>(),
 
   get: (ids?: TransmissionIdLookup, isMain?: boolean) => ({
-    payload: (_dispatch: AppDispatch, getState: AppGetState) =>
+    payload: (_dispatch: RootDispatch, getState: RootGetState) =>
       apiInstance.callServer('torrent-get', {
         ids,
         fields: [...getState().torrents.fields],

@@ -1,10 +1,17 @@
-import Checkbox from '@mui/material/Checkbox/Checkbox'
-import Icon from '@mui/material/Icon/Icon'
-import IconButton, { IconButtonProps } from '@mui/material/IconButton'
+import Group from '@mui/icons-material/Group'
+import Timer from '@mui/icons-material/Timer'
+import {
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  Stack,
+  Typography,
+} from '@mui/material'
+import Checkbox from '@mui/material/Checkbox'
 import LinearProgress, {
   LinearProgressProps,
 } from '@mui/material/LinearProgress'
-import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import { memo } from 'react'
 
@@ -13,12 +20,7 @@ import { TorrentStatus } from '@src/api'
 interface Props {
   torrent: TransmissionTorrent
   checked: boolean
-  rightIcon?: string
-  onRightIconClick?: (
-    event: React.MouseEvent,
-    torrent: TransmissionTorrent,
-  ) => void
-  rightIconProps?: IconButtonProps
+  secondaryAction?: React.ReactNode
   onClick: (event: React.MouseEvent, torrent: TransmissionTorrent) => void
   onDoubleClick?: (
     event: React.MouseEvent,
@@ -31,88 +33,65 @@ interface Props {
 }
 
 interface StatusResult {
-  progress: number
+  progress?: number
   message: React.ReactNode
   progressColor: NonNullable<LinearProgressProps['color']>
 }
 
 function TorrentListItem(props: Props) {
   const status = getStatus(props.torrent)
-  const progress = status ? (
-    <LinearProgress
-      variant="determinate"
-      color={status.progressColor}
-      value={Math.min(status.progress, 100)}
-    />
-  ) : null
-
-  const handleClick = (event: React.MouseEvent) => {
-    props.onClick(event, props.torrent)
-  }
-
-  const handleCheckboxClick = (event: React.MouseEvent) => {
-    props.onCheckboxChange(event, props.torrent)
-  }
-
-  const handleDoubleClick = (event: React.MouseEvent) => {
-    if (!props.onDoubleClick) {
-      return
-    }
-
-    props.onDoubleClick(event, props.torrent)
-  }
-
-  const handleRightIconClick = (event: React.MouseEvent) => {
-    if (!props.onRightIconClick) {
-      return
-    }
-
-    props.onRightIconClick(event, props.torrent)
-  }
-
-  const rightIcon = props.rightIcon ? (
-    <IconButton
-      {...props.rightIconProps}
-      onClickCapture={handleRightIconClick}
-      size="large"
-    >
-      <Icon>{props.rightIcon}</Icon>
-    </IconButton>
-  ) : undefined
+  const progress =
+    status?.progress != null ? (
+      <LinearProgress
+        variant="determinate"
+        color={status.progressColor}
+        value={Math.min(status.progress, 100)}
+        sx={(theme) => ({
+          height: theme.spacing(1),
+        })}
+      />
+    ) : null
 
   return (
     <ListItem
-      button={true}
+      button
       disableRipple
-      divider={true}
-      onClick={handleClick}
-      onDoubleClick={handleDoubleClick}
+      divider
+      onClick={(event) => props.onClick(event, props.torrent)}
+      onDoubleClick={(event) => props.onDoubleClick?.(event, props.torrent)}
+      // TODO this is supposed to be read from the list context.
+      dense
     >
-      <Checkbox
-        onClickCapture={handleCheckboxClick}
-        checked={props.checked}
-        color="secondary"
-      />
+      <ListItemIcon>
+        <Checkbox
+          onClickCapture={(event) =>
+            props.onCheckboxChange(event, props.torrent)
+          }
+          checked={props.checked}
+          color="primary"
+        />
+      </ListItemIcon>
 
       <ListItemText
-        primary={props.torrent.name}
-        primaryTypographyProps={{ style: { wordBreak: 'break-all' } }}
-        secondary={
-          <>
+        disableTypography
+        primary={
+          <Stack direction="column" spacing={0.3}>
+            <Typography variant="body2" sx={{ wordBreak: 'break-all' }}>
+              {props.torrent.name}
+            </Typography>
             {progress}
-            {status ? status.message : undefined}
-          </>
-        }
-        secondaryTypographyProps={
-          {
-            component: 'div',
-            // https://github.com/mui-org/material-ui/issues/19036
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any
+            <Typography variant="body2" color="text.secondary" component="div">
+              {status?.message}
+            </Typography>
+          </Stack>
         }
       />
 
-      {rightIcon}
+      {props.secondaryAction ? (
+        <ListItemSecondaryAction>
+          {props.secondaryAction}
+        </ListItemSecondaryAction>
+      ) : undefined}
     </ListItem>
   )
 }
@@ -127,19 +106,17 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
 
       return {
         progress: torrent.percentDone * 100,
-        progressColor: 'secondary',
+        progressColor: 'info',
         message: (
-          <>
-            <Icon fontSize="small" style={{ verticalAlign: 'middle' }}>
-              group
-            </Icon>{' '}
-            {torrent.peersSendingToUs} / {torrent.peersConnected}
-            {' | '}
-            <Icon fontSize="small" style={{ verticalAlign: 'middle' }}>
-              timer
-            </Icon>{' '}
-            {eta}
-          </>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Group fontSize="small" />
+            <span>
+              {torrent.peersSendingToUs} / {torrent.peersConnected}
+            </span>
+            <Divider flexItem orientation="vertical" />
+            <Timer fontSize="small" />
+            <span>{eta}</span>
+          </Stack>
         ),
         // message: `Downloading from ${torrent.peersSendingToUs} of ${
         //   torrent.peersConnected
@@ -150,33 +127,57 @@ const getStatus = (torrent: TransmissionTorrent): StatusResult | null => {
     case TorrentStatus.SEED:
       return {
         progress: (torrent.uploadRatio / torrent.seedRatioLimit) * 100,
-        progressColor: 'primary',
+        progressColor: 'success',
+
         message: (
-          <>
-            <Icon fontSize="small" style={{ verticalAlign: 'middle' }}>
-              group
-            </Icon>{' '}
-            {torrent.peersGettingFromUs} / {torrent.peersConnected}
-          </>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Group fontSize="small" />
+
+            <span>
+              {torrent.peersGettingFromUs} / {torrent.peersConnected}
+            </span>
+          </Stack>
         ),
         // message: `Seeding to ${torrent.peersGettingFromUs} of ${
         //   torrent.peersConnected
         // } peers`,
+      }
+    case TorrentStatus.CHECK:
+      return {
+        message: 'Verifying ...',
+        progressColor: 'warning',
+        progress: torrent.recheckProgress * 100,
       }
     case TorrentStatus.STOPPED:
       if (torrent.error) {
         return {
           message: torrent.errorString,
           progress: 0,
-          progressColor: 'primary',
+          progressColor: 'info',
         }
       }
 
       return {
         message: 'Stopped',
-        progress: 0,
-        progressColor: 'primary',
+        // progress: 0,
+        progressColor: 'inherit',
       }
+    case TorrentStatus.CHECK_WAIT:
+      return {
+        message: 'Waiting to verify ...',
+        progressColor: 'inherit',
+      }
+    case TorrentStatus.DOWNLOAD_WAIT:
+      return {
+        message: 'Waiting to start ...',
+        progressColor: 'inherit',
+      }
+    case TorrentStatus.SEED_WAIT: {
+      return {
+        message: 'Waiting to seed ...',
+        progressColor: 'inherit',
+      }
+    }
   }
 
   return null

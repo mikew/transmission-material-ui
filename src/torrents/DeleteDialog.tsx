@@ -1,25 +1,26 @@
-import Button from '@mui/material/Button/Button'
-import Checkbox from '@mui/material/Checkbox/Checkbox'
-import Dialog from '@mui/material/Dialog/Dialog'
-import DialogActions from '@mui/material/DialogActions/DialogActions'
-import DialogContent from '@mui/material/DialogContent/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle/DialogTitle'
-import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel'
-import List from '@mui/material/List/List'
-import ListItem from '@mui/material/ListItem/ListItem'
-import ListItemText from '@mui/material/ListItemText/ListItemText'
+import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 import { memo, useCallback, useEffect, useState } from 'react'
 
-import { RootState } from '@src/redux/types'
-import useDispatch from '@src/redux/useDispatch'
-import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
+import {
+  useRootDispatch,
+  useRootSelectorShallowEqual,
+} from '@src/redux/helpers'
 
 import actions from './actions'
 import * as selectors from './selectors'
 
 function DeleteDialog() {
-  const dispatch = useDispatch()
-  const mappedState = useShallowEqualSelector(mapState)
+  const dispatch = useRootDispatch()
+  const mappedState = useRootSelectorShallowEqual(mapState)
   const [deleteData, setDeleteData] = useState(false)
   const onClose = useCallback(
     () => dispatch(actions.toggleDeleteDialog()),
@@ -51,15 +52,17 @@ function DeleteDialog() {
       onClose={handleBackdropClick}
     >
       <DialogTitle>Delete {mappedState.checked.length} torrents</DialogTitle>
-      <DialogContent>
-        <List dense={true}>
+
+      <DialogContent sx={{ padding: 0 }}>
+        <List dense disablePadding>
           {mappedState.checked.map((x) => (
             <ListItem divider={true} key={x.id}>
-              <ListItemText primary={x.name} />
+              <ListItemText primary={x.name} sx={{ wordBreak: 'break-all' }} />
             </ListItem>
           ))}
         </List>
       </DialogContent>
+
       <DialogActions>
         <FormControlLabel
           control={

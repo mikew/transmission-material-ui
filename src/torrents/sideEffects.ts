@@ -2,8 +2,7 @@ import { shallowEqual } from 'react-redux'
 import { reduxActionSideEffect, reduxSelectorSideEffect } from 'redux-easy-mode'
 
 import apiInstance from '@src/api/apiInstance'
-import { RootState } from '@src/redux/types'
-import wait from '@src/util/wait'
+import wait from '@src/lib/wait'
 
 import actions from './actions'
 
@@ -109,6 +108,16 @@ reduxActionSideEffect(actions.startTorrent, (action, dispatch) => {
 reduxActionSideEffect(actions.stopTorrent, (action, dispatch) => {
   async function run() {
     await apiInstance.callServer('torrent-stop', { ids: action.payload })
+    await wait(500)
+    dispatch(actions.get(action.payload))
+  }
+
+  run()
+})
+
+reduxActionSideEffect(actions.verifyTorrents, (action, dispatch) => {
+  async function run() {
+    await apiInstance.callServer('torrent-verify', { ids: action.payload })
     await wait(500)
     dispatch(actions.get(action.payload))
   }

@@ -1,7 +1,6 @@
 import { memo, useEffect } from 'react'
 
-import useDispatch from '@src/redux/useDispatch'
-import useSelector from '@src/redux/useSelector'
+import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 import actions from '@src/torrents/actions'
 import * as selectors from '@src/torrents/selectors'
 
@@ -10,8 +9,8 @@ import TorrentTrackerList from './TorrentTrackerList'
 const fields = new Set<keyof TransmissionTorrent>(['trackerStats'])
 
 function InspectorTabTrackers() {
-  const dispatch = useDispatch()
-  const checkedTorrents = useSelector(selectors.getCheckedTorrents)
+  const dispatch = useRootDispatch()
+  const checkedTorrents = useRootSelector(selectors.getCheckedTorrents)
 
   useEffect(() => {
     dispatch(actions.addFields(fields))

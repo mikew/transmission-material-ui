@@ -1,27 +1,28 @@
-import Button from '@mui/material/Button/Button'
-import Dialog from '@mui/material/Dialog/Dialog'
-import DialogActions from '@mui/material/DialogActions/DialogActions'
-import DialogContent from '@mui/material/DialogContent/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle/DialogTitle'
-import TextField from '@mui/material/TextField/TextField'
-import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { Divider, FormHelperText } from '@mui/material'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import TextField from '@mui/material/TextField'
+import { memo, useCallback, useEffect, useState } from 'react'
 
-import useDispatch from '@src/redux/useDispatch'
-import useSelector from '@src/redux/useSelector'
+import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 import GroupSelect from '@src/settings/GroupSelect'
 
 import actions from './actions'
 
 function AddTorrentDialog() {
-  const dispatch = useDispatch()
-  const isAddDialogVisible = useSelector(
+  const dispatch = useRootDispatch()
+  const isAddDialogVisible = useRootSelector(
     (state) => state.torrents.isAddDialogVisible,
   )
-  const params = new URLSearchParams(window.location.search)
+  const params = new URLSearchParams(
+    typeof window === 'undefined' ? undefined : window.location.search,
+  )
   const magnetUrlFromParams = params.get('magnetUrl')
-  const inputRef = useRef<HTMLInputElement>()
   const [magnetUrl, setMagnetUrl] = useState('')
-  const [current, updateCurrent] = useState<
+  const [selectedLocation, setSelectedLocation] = useState<
     TorrentGroupDefinition | undefined
   >()
 
@@ -35,13 +36,13 @@ function AddTorrentDialog() {
         actions.addTorrent({
           mode: 'magnet',
           data: magnetUrl,
-          location: current ? current.location : undefined,
+          location: selectedLocation ? selectedLocation.location : undefined,
         }),
       )
     }
 
     handleBackdropClick()
-  }, [dispatch, handleBackdropClick, magnetUrl, current])
+  }, [dispatch, handleBackdropClick, magnetUrl, selectedLocation])
 
   const handleSubmit = useCallback(
     (event: React.FormEvent) => {
@@ -54,7 +55,7 @@ function AddTorrentDialog() {
   useEffect(() => {
     if (!isAddDialogVisible) {
       setMagnetUrl('')
-      updateCurrent(undefined)
+      setSelectedLocation(undefined)
     }
   }, [isAddDialogVisible])
 
@@ -66,7 +67,7 @@ function AddTorrentDialog() {
   }, [dispatch, magnetUrlFromParams])
 
   useEffect(() => {
-    if (navigator.registerProtocolHandler) {
+    if (typeof window !== 'undefined' && navigator.registerProtocolHandler) {
       const currentUrl = new URL(window.location.toString())
       // Remove any query params.
       currentUrl.search = ''
@@ -77,38 +78,32 @@ function AddTorrentDialog() {
   return (
     <Dialog
       maxWidth="xs"
-      fullWidth={true}
+      fullWidth
       open={isAddDialogVisible}
       onClose={handleBackdropClick}
-      TransitionProps={{
-        onEntered: () => {
-          // console.log(inputRef)
-          setTimeout(() => {
-            if (!inputRef.current) {
-              return
-            }
-
-            inputRef.current.focus()
-          }, 50)
-        },
-      }}
     >
       <DialogTitle>Add Torrent</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <TextField
-            inputRef={inputRef}
+            autoFocus
+            margin="dense"
             value={magnetUrl}
-            fullWidth={true}
+            fullWidth
             label="Magnet"
             onChange={(event) => {
               setMagnetUrl(event.target.value)
             }}
           />
           <GroupSelect
-            value={current}
-            onChange={(group) => updateCurrent(group)}
+            value={selectedLocation}
+            onChange={(group) => setSelectedLocation(group)}
           />
+          <Divider sx={{ marginY: 1 }} />
+          <FormHelperText>
+            Tip: You can add a .torrent file or magnet without this dialog by
+            drag + drop, or by pasting into the window.
+          </FormHelperText>
         </form>
       </DialogContent>
       <DialogActions>

@@ -7,13 +7,11 @@ import inspector from '@src/inspector/reducer'
 import settings from '@src/settings/reducer'
 import torrents from '@src/torrents/reducer'
 
-import { RootState } from './types'
-
 import '@src/torrents/sideEffects'
 
 // The reducer must be added to the rootReducer. It's key must match the key
 // you've given the feature in the RootStore.
-const rootReducer = combineReducers<RootState>({
+const rootReducer = combineReducers({
   torrents,
   inspector,
   settings,

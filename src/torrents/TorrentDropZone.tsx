@@ -1,9 +1,8 @@
-import { useEffect, useCallback, memo } from 'react'
+import { Box } from '@mui/material'
+import React, { useEffect, useCallback, memo } from 'react'
 
-import { AppDispatch } from '@src/redux/types'
-import useDispatch from '@src/redux/useDispatch'
-import { appMakeStyles } from '@src/styles/helpers'
-import getFilesFromEvent from '@src/util/getFilesFromEvent'
+import getFilesFromEvent from '@src/lib/getFilesFromEvent'
+import { useRootDispatch } from '@src/redux/helpers'
 
 import actions from './actions'
 
@@ -11,16 +10,11 @@ interface Props {
   children?: React.ReactNode
 }
 
-const useStyles = appMakeStyles()(() => ({
-  root: {
-    height: '100%',
-  },
-}))
-
 function TorrentDropZone(props: Props) {
-  const dispatch = useDispatch()
+  const dispatch = useRootDispatch()
   const onDrop = useCallback(
     (event: React.DragEvent) => {
+      event.preventDefault()
       handleDataTransfer(dispatch, event.dataTransfer)
     },
     [dispatch],
@@ -31,6 +25,7 @@ function TorrentDropZone(props: Props) {
         return
       }
 
+      event.preventDefault()
       handleDataTransfer(dispatch, event.clipboardData)
     }
     document.addEventListener('paste', handler)
@@ -39,17 +34,21 @@ function TorrentDropZone(props: Props) {
       document.removeEventListener('paste', handler)
     }
   }, [dispatch])
-  const { classes } = useStyles()
 
   return (
-    <div onDrop={onDrop} className={classes.root}>
+    <Box
+      onDrop={onDrop}
+      onDragEnter={(event) => event.preventDefault()}
+      onDragOver={(event) => event.preventDefault()}
+      sx={{ height: '100%' }}
+    >
       {props.children}
-    </div>
+    </Box>
   )
 }
 
 function handleDataTransfer(
-  dispatch: AppDispatch,
+  dispatch: RootDispatch,
   dataTransfer: DataTransfer | null,
 ) {
   if (dataTransfer == null) {

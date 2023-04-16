@@ -1,0 +1,31 @@
+{
+  "name": "transmission-material-ui",
+  "short_name": "transmission-material-ui",
+  "start_url": "/transmission/web/",
+  "scope": "/transmission/web/",
+
+  "display": "standalone",
+  "theme_color": "#302a31",
+  "background_color": "#070807",
+
+  "lang": "en",
+
+  "icons": [
+    {
+      "src": "/transmission/web/favicon/android-chrome-192x192.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/transmission/web/favicon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/transmission/web/favicon/maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

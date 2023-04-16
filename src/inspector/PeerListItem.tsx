@@ -1,6 +1,6 @@
-import Icon from '@mui/material/Icon/Icon'
-import ListItem from '@mui/material/ListItem/ListItem'
-import ListItemText from '@mui/material/ListItemText/ListItemText'
+import Lock from '@mui/icons-material/Lock'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 import { memo } from 'react'
 
 interface Props {
@@ -9,21 +9,14 @@ interface Props {
 
 function PeerListItem(props: Props) {
   const icon = props.peer.isEncrypted ? (
-    <Icon fontSize="inherit">lock</Icon>
+    <Lock fontSize="inherit">lock</Lock>
   ) : undefined
 
   return (
-    <ListItem divider={true}>
+    <ListItem divider>
       <ListItemText
         primary={props.peer.address}
         secondary={props.peer.clientName}
-        secondaryTypographyProps={
-          {
-            component: 'div',
-            // https://github.com/mui-org/material-ui/issues/19036
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any
-        }
       />
       {icon}
     </ListItem>

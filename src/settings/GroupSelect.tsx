@@ -1,12 +1,11 @@
-import { ListSubheader } from '@mui/material'
-import List from '@mui/material/List/List'
-import ListItem from '@mui/material/ListItem/ListItem'
-import ListItemText from '@mui/material/ListItemText/ListItemText'
-import Menu from '@mui/material/Menu/Menu'
-import MenuItem from '@mui/material/MenuItem/MenuItem'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import { memo, useState } from 'react'
 
-import useSelector from '@src/redux/useSelector'
+import { useRootSelector } from '@src/redux/helpers'
 
 import * as selectors from './selectors'
 
@@ -20,7 +19,7 @@ function GroupSelect(props: Props) {
   const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
-  const groups = useSelector(selectors.getGroups)
+  const groups = useRootSelector(selectors.getGroups)
 
   const handleMenuItemClick = (group: TorrentGroupDefinition) => {
     props.onChange(group)
@@ -50,11 +49,11 @@ function GroupSelect(props: Props) {
         {Object.keys(groups).map((groupName) => {
           return (
             <div key={groupName}>
-              <ListSubheader>{groupName}</ListSubheader>
               {groups[groupName].map((location) => {
                 return (
                   <MenuItem
                     key={location}
+                    divider
                     onClick={() => handleMenuItemClick({ groupName, location })}
                     selected={
                       props.value
@@ -62,7 +61,7 @@ function GroupSelect(props: Props) {
                         : undefined
                     }
                   >
-                    <ListItemText primary={location} />
+                    <ListItemText primary={location} secondary={groupName} />
                   </MenuItem>
                 )
               })}

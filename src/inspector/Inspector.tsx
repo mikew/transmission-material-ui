@@ -1,14 +1,15 @@
-import Drawer from '@mui/material/Drawer/Drawer'
-import Icon from '@mui/material/Icon/Icon'
-import Tab from '@mui/material/Tab/Tab'
-import Tabs from '@mui/material/Tabs/Tabs'
+import { Folder, Group, Info, RssFeed } from '@mui/icons-material'
+import { Toolbar } from '@mui/material'
+import Drawer from '@mui/material/Drawer'
+import { styled } from '@mui/material/styles'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
 import { memo } from 'react'
 
-import { RootState } from '@src/redux/types'
-import useDispatch from '@src/redux/useDispatch'
-import useShallowEqualSelector from '@src/redux/useShallowEqualSelector'
-import { appMakeStyles } from '@src/styles/helpers'
-import FloatingBarSpacer from '@src/util/FloatingBarSpacer'
+import {
+  useRootDispatch,
+  useRootSelectorShallowEqual,
+} from '@src/redux/helpers'
 
 import actions from './actions'
 import InspectorTabFiles from './InspectorTabFiles'
@@ -18,11 +19,10 @@ import InspectorTabs from './InspectorTabs'
 import InspectorTabTrackers from './InspectorTabTrackers'
 
 function Inspector() {
-  const dispatch = useDispatch()
+  const dispatch = useRootDispatch()
   const setTab = (_event: unknown, value: InspectorTabs) =>
     dispatch(actions.setTab(value))
-  const mappedState = useShallowEqualSelector(mapState)
-  const { classes } = useStyles()
+  const mappedState = useRootSelectorShallowEqual(mapState)
 
   return (
     <Drawer
@@ -30,15 +30,18 @@ function Inspector() {
       variant="persistent"
       anchor="right"
       PaperProps={{
-        // Seems to be an issue with variant="persistent" and
-        // PaperProps.className
-        // className: props.classes.paper,
-        classes: {
-          root: classes.paper,
-        },
+        sx: (theme) => ({
+          [theme.breakpoints.only('xs')]: {
+            width: '100%',
+            borderWidth: 0,
+          },
+          zIndex: theme.zIndex.appBar - 1,
+          width: 400,
+          backgroundColor: theme.palette.background.default,
+        }),
       }}
     >
-      <FloatingBarSpacer />
+      <Toolbar variant="dense" />
       <Tabs
         value={mappedState.currentTab}
         onChange={setTab}
@@ -46,29 +49,25 @@ function Inspector() {
         indicatorColor="secondary"
         textColor="secondary"
       >
-        <Tab
+        <StyledTab
           value={InspectorTabs.info}
           // label="Info"
-          icon={<Icon color="inherit">info</Icon>}
-          className={classes.tab}
+          icon={<Info />}
         />
-        <Tab
+        <StyledTab
           value={InspectorTabs.files}
           // label="Files"
-          icon={<Icon color="inherit">folder</Icon>}
-          className={classes.tab}
+          icon={<Folder />}
         />
-        <Tab
+        <StyledTab
           value={InspectorTabs.trackers}
           // label="Trackers"
-          icon={<Icon color="inherit">rss_feed</Icon>}
-          className={classes.tab}
+          icon={<RssFeed />}
         />
-        <Tab
+        <StyledTab
           value={InspectorTabs.peers}
           // label="Peers"
-          icon={<Icon color="inherit">group</Icon>}
-          className={classes.tab}
+          icon={<Group />}
         />
       </Tabs>
       {mappedState.isInspectorOpen
@@ -76,7 +75,7 @@ function Inspector() {
             currentTab: mappedState.currentTab,
           })
         : undefined}
-      <FloatingBarSpacer />
+      <Toolbar variant="dense" />
     </Drawer>
   )
 }
@@ -103,20 +102,12 @@ const mapState = (state: RootState) => ({
   isInspectorOpen: state.inspector.isInspectorOpen,
 })
 
-const useStyles = appMakeStyles()((theme) => ({
-  tab: {
-    minWidth: 48,
-    // TODO This was part of the mui v4 to v5 migration. Styling around tabs
-    // changed and this keeps the previous style. Not sure if it's absolutely
-    // necessary.
-    color: theme.palette.text.disabled,
-  },
-  paper: {
-    [theme.breakpoints.only('xs')]: {
-      width: '100%',
-    },
-    width: 400,
-  },
+const StyledTab = styled(Tab)(({ theme }) => ({
+  minWidth: 48,
+  // TODO This was part of the mui v4 to v5 migration. Styling around tabs
+  // changed and this keeps the previous style. Not sure if it's absolutely
+  // necessary.
+  color: theme.palette.text.disabled,
 }))
 
 export default memo(Inspector)

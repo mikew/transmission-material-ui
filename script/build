@@ -5,7 +5,13 @@ if [ -z "$CI" ]; then
   ./script/prepare-env
 fi
 
-REACT_APP_BUILD_VERSION="$(date +%s)" \
-REACT_APP_TRANSMISSION_API_URL=/transmission/rpc \
-PUBLIC_URL=/transmission/web/ \
-  ./node_modules/.bin/react-scripts build
+if [ "$BUILD_FOR_NPX_SERVE" != "1" ]; then
+  export NEXT_PUBLIC_BASE_PATH=/transmission/web
+  export NEXT_PUBLIC_TRANSMISSION_RPC_PATH=/transmission/rpc
+fi
+
+rm -rf out/ pwa-out/
+
+./node_modules/.bin/next build
+./node_modules/.bin/next export
+cp -a pwa-out/* out/
