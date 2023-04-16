@@ -57,7 +57,7 @@ function DeleteDialog() {
         <List dense disablePadding>
           {mappedState.checked.map((x) => (
             <ListItem divider={true} key={x.id}>
-              <ListItemText primary={x.name} />
+              <ListItemText primary={x.name} sx={{ wordBreak: 'break-all' }} />
             </ListItem>
           ))}
         </List>

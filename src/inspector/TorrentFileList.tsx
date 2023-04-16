@@ -15,7 +15,9 @@ import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem'
 import TreeView from '@mui/lab/TreeView'
 import { Box, List } from '@mui/material'
 import { alpha } from '@mui/material/styles'
+import { Fragment } from 'react'
 
+import ForceWrap from '@src/lib/ForceWrap'
 import ListHeaderTopBar from '@src/lib/ListHeaderTopBar'
 import convertFilesToGroup, {
   DirSpec,
@@ -49,7 +51,7 @@ function renderItem(item: DirSpec | FileSpec) {
         nodeId={item.name}
         label={
           <Box display="flex" alignItems="center">
-            {item.name}
+            <ForceWrap>{item.name}</ForceWrap>
             <Box flexGrow="1" />
           </Box>
         }
@@ -62,7 +64,7 @@ function renderItem(item: DirSpec | FileSpec) {
     return (
       <TreeItem
         nodeId={item.name}
-        label={item.name}
+        label={<ForceWrap>{item.name}</ForceWrap>}
         sx={(theme) => ({
           [`& .${treeItemClasses.group}`]: {
             borderLeft: `1px solid ${alpha(theme.palette.text.secondary, 0.2)}`,
@@ -72,7 +74,9 @@ function renderItem(item: DirSpec | FileSpec) {
           },
         })}
       >
-        {item.children.map((x) => renderItem(x))}
+        {item.children.map((x) => (
+          <Fragment key={x.name}>{renderItem(x)}</Fragment>
+        ))}
       </TreeItem>
     )
   }
