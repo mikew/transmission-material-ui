@@ -1,3 +1,4 @@
+import { Divider, FormHelperText } from '@mui/material'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -98,6 +99,11 @@ function AddTorrentDialog() {
             value={selectedLocation}
             onChange={(group) => setSelectedLocation(group)}
           />
+          <Divider sx={{ marginY: 1 }} />
+          <FormHelperText>
+            Tip: You can add a .torrent file or magnet without this dialog by
+            drag + drop, or by pasting into the window.
+          </FormHelperText>
         </form>
       </DialogContent>
       <DialogActions>
