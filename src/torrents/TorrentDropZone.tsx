@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import { useEffect, useCallback, memo } from 'react'
+import React, { useEffect, useCallback, memo } from 'react'
 
 import getFilesFromEvent from '@src/lib/getFilesFromEvent'
 import { useRootDispatch } from '@src/redux/helpers'
@@ -14,6 +14,7 @@ function TorrentDropZone(props: Props) {
   const dispatch = useRootDispatch()
   const onDrop = useCallback(
     (event: React.DragEvent) => {
+      event.preventDefault()
       handleDataTransfer(dispatch, event.dataTransfer)
     },
     [dispatch],
@@ -24,6 +25,7 @@ function TorrentDropZone(props: Props) {
         return
       }
 
+      event.preventDefault()
       handleDataTransfer(dispatch, event.clipboardData)
     }
     document.addEventListener('paste', handler)
@@ -34,7 +36,12 @@ function TorrentDropZone(props: Props) {
   }, [dispatch])
 
   return (
-    <Box onDrop={onDrop} sx={{ height: '100%' }}>
+    <Box
+      onDrop={onDrop}
+      onDragEnter={(event) => event.preventDefault()}
+      onDragOver={(event) => event.preventDefault()}
+      sx={{ height: '100%' }}
+    >
       {props.children}
     </Box>
   )
