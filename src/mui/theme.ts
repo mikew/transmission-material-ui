@@ -1,4 +1,7 @@
+import { listItemClasses } from '@mui/material/ListItem'
 import { createTheme } from '@mui/material/styles'
+
+import SlideUp from '@src/lib/SlideUp'
 
 const ROUNDED_BORDER_RADIUS = 9999
 
@@ -37,6 +40,35 @@ const theme = createTheme({
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   },
   components: {
+    MuiListSubheader: {
+      styleOverrides: {
+        root: {
+          // Both ListSubheader and TextField's label have a z-index of 1, which
+          // means the label will appear over the header.
+          // We don't want that.
+          zIndex: 2,
+        },
+      },
+    },
+    MuiListItem: {
+      styleOverrides: {
+        divider: {
+          '&:last-child': {
+            borderBottomWidth: 0,
+          },
+        },
+        container: {
+          [`&:last-child .${listItemClasses.divider}`]: {
+            borderBottomWidth: 0,
+          },
+        },
+      },
+    },
+    MuiDialog: {
+      defaultProps: {
+        TransitionComponent: SlideUp,
+      },
+    },
     MuiTextField: {
       defaultProps: {
         // Looks a little more modern than outlined.

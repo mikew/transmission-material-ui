@@ -4,6 +4,7 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 
+import formatBytes from '@src/lib/formatBytes'
 import { useRootSelectorShallowEqual } from '@src/redux/helpers'
 import CheckAllTorrents from '@src/torrents/CheckAllTorrents'
 import DeleteAllTorrents from '@src/torrents/DeleteAllTorrents'
@@ -42,19 +43,5 @@ const mapState = (state: RootState) => ({
   rateUpload: selectors.getRateUpload(state),
   rateDownload: selectors.getRateDownload(state),
 })
-
-function formatBytes(bytes: number | string, decimals = 2) {
-  if (!bytes) {
-    return '0 B'
-  }
-
-  bytes = Number(bytes)
-  const k = 1024
-  const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  const value = bytes / Math.pow(k, i)
-
-  return `${value.toFixed(decimals)} ${sizes[i]}`
-}
 
 export default TopAppBar

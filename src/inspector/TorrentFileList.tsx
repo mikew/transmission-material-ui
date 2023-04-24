@@ -6,7 +6,6 @@ import {
   Folder,
   FolderOpen,
   InsertDriveFile,
-  MenuOpen,
   Photo,
   Terminal,
   Videocam,
@@ -52,7 +51,6 @@ function renderItem(item: DirSpec | FileSpec) {
         label={
           <Box display="flex" alignItems="center">
             <ForceWrap>{item.name}</ForceWrap>
-            <Box flexGrow="1" />
           </Box>
         }
         icon={getIconForFile(item.name)}
