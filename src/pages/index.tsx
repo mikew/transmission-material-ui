@@ -11,6 +11,7 @@ import AddTorrentDialog from '@src/torrents/AddTorrentDialog'
 import DeleteDialog from '@src/torrents/DeleteDialog'
 import TorrentDropZone from '@src/torrents/TorrentDropZone'
 import TorrentList from '@src/torrents/TorrentList'
+import SettingsDialog from '@src/transmissionSettings/SettingsDialog'
 
 export default function Home() {
   const dispatch = useRootDispatch()
@@ -34,6 +35,7 @@ export default function Home() {
         <AddTorrentDialog />
         <DeleteDialog />
         <Inspector />
+        <SettingsDialog />
 
         <Toolbar variant="dense" />
         <BottomAppBar />
