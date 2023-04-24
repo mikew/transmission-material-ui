@@ -1,4 +1,4 @@
-import { Close } from '@mui/icons-material'
+import { Close, Settings } from '@mui/icons-material'
 import Add from '@mui/icons-material/Add'
 import Info from '@mui/icons-material/Info'
 import AppBar from '@mui/material/AppBar'
@@ -9,7 +9,8 @@ import Toolbar from '@mui/material/Toolbar'
 
 import inspectorActions from '@src/inspector/actions'
 import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
-import actions from '@src/torrents/actions'
+import torrentActions from '@src/torrents/actions'
+import transmissionSettingsActions from '@src/transmissionSettings/actions'
 
 const BottomAppBar: React.FC = (props) => {
   const dispatch = useRootDispatch()
@@ -28,7 +29,16 @@ const BottomAppBar: React.FC = (props) => {
       })}
     >
       <Toolbar variant="dense">
+        <IconButton
+          edge="start"
+          onClick={() => {
+            dispatch(transmissionSettingsActions.showDialog())
+          }}
+        >
+          <Settings />
+        </IconButton>
         <Box flexGrow={1} />
+
         <IconButton
           edge="end"
           onClick={() => {
@@ -55,7 +65,7 @@ const BottomAppBar: React.FC = (props) => {
         <Box sx={{ pointerEvents: 'all' }}>
           <Fab
             color="secondary"
-            onClick={() => dispatch(actions.toggleAddDialog())}
+            onClick={() => dispatch(torrentActions.toggleAddDialog())}
           >
             <Add />
           </Fab>
