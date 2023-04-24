@@ -51,17 +51,6 @@ function renderItem(item: DirSpec | FileSpec) {
         label={
           <Box display="flex" alignItems="center">
             <ForceWrap>{item.name}</ForceWrap>
-            <Box flexGrow="1" />
-
-            <MenuOpen
-              fontSize="inherit"
-              sx={{
-                visibility: 'hidden',
-                ['.Mui-focused &']: {
-                  visibility: 'initial',
-                },
-              }}
-            />
           </Box>
         }
         icon={getIconForFile(item.name)}
