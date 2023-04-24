@@ -1,4 +1,7 @@
+import { listItemClasses } from '@mui/material/ListItem'
 import { createTheme } from '@mui/material/styles'
+
+import SlideUp from '@src/lib/SlideUp'
 
 const ROUNDED_BORDER_RADIUS = 9999
 
@@ -59,6 +62,11 @@ const theme = createTheme({
             borderBottomWidth: 0,
           },
         },
+      },
+    },
+    MuiDialog: {
+      defaultProps: {
+        TransitionComponent: SlideUp,
       },
     },
     MuiTextField: {
