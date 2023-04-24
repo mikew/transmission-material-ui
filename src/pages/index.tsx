@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useEffect } from 'react'
 
 import Inspector from '@src/inspector/Inspector'
+import MobileNavigationSpacer from '@src/lib/MobileNavigationSpacer'
 import { useRootDispatch } from '@src/redux/helpers'
 import actions from '@src/settings/actions'
 import BottomAppBar from '@src/shell/BottomAppBar'
@@ -37,7 +38,9 @@ export default function Home() {
         <Inspector />
         <SettingsDialog />
 
-        <Toolbar variant="dense" />
+        <MobileNavigationSpacer>
+          <Toolbar variant="dense" />
+        </MobileNavigationSpacer>
         <BottomAppBar />
       </TorrentDropZone>
     </>

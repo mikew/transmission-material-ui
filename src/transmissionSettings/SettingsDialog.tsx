@@ -13,6 +13,7 @@ import { Formik } from 'formik'
 import { useEffect, useState } from 'react'
 
 import apiInstance from '@src/api/apiInstance'
+import MobileNavigationSpacer from '@src/lib/MobileNavigationSpacer'
 import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 
 import actions from './actions'
@@ -129,22 +130,24 @@ const SettingsDialog = () => {
               >
                 {children}
               </DialogContent>
-              <DialogActions>
-                <Button
-                  variant="outlined"
-                  onClick={hideDialog}
-                  sx={{ display: ['block', 'none'] }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={submitForm}
-                >
-                  Save
-                </Button>
-              </DialogActions>
+              <MobileNavigationSpacer>
+                <DialogActions>
+                  <Button
+                    variant="outlined"
+                    onClick={hideDialog}
+                    sx={{ display: ['block', 'none'] }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={submitForm}
+                  >
+                    Save
+                  </Button>
+                </DialogActions>
+              </MobileNavigationSpacer>
             </>
           )
         }}
