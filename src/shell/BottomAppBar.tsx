@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 
 import inspectorActions from '@src/inspector/actions'
+import MobileNavigationSpacer from '@src/lib/MobileNavigationSpacer'
 import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 import torrentActions from '@src/torrents/actions'
 import transmissionSettingsActions from '@src/transmissionSettings/actions'
@@ -28,26 +29,29 @@ const BottomAppBar: React.FC = (props) => {
         zIndex: theme.zIndex.appBar,
       })}
     >
-      <Toolbar variant="dense">
-        <IconButton
-          edge="start"
-          onClick={() => {
-            dispatch(transmissionSettingsActions.showDialog())
-          }}
-        >
-          <Settings />
-        </IconButton>
-        <Box flexGrow={1} />
+      <MobileNavigationSpacer>
+        <Toolbar variant="dense">
+          <IconButton
+            edge="start"
+            onClick={() => {
+              dispatch(transmissionSettingsActions.showDialog())
+            }}
+          >
+            <Settings />
+          </IconButton>
 
-        <IconButton
-          edge="end"
-          onClick={() => {
-            dispatch(inspectorActions.toggleInspector())
-          }}
-        >
-          {isInspectorOpen ? <Close /> : <Info />}
-        </IconButton>
-      </Toolbar>
+          <Box flexGrow={1} />
+
+          <IconButton
+            edge="end"
+            onClick={() => {
+              dispatch(inspectorActions.toggleInspector())
+            }}
+          >
+            {isInspectorOpen ? <Close /> : <Info />}
+          </IconButton>
+        </Toolbar>
+      </MobileNavigationSpacer>
 
       <Box
         sx={{

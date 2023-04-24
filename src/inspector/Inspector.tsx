@@ -6,6 +6,7 @@ import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import { memo } from 'react'
 
+import MobileNavigationSpacer from '@src/lib/MobileNavigationSpacer'
 import {
   useRootDispatch,
   useRootSelectorShallowEqual,
@@ -75,7 +76,9 @@ function Inspector() {
             currentTab: mappedState.currentTab,
           })
         : undefined}
-      <Toolbar variant="dense" />
+      <MobileNavigationSpacer>
+        <Toolbar variant="dense" />
+      </MobileNavigationSpacer>
     </Drawer>
   )
 }
