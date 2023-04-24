@@ -130,7 +130,11 @@ const SettingsDialog = () => {
                 {children}
               </DialogContent>
               <DialogActions>
-                <Button variant="outlined" onClick={hideDialog}>
+                <Button
+                  variant="outlined"
+                  onClick={hideDialog}
+                  sx={{ display: ['block', 'none'] }}
+                >
                   Cancel
                 </Button>
                 <Button
