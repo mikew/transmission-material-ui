@@ -408,7 +408,7 @@ interface TransmissionSession {
   'download-dir-free-space'?: number
   'download-queue-enabled'?: boolean
   'download-queue-size'?: number
-  'encryption'?: string
+  'encryption'?: 'required' | 'preferred' | 'tolerated'
   'idle-seeding-limit'?: number
   'idle-seeding-limit-enabled'?: boolean
   'incomplete-dir'?: string
