@@ -47,6 +47,20 @@ const theme = createTheme({
         },
       },
     },
+    MuiListItem: {
+      styleOverrides: {
+        divider: {
+          '&:last-child': {
+            borderBottomWidth: 0,
+          },
+        },
+        container: {
+          [`&:last-child .${listItemClasses.divider}`]: {
+            borderBottomWidth: 0,
+          },
+        },
+      },
+    },
     MuiTextField: {
       defaultProps: {
         // Looks a little more modern than outlined.
