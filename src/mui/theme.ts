@@ -37,6 +37,16 @@ const theme = createTheme({
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   },
   components: {
+    MuiListSubheader: {
+      styleOverrides: {
+        root: {
+          // Both ListSubheader and TextField's label have a z-index of 1, which
+          // means the label will appear over the header.
+          // We don't want that.
+          zIndex: 2,
+        },
+      },
+    },
     MuiTextField: {
       defaultProps: {
         // Looks a little more modern than outlined.
