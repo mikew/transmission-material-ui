@@ -1,8 +1,18 @@
 import { ListItem, ListItemText } from '@mui/material'
 import { Field } from 'formik'
-import { TextField } from 'formik-mui'
+import { TextField, TextFieldProps } from 'formik-mui'
 
-const SettingsTextField = ({ name, ...props }) => {
+export type SettingsTextFieldProps = Omit<
+  TextFieldProps,
+  'field' | 'form' | 'meta'
+> & {
+  name: string
+}
+
+const SettingsTextField: React.FC<SettingsTextFieldProps> = ({
+  name,
+  ...props
+}) => {
   return (
     <ListItem divider>
       <ListItemText

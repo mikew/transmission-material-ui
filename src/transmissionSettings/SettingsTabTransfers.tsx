@@ -1,5 +1,4 @@
 import { List, ListSubheader } from '@mui/material'
-import React from 'react'
 
 import formatBytes from '@src/lib/formatBytes'
 import { useRootSelector } from '@src/redux/helpers'

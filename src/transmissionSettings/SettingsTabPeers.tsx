@@ -1,5 +1,4 @@
 import { List, ListSubheader, MenuItem } from '@mui/material'
-import React from 'react'
 
 import { useRootSelector } from '@src/redux/helpers'
 

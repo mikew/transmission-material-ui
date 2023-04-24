@@ -2,7 +2,7 @@ import { ListItem, ListItemIcon, ListItemText } from '@mui/material'
 import { Field, useField } from 'formik'
 import { Checkbox, TextField, TextFieldProps } from 'formik-mui'
 
-type SettingsCheckboxComboWithTextFieldProps = Omit<
+export type SettingsCheckboxComboWithTextFieldProps = Omit<
   TextFieldProps,
   'form' | 'meta' | 'field'
 > & {

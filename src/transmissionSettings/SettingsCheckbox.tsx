@@ -2,7 +2,15 @@ import { ListItem, ListItemIcon, ListItemText } from '@mui/material'
 import { Field } from 'formik'
 import { Checkbox } from 'formik-mui'
 
-const SettingsCheckbox = ({ name, ...props }) => {
+export type SettingsCheckboxProps = {
+  name: string
+  label: React.ReactNode
+}
+
+const SettingsCheckbox: React.FC<SettingsCheckboxProps> = ({
+  name,
+  ...props
+}) => {
   return (
     <ListItem divider>
       <ListItemIcon>

@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { Formik } from 'formik'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import apiInstance from '@src/api/apiInstance'
 import { useRootDispatch, useRootSelector } from '@src/redux/helpers'

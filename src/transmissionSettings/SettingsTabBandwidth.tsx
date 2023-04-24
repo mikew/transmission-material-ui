@@ -1,5 +1,4 @@
 import { List, ListSubheader } from '@mui/material'
-import React from 'react'
 
 import SettingsCheckbox from './SettingsCheckbox'
 import SettingsCheckboxComboWithTextField from './SettingsCheckboxComboWithTextField'
