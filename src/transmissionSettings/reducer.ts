@@ -6,11 +6,17 @@ export interface State {
   settings: TransmissionSession
   fields: Set<keyof TransmissionSession>
   isSettingsDialogVisible: boolean
+  portStatus: 'loading' | 'open' | 'closed'
+  spaceRemaining: 'loading' | number
+  isWatching: boolean
 }
 
 const initialState: State = {
   fields: new Set<keyof TransmissionSession>(['alt-speed-enabled']),
   isSettingsDialogVisible: false,
+  portStatus: 'loading',
+  spaceRemaining: 'loading',
+  isWatching: false,
   settings: {
     // TODO define these, they came back from the API but aren't defined.
     // 'anti-brute-force-enabled': false,
@@ -95,7 +101,24 @@ export default createReducer(initialState, (builder) => {
         ...action.payload,
       },
     }))
-    .addHandler(actions.update, (state, action) => ({
+    .addStartHandler(actions.update, (state, action) => {
+      // Making this optimistic is tough. Technically we can just do it, but the
+      // "port open" check is done when the port changes in redux. And the API
+      // it uses doesn't let you specify the port. So if we run that check
+      // before it's actually changed on the server, we'll get invalid results.
+      if (!action.meta.optimistic) {
+        return state
+      }
+
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          ...action.meta.payload,
+        },
+      }
+    })
+    .addSuccessHandler(actions.update, (state, action) => ({
       ...state,
       settings: {
         ...state.settings,
@@ -114,4 +137,34 @@ export default createReducer(initialState, (builder) => {
       ...state,
       isSettingsDialogVisible: false,
     }))
+    .addHandler(actions.setPortStatus, (state, action) => ({
+      ...state,
+      portStatus: action.payload,
+    }))
+    .addHandler(actions.setSpaceRemaining, (state, action) => ({
+      ...state,
+      spaceRemaining: action.payload,
+    }))
+    .addHandler(actions.setIsWatching, (state, action) => ({
+      ...state,
+      isWatching: action.payload,
+    }))
+    .addHandler(actions.addFields, (state, action) => {
+      const newFields = new Set(state.fields)
+      action.payload.forEach((x) => newFields.add(x))
+
+      return {
+        ...state,
+        fields: newFields,
+      }
+    })
+    .addHandler(actions.removeFields, (state, action) => {
+      const newFields = new Set(state.fields)
+      action.payload.forEach((x) => newFields.delete(x))
+
+      return {
+        ...state,
+        fields: newFields,
+      }
+    })
 })

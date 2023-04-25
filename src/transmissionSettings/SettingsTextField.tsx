@@ -17,9 +17,18 @@ const SettingsTextField: React.FC<SettingsTextFieldProps> = ({
     <ListItem divider>
       <ListItemText
         primary={
-          <Field name={name} component={TextField} fullWidth {...props} />
+          <Field
+            name={name}
+            component={TextField}
+            fullWidth
+            {...props}
+            helperText={
+              <>
+                {props.helperText} [{name}]
+              </>
+            }
+          />
         }
-        secondary={`[${name}]`}
       />
     </ListItem>
   )

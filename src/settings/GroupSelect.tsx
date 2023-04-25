@@ -3,7 +3,7 @@ import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import { memo, useState } from 'react'
+import { Fragment, memo, useState } from 'react'
 
 import { useRootSelector } from '@src/redux/helpers'
 
@@ -48,7 +48,7 @@ function GroupSelect(props: Props) {
       >
         {Object.keys(groups).map((groupName) => {
           return (
-            <div key={groupName}>
+            <Fragment key={groupName}>
               {groups[groupName].map((location) => {
                 return (
                   <MenuItem
@@ -65,7 +65,7 @@ function GroupSelect(props: Props) {
                   </MenuItem>
                 )
               })}
-            </div>
+            </Fragment>
           )
         })}
       </Menu>

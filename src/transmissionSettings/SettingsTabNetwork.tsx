@@ -1,9 +1,15 @@
-import { List, ListSubheader } from '@mui/material'
+import { Box, List, ListSubheader } from '@mui/material'
+
+import { useRootSelector } from '@src/redux/helpers'
 
 import SettingsCheckbox from './SettingsCheckbox'
 import SettingsTextField from './SettingsTextField'
 
 const SettingsTabNetwork = () => {
+  const portStatus = useRootSelector(
+    (state) => state.transmissionSettings.portStatus,
+  )
+
   return (
     <>
       <List dense>
@@ -12,6 +18,25 @@ const SettingsTabNetwork = () => {
           name={'peer-port'}
           label="Peer listening port"
           type="number"
+          helperText={
+            <>
+              Port Status:{' '}
+              <Box
+                color={
+                  portStatus === 'loading'
+                    ? 'info.main'
+                    : portStatus === 'closed'
+                    ? 'error.main'
+                    : portStatus === 'open'
+                    ? 'success.main'
+                    : undefined
+                }
+                component="span"
+              >
+                {portStatus}
+              </Box>
+            </>
+          }
         />
         <SettingsCheckbox
           name={'peer-port-random-on-start'}

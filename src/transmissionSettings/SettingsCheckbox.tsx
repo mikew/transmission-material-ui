@@ -14,29 +14,19 @@ const SettingsCheckbox: React.FC<SettingsCheckboxProps> = ({
   helperText,
   ...props
 }) => {
-  const fieldName = `[${name}]`
-  const finalHelperText = helperText ? (
-    <>
-      {helperText} {fieldName}
-    </>
-  ) : (
-    fieldName
-  )
-
   return (
     <ListItem divider>
       <ListItemIcon>
-        <Field
-          name={name}
-          component={Checkbox}
-          type="checkbox"
-          // Label={{
-          //   label: props.label,
-          // }}
-          // {...props}
-        />
+        <Field name={name} component={Checkbox} type="checkbox" />
       </ListItemIcon>
-      <ListItemText primary={props.label} secondary={finalHelperText} />
+      <ListItemText
+        primary={props.label}
+        secondary={
+          <>
+            {helperText} [{name}]
+          </>
+        }
+      />
     </ListItem>
   )
 }

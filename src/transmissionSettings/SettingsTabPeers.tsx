@@ -40,7 +40,7 @@ export function SettingsTabPeers() {
         />
         <SettingsCheckbox
           name={'lpd-enabled'}
-          label="Use local peer discover for public torrents"
+          label="Use local peer discovery for public torrents"
         />
       </List>
 

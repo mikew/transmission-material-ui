@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -10,9 +11,9 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { Formik } from 'formik'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { ActionSuccessType } from 'redux-easy-mode/lib/async/asyncMiddleware'
 
-import apiInstance from '@src/api/apiInstance'
 import MobileNavigationSpacer from '@src/lib/MobileNavigationSpacer'
 import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 
@@ -22,18 +23,18 @@ import SettingsTabNetwork from './SettingsTabNetwork'
 import { SettingsTabPeers } from './SettingsTabPeers'
 import { SettingsTabTransfers } from './SettingsTabTransfers'
 
-type SETTINGS_TAB = 'transfers' | 'bandwidth' | 'peers' | 'network'
+type SETTINGS_TAB = 'transfers' | 'bandwidth' | 'peers' | 'network' | 'all'
 
 const SettingsDialog = () => {
   const [selectedTab, setSelectedTab] = useState<SETTINGS_TAB>('transfers')
   const dispatch = useRootDispatch()
+  const buttonRef = useRef<null | 'save' | 'apply'>(null)
 
   let children: React.ReactNode = undefined
 
   switch (selectedTab) {
     case 'transfers':
       children = <SettingsTabTransfers />
-
       break
     case 'bandwidth':
       children = <SettingsTabBandwidth />
@@ -43,6 +44,17 @@ const SettingsDialog = () => {
       break
     case 'network':
       children = <SettingsTabNetwork />
+      break
+    case 'all':
+      children = (
+        <>
+          <SettingsTabTransfers />
+          <SettingsTabBandwidth />
+          <SettingsTabPeers />
+          <SettingsTabNetwork />
+        </>
+      )
+      break
   }
 
   const theme = useTheme()
@@ -69,19 +81,35 @@ const SettingsDialog = () => {
   const initialValueRedux = useRootSelector(
     (state) => state.transmissionSettings.settings,
   )
-  const [initialValues, setInitialValues] = useState(initialValueRedux)
+  const [initialValues, setInitialValues] = useState(
+    // That we initialize from redux isn't important in the grand scheme of
+    // things. It just happens to always contain a full set of settings.
+    initialValueRedux,
+  )
   const [formikKey, setFormikKey] = useState(1)
   useEffect(() => {
     async function run() {
       if (isVisible) {
-        const response = await apiInstance.callServer('session-get', {})
-        setInitialValues(response)
+        // Using redux to fetch a fresh copy of the settings is important, as it
+        // has the bonus side effect of re-running ... side effects.
+        const response = (await dispatch(
+          actions.get(true),
+        )) as unknown as ActionSuccessType<typeof actions.get>
+        setInitialValues(response.payload)
         setFormikKey((previous) => previous + 1)
       }
     }
 
     run()
-  }, [isVisible])
+  }, [dispatch, isVisible])
+
+  useEffect(() => {
+    dispatch(actions.setIsWatching(true))
+
+    return () => {
+      dispatch(actions.setIsWatching(false))
+    }
+  }, [dispatch])
 
   return (
     <Dialog
@@ -96,15 +124,21 @@ const SettingsDialog = () => {
         key={formikKey}
         onSubmit={async (values, formik) => {
           try {
-            await dispatch(actions.update(values))
-            hideDialog()
+            await dispatch(actions.update(cleanupValues(values), false))
+
+            setInitialValues(values)
+            setFormikKey((previous) => previous + 1)
+
+            if (buttonRef.current === 'save') {
+              hideDialog()
+            }
           } catch (err) {
             console.error(err)
           }
           formik.setSubmitting(false)
         }}
       >
-        {({ submitForm }) => {
+        {({ submitForm, resetForm }) => {
           return (
             <>
               <DialogTitle>Settings</DialogTitle>
@@ -113,12 +147,13 @@ const SettingsDialog = () => {
                 onChange={(_event, value) => {
                   setSelectedTab(value)
                 }}
-                variant="fullWidth"
+                variant="scrollable"
               >
                 <Tab value="transfers" label="Transfers" />
                 <Tab value="bandwidth" label="Bandwidth" />
                 <Tab value="peers" label="Peers" />
                 <Tab value="network" label="Network" />
+                <Tab value="all" label="All" />
               </Tabs>
               <DialogContent
                 // The children in the settings section are expected to manage
@@ -133,16 +168,37 @@ const SettingsDialog = () => {
               <MobileNavigationSpacer>
                 <DialogActions>
                   <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => resetForm()}
+                  >
+                    Reset
+                  </Button>
+                  <Box flexGrow="1" />
+                  <Button
                     variant="outlined"
                     onClick={hideDialog}
                     sx={{ display: ['block', 'none'] }}
                   >
-                    Cancel
+                    Close
+                  </Button>
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => {
+                      buttonRef.current = 'apply'
+                      submitForm()
+                    }}
+                  >
+                    Apply
                   </Button>
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={submitForm}
+                    onClick={() => {
+                      buttonRef.current = 'save'
+                      submitForm()
+                    }}
                   >
                     Save
                   </Button>
@@ -154,6 +210,19 @@ const SettingsDialog = () => {
       </Formik>
     </Dialog>
   )
+}
+
+function cleanupValues(values: Partial<TransmissionSession>) {
+  const cleaned = { ...values }
+
+  // There's no way to actually set this in the settings dialog since it's
+  // polling on the main view. Never send it from the settings dialog.
+  delete cleaned['alt-speed-enabled']
+
+  // Casting here just to cleanup the return signature. TS does do the right
+  // thing here and returns a (very large) generated type where deleted keys are
+  // actually missing.
+  return cleaned as Partial<TransmissionSession>
 }
 
 export default SettingsDialog
