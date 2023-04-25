@@ -1,4 +1,4 @@
-import { reduxActionSideEffect } from 'redux-easy-mode'
+import { reduxActionSideEffect, reduxSelectorSideEffect } from 'redux-easy-mode'
 
 import apiInstance from '@src/api/apiInstance'
 
@@ -12,3 +12,25 @@ reduxActionSideEffect(actions.update, (action, dispatch) => {
 
   run()
 })
+
+reduxSelectorSideEffect(
+  (state: RootState) => state.transmissionSettings.settings['peer-port'],
+  (value, _previous, dispatch: RootDispatch) => {
+    async function run() {
+      dispatch(actions.setPortStatus('loading'))
+
+      try {
+        const response = await apiInstance.callServer('port-test', null)
+        dispatch(
+          actions.setPortStatus(response['port-is-open'] ? 'open' : 'closed'),
+        )
+      } catch (err) {
+        console.error(err)
+        dispatch(actions.setPortStatus('closed'))
+      }
+    }
+
+    run()
+  },
+)
+

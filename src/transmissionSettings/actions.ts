@@ -3,6 +3,8 @@ import { createActions } from 'redux-easy-mode'
 import apiInstance from '@src/api/apiInstance'
 import identityPayloadCreator from '@src/redux/identityPayloadCreator'
 
+import { State } from './reducer'
+
 export default createActions('transmissionSettings', {
   addFields: identityPayloadCreator<Set<keyof TransmissionSession>>(),
   removeFields: identityPayloadCreator<Set<keyof TransmissionSession>>(),
@@ -11,6 +13,7 @@ export default createActions('transmissionSettings', {
   showDialog: () => undefined,
   hideDialog: () => undefined,
 
+  setPortStatus: identityPayloadCreator<State['portStatus']>(),
   get: () => ({
     payload: (_dispatch: RootDispatch, getState: RootGetState) =>
       apiInstance.callServer('session-get', {

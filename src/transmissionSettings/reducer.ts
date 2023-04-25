@@ -6,11 +6,13 @@ export interface State {
   settings: TransmissionSession
   fields: Set<keyof TransmissionSession>
   isSettingsDialogVisible: boolean
+  portStatus: 'loading' | 'open' | 'closed'
 }
 
 const initialState: State = {
   fields: new Set<keyof TransmissionSession>(['alt-speed-enabled']),
   isSettingsDialogVisible: false,
+  portStatus: 'loading',
   settings: {
     // TODO define these, they came back from the API but aren't defined.
     // 'anti-brute-force-enabled': false,
@@ -113,5 +115,9 @@ export default createReducer(initialState, (builder) => {
     .addHandler(actions.hideDialog, (state, action) => ({
       ...state,
       isSettingsDialogVisible: false,
+    }))
+    .addHandler(actions.setPortStatus, (state, action) => ({
+      ...state,
+      portStatus: action.payload,
     }))
 })
