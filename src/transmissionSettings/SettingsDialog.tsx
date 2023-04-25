@@ -124,7 +124,7 @@ const SettingsDialog = () => {
           formik.setSubmitting(false)
         }}
       >
-        {({ submitForm }) => {
+        {({ submitForm, resetForm }) => {
           return (
             <>
               <DialogTitle>Settings</DialogTitle>
@@ -162,8 +162,15 @@ const SettingsDialog = () => {
                   </Button>
                   <Button
                     color="primary"
+                    variant="outlined"
+                    onClick={() => resetForm()}
+                  >
+                    Reset
+                  </Button>
+                  <Button
+                    color="primary"
                     variant="contained"
-                    onClick={submitForm}
+                    onClick={() => submitForm()}
                   >
                     Save
                   </Button>
