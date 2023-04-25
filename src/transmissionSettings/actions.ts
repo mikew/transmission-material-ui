@@ -14,6 +14,8 @@ export default createActions('transmissionSettings', {
   hideDialog: () => undefined,
 
   setPortStatus: identityPayloadCreator<State['portStatus']>(),
+  setSpaceRemaining: identityPayloadCreator<State['spaceRemaining']>(),
+
   get: () => ({
     payload: (_dispatch: RootDispatch, getState: RootGetState) =>
       apiInstance.callServer('session-get', {

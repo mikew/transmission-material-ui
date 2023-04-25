@@ -8,9 +8,8 @@ import SettingsCheckboxComboWithTextField from './SettingsCheckboxComboWithTextF
 import SettingsTextField from './SettingsTextField'
 
 export function SettingsTabTransfers() {
-  // TODO This is deprecated, use free-space API method.
   const freeSpace = useRootSelector(
-    (state) => state.transmissionSettings.settings['download-dir-free-space'],
+    (state) => state.transmissionSettings.spaceRemaining,
   )
 
   return (
@@ -20,7 +19,9 @@ export function SettingsTabTransfers() {
         <SettingsTextField
           name="download-dir"
           label="Default location"
-          helperText={`${formatBytes(freeSpace)} remaining`}
+          helperText={`${
+            freeSpace === 'loading' ? '...' : formatBytes(freeSpace)
+          } remaining`}
         />
 
         <SettingsCheckbox
