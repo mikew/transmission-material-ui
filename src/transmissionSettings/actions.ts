@@ -17,10 +17,12 @@ export default createActions('transmissionSettings', {
   setPortStatus: identityPayloadCreator<State['portStatus']>(),
   setSpaceRemaining: identityPayloadCreator<State['spaceRemaining']>(),
 
-  get: () => ({
+  get: (isMain = false) => ({
     payload: (_dispatch: RootDispatch, getState: RootGetState) =>
       apiInstance.callServer('session-get', {
-        // fields: [...getState().transmissionSettings.fields],
+        fields: isMain
+          ? undefined
+          : [...getState().transmissionSettings.fields],
       }),
   }),
 
