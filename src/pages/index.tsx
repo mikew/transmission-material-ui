@@ -10,6 +10,7 @@ import BottomAppBar from '@src/shell/BottomAppBar'
 import TopAppBar from '@src/shell/TopAppBar'
 import AddTorrentDialog from '@src/torrents/AddTorrentDialog'
 import DeleteDialog from '@src/torrents/DeleteDialog'
+import StatusNotifier from '@src/torrents/StatusNotifier'
 import TorrentDropZone from '@src/torrents/TorrentDropZone'
 import TorrentList from '@src/torrents/TorrentList'
 import SettingsDialog from '@src/transmissionSettings/SettingsDialog'
@@ -42,6 +43,8 @@ export default function Home() {
           <Toolbar variant="dense" />
         </MobileNavigationSpacer>
         <BottomAppBar />
+
+        <StatusNotifier />
       </TorrentDropZone>
     </>
   )
