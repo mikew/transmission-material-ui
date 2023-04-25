@@ -12,8 +12,9 @@ import MobileNavigationSpacer from '@src/lib/MobileNavigationSpacer'
 import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 import torrentActions from '@src/torrents/actions'
 import transmissionSettingsActions from '@src/transmissionSettings/actions'
+import SlowModeButton from '@src/transmissionSettings/SlowModeButton'
 
-const BottomAppBar: React.FC = (props) => {
+const BottomAppBar: React.FC = () => {
   const dispatch = useRootDispatch()
   const isInspectorOpen = useRootSelector(
     (state) => state.inspector.isInspectorOpen,
@@ -39,6 +40,8 @@ const BottomAppBar: React.FC = (props) => {
           >
             <Settings />
           </IconButton>
+
+          <SlowModeButton />
 
           <Box flexGrow={1} />
 
