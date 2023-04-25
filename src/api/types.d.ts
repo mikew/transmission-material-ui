@@ -111,7 +111,7 @@ interface TransmissionRPC {
 
   // 4.1.2.  Accessors
   'session-get': {
-    request: { fields?: (keyof TransmissionSession)[] }
+    request: undefined | { fields?: (keyof TransmissionSession)[] }
     response: TransmissionSession
   }
 
@@ -262,199 +262,199 @@ interface TorrentAddRequest {
   /**
    * pointer to a string of one or more cookies.
    */
-  'cookies': string
+  'cookies'?: string
 
   /**
    * path to download the torrent to
    */
-  'download-dir': string
+  'download-dir'?: string
 
   /**
    * filename or URL of the .torrent file
    */
-  'filename': string
+  'filename'?: string
 
   /**
    * array of string labels
    */
-  'labels': string[]
+  'labels'?: string[]
 
   /**
    * base64-encoded .torrent content
    */
-  'metainfo': string
+  'metainfo'?: string
 
   /**
    * if true, don't start the torrent
    */
-  'paused': boolean
+  'paused'?: boolean
 
   /**
    * maximum number of peers
    */
-  'peer-limit': number
+  'peer-limit'?: number
 
   /**
    * torrent's bandwidth tr_priority_t
    */
-  'bandwidthPriority': number
+  'bandwidthPriority'?: number
 
   /**
    * indices of file(s) to download
    */
-  'files-wanted': number[]
+  'files-wanted'?: number[]
 
   /**
    * indices of file(s) to not download
    */
-  'files-unwanted': number[]
+  'files-unwanted'?: number[]
 
   /**
    * indices of high-priority file(s)
    */
-  'priority-high': number[]
+  'priority-high'?: number[]
 
   /**
    * indices of low-priority file(s)
    */
-  'priority-low': number[]
+  'priority-low'?: number[]
 
   /**
    * indices of normal-priority file(s)
    */
-  'priority-normal': number[]
+  'priority-normal'?: number[]
 }
 
 interface TorrentSetRequest {
   /**
    * this torrent's bandwidth tr_priority_t
    */
-  'bandwidthPriority': number
+  'bandwidthPriority'?: number
 
   /**
    * maximum download speed (KBps)
    */
-  'downloadLimit': number
+  'downloadLimit'?: number
 
   /**
    * true if downloadLimit is honored
    */
-  'downloadLimited': boolean
+  'downloadLimited'?: boolean
 
   /**
    * indices of file(s) to not download
    */
-  'files-unwanted': number[]
+  'files-unwanted'?: number[]
 
   /**
    * indices of file(s) to download
    */
-  'files-wanted': number[]
+  'files-wanted'?: number[]
 
   /**
    * The name of this torrent's bandwidth group
    */
-  'group': string
+  'group'?: string
 
   /**
    * true if session upload limits are honored
    */
-  'honorsSessionLimits': boolean
+  'honorsSessionLimits'?: boolean
 
   /**
    * torrent list, as described in 3.1
    */
-  'ids': TransmissionIdLookup
+  'ids'?: TransmissionIdLookup
 
   /**
    * array of string labels
    */
-  'labels': string[]
+  'labels'?: string[]
 
   /**
    * new location of the torrent's content
    */
-  'location': string
+  'location'?: string
 
   /**
    * maximum number of peers
    */
-  'peer-limit': number
+  'peer-limit'?: number
 
   /**
    * indices of high-priority file(s)
    */
-  'priority-high': number[]
+  'priority-high'?: number[]
 
   /**
    * indices of low-priority file(s)
    */
-  'priority-low': number[]
+  'priority-low'?: number[]
 
   /**
    * indices of normal-priority file(s)
    */
-  'priority-normal': number[]
+  'priority-normal'?: number[]
 
   /**
    * position of this torrent in its queue [0...n)
    */
-  'queuePosition': number
+  'queuePosition'?: number
 
   /**
    * torrent-level number of minutes of seeding inactivity
    */
-  'seedIdleLimit': number
+  'seedIdleLimit'?: number
 
   /**
    * which seeding inactivity to use. See tr_idlelimit
    */
-  'seedIdleMode': number
+  'seedIdleMode'?: number
 
   /**
    * torrent-level seeding ratio
    */
-  'seedRatioLimit': number
+  'seedRatioLimit'?: number
 
   /**
    * which ratio to use. See tr_ratiolimit
    */
-  'seedRatioMode': number
+  'seedRatioMode'?: number
 
   /**
    * download torrent pieces sequentially
    */
-  'sequentialDownload': boolean
+  'sequentialDownload'?: boolean
 
   /**
    * @deprecated use trackerList instead
    */
-  'trackerAdd': string[]
+  'trackerAdd'?: string[]
 
   /**
    * string of announce URLs, one per line, and a blank line between tiers.
    */
-  'trackerList': string
+  'trackerList'?: string
 
   /**
    * @deprecated use trackerList instead
    */
-  'trackerRemove': string[]
+  'trackerRemove'?: string[]
 
   /**
    * @deprecated use trackerList instead
    */
-  'trackerReplace': string[]
+  'trackerReplace'?: string[]
 
   /**
    * maximum upload speed (KBps)
    */
-  'uploadLimit': number
+  'uploadLimit'?: number
 
   /**
    * true if uploadLimit is honored
    */
-  'uploadLimited': boolean
+  'uploadLimited'?: boolean
 }
 
 interface TransmissionOptions {
@@ -502,82 +502,82 @@ interface TransmissionPeer {
   /**
    * tr_peer_stat
    */
-  'address': string
+  address: string
 
   /**
    * tr_peer_stat
    */
-  'clientName': string
+  clientName: string
 
   /**
    * tr_peer_stat
    */
-  'clientIsChoked': boolean
+  clientIsChoked: boolean
 
   /**
    * tr_peer_stat
    */
-  'clientIsInterested': boolean
+  clientIsInterested: boolean
 
   /**
    * tr_peer_stat
    */
-  'flagStr': string
+  flagStr: string
 
   /**
    * tr_peer_stat
    */
-  'isDownloadingFrom': boolean
+  isDownloadingFrom: boolean
 
   /**
    * tr_peer_stat
    */
-  'isEncrypted': boolean
+  isEncrypted: boolean
 
   /**
    * tr_peer_stat
    */
-  'isIncoming': boolean
+  isIncoming: boolean
 
   /**
    * tr_peer_stat
    */
-  'isUploadingTo': boolean
+  isUploadingTo: boolean
 
   /**
    * tr_peer_stat
    */
-  'isUTP': boolean
+  isUTP: boolean
 
   /**
    * tr_peer_stat
    */
-  'peerIsChoked': boolean
+  peerIsChoked: boolean
 
   /**
    * tr_peer_stat
    */
-  'peerIsInterested': boolean
+  peerIsInterested: boolean
 
   /**
    * tr_peer_stat
    */
-  'port': number
+  port: number
 
   /**
    * tr_peer_stat
    */
-  'progress': number
+  progress: number
 
   /**
    * tr_peer_stat
    */
-  'rateToClient (B/s)': number
+  rateToClient: number
 
   /**
    * tr_peer_stat
    */
-  'rateToPeer (B/s)': number
+  rateToPeer: number
 }
 
 interface TransmissionPeersFrom {
