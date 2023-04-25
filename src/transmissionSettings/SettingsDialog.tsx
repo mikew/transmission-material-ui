@@ -101,6 +101,14 @@ const SettingsDialog = () => {
     run()
   }, [dispatch, isVisible])
 
+  useEffect(() => {
+    dispatch(actions.setIsWatching(true))
+
+    return () => {
+      dispatch(actions.setIsWatching(false))
+    }
+  }, [dispatch])
+
   return (
     <Dialog
       open={isVisible}
