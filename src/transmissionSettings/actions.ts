@@ -6,8 +6,9 @@ import identityPayloadCreator from '@src/redux/identityPayloadCreator'
 import { State } from './reducer'
 
 export default createActions('transmissionSettings', {
-  addFields: identityPayloadCreator<Set<keyof TransmissionSession>>(),
-  removeFields: identityPayloadCreator<Set<keyof TransmissionSession>>(),
+  addFields: identityPayloadCreator<State['fields']>(),
+  removeFields: identityPayloadCreator<State['fields']>(),
+  setIsWatching: identityPayloadCreator<State['isWatching']>(),
 
   toggleDialog: () => undefined,
   showDialog: () => undefined,

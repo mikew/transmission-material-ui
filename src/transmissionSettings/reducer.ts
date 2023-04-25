@@ -8,6 +8,7 @@ export interface State {
   isSettingsDialogVisible: boolean
   portStatus: 'loading' | 'open' | 'closed'
   spaceRemaining: 'loading' | number
+  isWatching: boolean
 }
 
 const initialState: State = {
@@ -15,6 +16,7 @@ const initialState: State = {
   isSettingsDialogVisible: false,
   portStatus: 'loading',
   spaceRemaining: 'loading',
+  isWatching: false,
   settings: {
     // TODO define these, they came back from the API but aren't defined.
     // 'anti-brute-force-enabled': false,
@@ -126,4 +128,26 @@ export default createReducer(initialState, (builder) => {
       ...state,
       spaceRemaining: action.payload,
     }))
+    .addHandler(actions.setIsWatching, (state, action) => ({
+      ...state,
+      isWatching: action.payload,
+    }))
+    .addHandler(actions.addFields, (state, action) => {
+      const newFields = new Set(state.fields)
+      action.payload.forEach((x) => newFields.add(x))
+
+      return {
+        ...state,
+        fields: newFields,
+      }
+    })
+    .addHandler(actions.removeFields, (state, action) => {
+      const newFields = new Set(state.fields)
+      action.payload.forEach((x) => newFields.delete(x))
+
+      return {
+        ...state,
+        fields: newFields,
+      }
+    })
 })

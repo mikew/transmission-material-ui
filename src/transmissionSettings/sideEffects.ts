@@ -1,17 +1,39 @@
-import { reduxActionSideEffect, reduxSelectorSideEffect } from 'redux-easy-mode'
+import { reduxSelectorSideEffect } from 'redux-easy-mode'
 
 import apiInstance from '@src/api/apiInstance'
 
 import actions from './actions'
 
-reduxActionSideEffect(actions.update, (action, dispatch) => {
-  async function run() {
-    await apiInstance.callServer('session-set', action.payload)
-    await dispatch(actions.get())
-  }
+const HEARTBEAT_TIMEOUT = 5_000
 
-  run()
-})
+// Keep a heartbeat going that fetches settings.
+reduxSelectorSideEffect(
+  (state: RootState) => state.transmissionSettings.isWatching,
+  (value, _previousValue, dispatch) => {
+    let timer: number | undefined
+
+    if (value) {
+      dispatch(actions.get())
+      timer = window.setInterval(() => {
+        dispatch(actions.get())
+      }, HEARTBEAT_TIMEOUT)
+    }
+
+    return () => {
+      window.clearInterval(timer)
+    }
+  },
+)
+
+// Refetch when the requested settings fields changes.
+reduxSelectorSideEffect(
+  (state: RootState) => state.transmissionSettings.fields,
+  (_value, previousValue, dispatch) => {
+    if (previousValue !== undefined) {
+      dispatch(actions.get())
+    }
+  },
+)
 
 reduxSelectorSideEffect(
   (state: RootState) => state.transmissionSettings.settings['peer-port'],
