@@ -124,8 +124,8 @@ const SettingsDialog = () => {
         key={formikKey}
         onSubmit={async (values, formik) => {
           try {
-            await dispatch(actions.update(values))
-            hideDialog()
+            await dispatch(actions.update(cleanupValues(values), false))
+
             setInitialValues(values)
             setFormikKey((previous) => previous + 1)
 
@@ -210,6 +210,19 @@ const SettingsDialog = () => {
       </Formik>
     </Dialog>
   )
+}
+
+function cleanupValues(values: Partial<TransmissionSession>) {
+  const cleaned = { ...values }
+
+  // There's no way to actually set this in the settings dialog since it's
+  // polling on the main view. Never send it from the settings dialog.
+  delete cleaned['alt-speed-enabled']
+
+  // Casting here just to cleanup the return signature. TS does do the right
+  // thing here and returns a (very large) generated type where deleted keys are
+  // actually missing.
+  return cleaned as Partial<TransmissionSession>
 }
 
 export default SettingsDialog
