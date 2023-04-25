@@ -22,7 +22,7 @@ import SettingsTabNetwork from './SettingsTabNetwork'
 import { SettingsTabPeers } from './SettingsTabPeers'
 import { SettingsTabTransfers } from './SettingsTabTransfers'
 
-type SETTINGS_TAB = 'transfers' | 'bandwidth' | 'peers' | 'network'
+type SETTINGS_TAB = 'transfers' | 'bandwidth' | 'peers' | 'network' | 'all'
 
 const SettingsDialog = () => {
   const [selectedTab, setSelectedTab] = useState<SETTINGS_TAB>('transfers')
@@ -42,6 +42,17 @@ const SettingsDialog = () => {
       break
     case 'network':
       children = <SettingsTabNetwork />
+      break
+    case 'all':
+      children = (
+        <>
+          <SettingsTabTransfers />
+          <SettingsTabBandwidth />
+          <SettingsTabPeers />
+          <SettingsTabNetwork />
+        </>
+      )
+      break
   }
 
   const theme = useTheme()
@@ -128,6 +139,7 @@ const SettingsDialog = () => {
                 <Tab value="bandwidth" label="Bandwidth" />
                 <Tab value="peers" label="Peers" />
                 <Tab value="network" label="Network" />
+                <Tab value="all" label="All" />
               </Tabs>
               <DialogContent
                 // The children in the settings section are expected to manage
