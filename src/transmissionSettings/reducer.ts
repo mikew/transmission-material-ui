@@ -101,7 +101,24 @@ export default createReducer(initialState, (builder) => {
         ...action.payload,
       },
     }))
-    .addHandler(actions.update, (state, action) => ({
+    .addStartHandler(actions.update, (state, action) => {
+      // Making this optimistic is tough. Technically we can just do it, but the
+      // "port open" check is done when the port changes in redux. And the API
+      // it uses doesn't let you specify the port. So if we run that check
+      // before it's actually changed on the server, we'll get invalid results.
+      if (!action.meta.optimistic) {
+        return state
+      }
+
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          ...action.meta.payload,
+        },
+      }
+    })
+    .addSuccessHandler(actions.update, (state, action) => ({
       ...state,
       settings: {
         ...state.settings,

@@ -26,9 +26,16 @@ export default createActions('transmissionSettings', {
       }),
   }),
 
-  update: identityPayloadCreator<Partial<TransmissionSession>>(),
-  // update: async (payload: Partial<TransmissionSession>) => {
-  //   await apiInstance.callServer('session-set', payload)
-  //   return apiInstance.callServer('session-get', {})
-  // },
+  update: (payload: Partial<TransmissionSession>, optimistic = true) => ({
+    payload: async () => {
+      await apiInstance.callServer('session-set', payload)
+      return apiInstance.callServer('session-get', {
+        fields: Object.keys(payload) as (keyof TransmissionSession)[],
+      })
+    },
+    meta: {
+      payload,
+      optimistic,
+    },
+  }),
 })
