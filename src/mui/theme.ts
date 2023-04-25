@@ -64,6 +64,22 @@ const theme = createTheme({
         },
       },
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        divider: {
+          '&:last-child': {
+            borderBottomWidth: 0,
+          },
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          cursor: 'pointer',
+        },
+      },
+    },
     MuiDialog: {
       defaultProps: {
         TransitionComponent: SlideUp,

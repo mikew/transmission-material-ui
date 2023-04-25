@@ -11,8 +11,8 @@ import {
 import { useTheme } from '@mui/material/styles'
 import { Formik } from 'formik'
 import { useEffect, useState } from 'react'
+import { ActionSuccessType } from 'redux-easy-mode/lib/async/asyncMiddleware'
 
-import apiInstance from '@src/api/apiInstance'
 import MobileNavigationSpacer from '@src/lib/MobileNavigationSpacer'
 import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
 
@@ -33,7 +33,6 @@ const SettingsDialog = () => {
   switch (selectedTab) {
     case 'transfers':
       children = <SettingsTabTransfers />
-
       break
     case 'bandwidth':
       children = <SettingsTabBandwidth />
@@ -69,19 +68,27 @@ const SettingsDialog = () => {
   const initialValueRedux = useRootSelector(
     (state) => state.transmissionSettings.settings,
   )
-  const [initialValues, setInitialValues] = useState(initialValueRedux)
+  const [initialValues, setInitialValues] = useState(
+    // That we initialize from redux isn't important in the grand scheme of
+    // things. It just happens to always contain a full set of settings.
+    initialValueRedux,
+  )
   const [formikKey, setFormikKey] = useState(1)
   useEffect(() => {
     async function run() {
       if (isVisible) {
-        const response = await apiInstance.callServer('session-get', {})
-        setInitialValues(response)
+        // Using redux to fetch a fresh copy of the settings is important, as it
+        // has the bonus side effect of re-running ... side effects.
+        const response = (await dispatch(
+          actions.get(),
+        )) as unknown as ActionSuccessType<typeof actions.get>
+        setInitialValues(response.payload)
         setFormikKey((previous) => previous + 1)
       }
     }
 
     run()
-  }, [isVisible])
+  }, [dispatch, isVisible])
 
   return (
     <Dialog
@@ -98,6 +105,8 @@ const SettingsDialog = () => {
           try {
             await dispatch(actions.update(values))
             hideDialog()
+            setInitialValues(values)
+            setFormikKey((previous) => previous + 1)
           } catch (err) {
             console.error(err)
           }
@@ -113,7 +122,7 @@ const SettingsDialog = () => {
                 onChange={(_event, value) => {
                   setSelectedTab(value)
                 }}
-                variant="fullWidth"
+                variant="scrollable"
               >
                 <Tab value="transfers" label="Transfers" />
                 <Tab value="bandwidth" label="Bandwidth" />

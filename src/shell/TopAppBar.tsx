@@ -26,11 +26,15 @@ const TopAppBar: React.FC = () => {
         <Box flexGrow={1} />
 
         <Typography color="inherit" variant="body2" component="div">
-          <Stack direction="row" spacing={1} alignItems="center">
+          <Stack direction="row" spacing={0.5} alignItems="center">
             <span>{formatBytes(mappedState.rateDownload)}/s</span>
-            <ArrowDownward fontSize="small" />
-            <Divider orientation="vertical" flexItem />
-            <ArrowUpward fontSize="small" />
+            <ArrowDownward fontSize="inherit" />
+
+            <Box alignSelf="stretch" height="auto" display="flex">
+              <Divider orientation="vertical" flexItem sx={{ marginX: 0.5 }} />
+            </Box>
+
+            <ArrowUpward fontSize="inherit" />
             <span>{formatBytes(mappedState.rateUpload)}/s</span>
           </Stack>
         </Typography>

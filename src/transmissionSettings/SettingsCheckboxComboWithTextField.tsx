@@ -18,23 +18,7 @@ const SettingsCheckboxComboWithTextField: React.FC<
   return (
     <ListItem divider>
       <ListItemIcon>
-        <Field
-          name={checkboxFieldName}
-          component={Checkbox}
-          type="checkbox"
-          // Label={{
-          //   label: (
-          //     <Field
-          //       name={textFieldName}
-          //       component={TextField}
-          //       disabled={!value}
-          //       {...props}
-          //     />
-          //   ),
-          //   disableTypography: true,
-          //   sx: { display: 'flex' },
-          // }}
-        />
+        <Field name={checkboxFieldName} component={Checkbox} type="checkbox" />
       </ListItemIcon>
       <ListItemText
         primary={
@@ -44,9 +28,13 @@ const SettingsCheckboxComboWithTextField: React.FC<
             disabled={!value}
             fullWidth
             {...props}
+            helperText={
+              <>
+                {props.helperText} [{checkboxFieldName}] [{textFieldName}]
+              </>
+            }
           />
         }
-        secondary={`[${checkboxFieldName}] [${textFieldName}]`}
       />
     </ListItem>
   )
