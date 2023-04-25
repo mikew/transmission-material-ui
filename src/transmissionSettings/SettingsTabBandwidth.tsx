@@ -27,17 +27,17 @@ export function SettingsTabBandwidth() {
 
       <List dense>
         <ListSubheader>Alternate Speed Limit</ListSubheader>
-        <SettingsCheckboxComboWithTextField
-          checkboxFieldName={'alt-speed-enabled'}
-          textFieldName={'alt-speed-down'}
+        <SettingsTextField
+          // checkboxFieldName={'alt-speed-enabled'}
+          name={'alt-speed-down'}
           label="Alternate limit download rate"
           type="number"
           helperText="KB/s"
         />
 
-        <SettingsCheckboxComboWithTextField
-          checkboxFieldName={'alt-speed-enabled'}
-          textFieldName={'alt-speed-up'}
+        <SettingsTextField
+          // checkboxFieldName={'alt-speed-enabled'}
+          name={'alt-speed-up'}
           label="Alternate limit upload rate"
           type="number"
           helperText="KB/s"
