@@ -91,7 +91,7 @@ const SettingsDialog = () => {
         // Using redux to fetch a fresh copy of the settings is important, as it
         // has the bonus side effect of re-running ... side effects.
         const response = (await dispatch(
-          actions.get(),
+          actions.get(true),
         )) as unknown as ActionSuccessType<typeof actions.get>
         setInitialValues(response.payload)
         setFormikKey((previous) => previous + 1)
