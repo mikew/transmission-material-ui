@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -10,7 +11,7 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { Formik } from 'formik'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ActionSuccessType } from 'redux-easy-mode/lib/async/asyncMiddleware'
 
 import MobileNavigationSpacer from '@src/lib/MobileNavigationSpacer'
@@ -27,6 +28,7 @@ type SETTINGS_TAB = 'transfers' | 'bandwidth' | 'peers' | 'network' | 'all'
 const SettingsDialog = () => {
   const [selectedTab, setSelectedTab] = useState<SETTINGS_TAB>('transfers')
   const dispatch = useRootDispatch()
+  const buttonRef = useRef<null | 'save' | 'apply'>(null)
 
   let children: React.ReactNode = undefined
 
@@ -126,6 +128,10 @@ const SettingsDialog = () => {
             hideDialog()
             setInitialValues(values)
             setFormikKey((previous) => previous + 1)
+
+            if (buttonRef.current === 'save') {
+              hideDialog()
+            }
           } catch (err) {
             console.error(err)
           }
@@ -162,23 +168,37 @@ const SettingsDialog = () => {
               <MobileNavigationSpacer>
                 <DialogActions>
                   <Button
-                    variant="outlined"
-                    onClick={hideDialog}
-                    sx={{ display: ['block', 'none'] }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
                     color="primary"
                     variant="outlined"
                     onClick={() => resetForm()}
                   >
                     Reset
                   </Button>
+                  <Box flexGrow="1" />
+                  <Button
+                    variant="outlined"
+                    onClick={hideDialog}
+                    sx={{ display: ['block', 'none'] }}
+                  >
+                    Close
+                  </Button>
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => {
+                      buttonRef.current = 'apply'
+                      submitForm()
+                    }}
+                  >
+                    Apply
+                  </Button>
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={() => submitForm()}
+                    onClick={() => {
+                      buttonRef.current = 'save'
+                      submitForm()
+                    }}
                   >
                     Save
                   </Button>
