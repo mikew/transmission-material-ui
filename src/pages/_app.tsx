@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+import { SnackbarProvider } from 'notistack'
 import * as React from 'react'
 import { Provider } from 'react-redux'
 
@@ -42,11 +43,18 @@ export default function MyApp(props: MyAppProps) {
           />
         </Head>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <GlobalStyles
-            styles={{ 'html, body, #__next': { minHeight: '100%' } }}
-          />
-          <Component {...pageProps} />
+          <SnackbarProvider
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+          >
+            <CssBaseline />
+            <GlobalStyles
+              styles={{ 'html, body, #__next': { minHeight: '100%' } }}
+            />
+            <Component {...pageProps} />
+          </SnackbarProvider>
         </ThemeProvider>
       </Provider>
     </CacheProvider>

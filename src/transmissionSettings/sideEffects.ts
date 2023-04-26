@@ -1,3 +1,4 @@
+import { enqueueSnackbar } from 'notistack'
 import { reduxSelectorSideEffect } from 'redux-easy-mode'
 
 import apiInstance from '@src/api/apiInstance'
@@ -59,8 +60,19 @@ reduxSelectorSideEffect(
 reduxSelectorSideEffect(
   (state: RootState) => state.transmissionSettings.settings['download-dir'],
   (value, _previous, dispatch: RootDispatch) => {
+    if (!value) {
+      return
+    }
+
     async function run() {
-      dispatch(actions.getFreeSpace(value))
+      try {
+        await dispatch(actions.getFreeSpace(value))
+      } catch (err) {
+        console.error(err)
+        enqueueSnackbar(`Error while checking free space for ${value}`, {
+          variant: 'error',
+        })
+      }
     }
 
     run()
@@ -70,8 +82,19 @@ reduxSelectorSideEffect(
 reduxSelectorSideEffect(
   (state: RootState) => state.transmissionSettings.settings['incomplete-dir'],
   (value, _previous, dispatch: RootDispatch) => {
+    if (!value) {
+      return
+    }
+
     async function run() {
-      dispatch(actions.getFreeSpace(value))
+      try {
+        await dispatch(actions.getFreeSpace(value))
+      } catch (err) {
+        console.error(err)
+        enqueueSnackbar(`Error while checking free space for ${value}`, {
+          variant: 'error',
+        })
+      }
     }
 
     run()

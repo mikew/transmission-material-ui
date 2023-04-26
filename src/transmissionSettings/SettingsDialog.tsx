@@ -11,6 +11,7 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { Formik } from 'formik'
+import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState } from 'react'
 import { ActionSuccessType } from 'redux-easy-mode/lib/async/asyncMiddleware'
 
@@ -136,6 +137,8 @@ const SettingsDialog = () => {
             if (buttonRef.current === 'save') {
               hideDialog()
             }
+
+            enqueueSnackbar('Settings updated', { variant: 'success' })
           } catch (err) {
             console.error(err)
           }
