@@ -100,9 +100,21 @@ export function SettingsTabTransfers() {
       <List dense>
         <ListSubheader>Scripts</ListSubheader>
         <SettingsCheckboxComboWithTextField
+          checkboxFieldName={'script-torrent-added-enabled'}
+          textFieldName={'script-torrent-added-filename'}
+          label="Call script when download is added ..."
+        />
+
+        <SettingsCheckboxComboWithTextField
           checkboxFieldName={'script-torrent-done-enabled'}
           textFieldName={'script-torrent-done-filename'}
           label="Call script when download completes ..."
+        />
+
+        <SettingsCheckboxComboWithTextField
+          checkboxFieldName={'script-torrent-done-seeding-enabled'}
+          textFieldName={'script-torrent-done-seeding-filename'}
+          label="Call script when download is done seeding ..."
         />
       </List>
     </>
