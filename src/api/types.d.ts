@@ -444,7 +444,7 @@ interface TorrentSetRequest {
   /**
    * @deprecated use trackerList instead
    */
-  'trackerReplace'?: string[]
+  'trackerReplace'?: [string, string][]
 
   /**
    * maximum upload speed (KBps)
@@ -1274,7 +1274,7 @@ interface TransmissionSession {
   /**
    * required, preferred, tolerated
    */
-  'encryption': string
+  'encryption': 'required' | 'preferred' | 'tolerated'
 
   /**
    * true if the seeding inactivity limit is honored by default
@@ -1446,7 +1446,7 @@ interface TransmissionSession {
   /**
    * see below
    */
-  'units': object
+  'units': TransmissionUnit
 
   /**
    * true means allow UTP
