@@ -60,17 +60,7 @@ reduxSelectorSideEffect(
   (state: RootState) => state.transmissionSettings.settings['download-dir'],
   (value, _previous, dispatch: RootDispatch) => {
     async function run() {
-      dispatch(actions.setSpaceRemaining('loading'))
-
-      try {
-        const response = await apiInstance.callServer('free-space', {
-          path: value,
-        })
-        dispatch(actions.setSpaceRemaining(response['size-bytes']))
-      } catch (err) {
-        console.error(err)
-        dispatch(actions.setSpaceRemaining(0))
-      }
+      dispatch(actions.getFreeSpace(value))
     }
 
     run()
