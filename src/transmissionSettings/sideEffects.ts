@@ -66,3 +66,14 @@ reduxSelectorSideEffect(
     run()
   },
 )
+
+reduxSelectorSideEffect(
+  (state: RootState) => state.transmissionSettings.settings['incomplete-dir'],
+  (value, _previous, dispatch: RootDispatch) => {
+    async function run() {
+      dispatch(actions.getFreeSpace(value))
+    }
+
+    run()
+  },
+)

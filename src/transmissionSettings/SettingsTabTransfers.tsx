@@ -17,13 +17,9 @@ export function SettingsTabTransfers() {
   // wouldn't re-render the whole parent component when only that field should
   // care about changes.
   const [{ value: downloadDir }] = useField('download-dir')
-  const freeSpace = freeSpaceMap[downloadDir]
-  const freeSpaceRemaining = freeSpace
-    ? formatBytes(freeSpace['size-bytes'])
-    : '...'
-  const driveSizeTotal = freeSpace
-    ? formatBytes(freeSpace['total_size'])
-    : '...'
+  const freeSpaceDownloadDir = freeSpaceMap[downloadDir]
+  const [{ value: incompleteDownloadDir }] = useField('incomplete-dir')
+  const freeSpaceIncompleteDownloadDir = freeSpaceMap[incompleteDownloadDir]
 
   return (
     <>
@@ -32,7 +28,7 @@ export function SettingsTabTransfers() {
         <SettingsTextField
           name="download-dir"
           label="Default location"
-          helperText={`${freeSpaceRemaining} remaining (${driveSizeTotal} total)`}
+          helperText={buildFreeSpaceMessage(freeSpaceDownloadDir)}
         />
 
         <SettingsCheckbox
@@ -47,6 +43,7 @@ export function SettingsTabTransfers() {
           checkboxFieldName="incomplete-dir-enabled"
           textFieldName="incomplete-dir"
           label="Where to store incomplete downloads"
+          helperText={buildFreeSpaceMessage(freeSpaceIncompleteDownloadDir)}
         />
       </List>
 
@@ -124,4 +121,17 @@ export function SettingsTabTransfers() {
       </List>
     </>
   )
+}
+
+function buildFreeSpaceMessage(
+  freeSpace: undefined | TransmissionRPC['free-space']['response'],
+) {
+  const freeSpaceRemaining = freeSpace
+    ? formatBytes(freeSpace['size-bytes'])
+    : '...'
+  const driveSizeTotal = freeSpace
+    ? formatBytes(freeSpace['total_size'])
+    : '...'
+
+  return `${freeSpaceRemaining} remaining (${driveSizeTotal} total)`
 }
