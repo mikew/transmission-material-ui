@@ -43,6 +43,11 @@ export function SettingsTabTransfers() {
           name={'rename-partial-files'}
           label="Append .part to incomplete files"
         />
+        <SettingsCheckboxComboWithTextField
+          checkboxFieldName="incomplete-dir-enabled"
+          textFieldName="incomplete-dir"
+          label="Where to store incomplete downloads"
+        />
       </List>
 
       <List dense>
