@@ -7,10 +7,12 @@ export type SettingsTextFieldProps = Omit<
   'field' | 'form' | 'meta'
 > & {
   name: string
+  component?: React.ComponentType<any>
 }
 
 const SettingsTextField: React.FC<SettingsTextFieldProps> = ({
   name,
+  component,
   ...props
 }) => {
   return (
@@ -19,7 +21,7 @@ const SettingsTextField: React.FC<SettingsTextFieldProps> = ({
         primary={
           <Field
             name={name}
-            component={TextField}
+            component={component ?? TextField}
             fullWidth
             {...props}
             helperText={
