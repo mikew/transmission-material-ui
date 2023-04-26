@@ -95,13 +95,17 @@ const SettingsDialog = () => {
         const response = (await dispatch(
           actions.get(true),
         )) as unknown as ActionSuccessType<typeof actions.get>
-        setInitialValues(response.payload)
-        setFormikKey((previous) => previous + 1)
+        commitValues(response.payload)
       }
     }
 
     run()
   }, [dispatch, isVisible])
+
+  function commitValues(values: TransmissionSession) {
+    setInitialValues(values)
+    setFormikKey((previous) => previous + 1)
+  }
 
   useEffect(() => {
     dispatch(actions.setIsWatching(true))
@@ -126,8 +130,8 @@ const SettingsDialog = () => {
           try {
             await dispatch(actions.update(cleanupValues(values), false))
 
-            setInitialValues(values)
-            setFormikKey((previous) => previous + 1)
+            // TODO Is this needed here? It was at some point ...
+            // commitValues(values)
 
             if (buttonRef.current === 'save') {
               hideDialog()

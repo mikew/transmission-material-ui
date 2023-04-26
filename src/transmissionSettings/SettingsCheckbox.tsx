@@ -1,7 +1,6 @@
 import { ListItem, ListItemIcon, ListItemText } from '@mui/material'
 import { Field } from 'formik'
 import { Checkbox } from 'formik-mui'
-import React from 'react'
 
 export type SettingsCheckboxProps = {
   name: string

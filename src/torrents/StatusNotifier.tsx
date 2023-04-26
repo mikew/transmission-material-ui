@@ -28,7 +28,7 @@ const StatusNotifier = () => {
         size="small"
         variant="outlined"
       >
-        Try Again
+        Reconnect
       </Button>
     )
   } else if (state.isApiDown) {
