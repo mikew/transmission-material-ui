@@ -7,26 +7,23 @@ export interface State {
   fields: Set<keyof TransmissionSession>
   isSettingsDialogVisible: boolean
   portStatus: 'loading' | 'open' | 'closed'
-  spaceRemaining: 'loading' | number
   isWatching: boolean
+  freeSpace: Record<
+    string,
+    undefined | TransmissionRPC['free-space']['response']
+  >
 }
 
 const initialState: State = {
   fields: new Set<keyof TransmissionSession>(['alt-speed-enabled']),
   isSettingsDialogVisible: false,
   portStatus: 'loading',
-  spaceRemaining: 'loading',
   isWatching: false,
+  freeSpace: {},
   settings: {
     // TODO define these, they came back from the API but aren't defined.
     // 'anti-brute-force-enabled': false,
     // 'anti-brute-force-threshold': 100,
-    // 'default-trackers': '',
-    // 'rpc-version-semver': '5.3.0',
-    // 'script-torrent-added-enabled': false,
-    // 'script-torrent-added-filename': '',
-    // 'script-torrent-done-seeding-enabled': false,
-    // 'script-torrent-done-seeding-filename': '',
     // 'session-id': 'MyRAMAC2YZXRrO9UDsxe1clk188OVfWy7e33EC6t8zBTPvHp',
     // 'tcp-enabled': true,
 
@@ -42,6 +39,7 @@ const initialState: State = {
     'blocklist-url': '',
     'cache-size-mb': 0,
     'config-dir': '',
+    'default-trackers': '',
     'dht-enabled': false,
     'download-dir': '',
     'download-dir-free-space': 0,
@@ -65,9 +63,14 @@ const initialState: State = {
 
     'rpc-version': 0,
     'rpc-version-minimum': 0,
+    'rpc-version-semver': '',
 
+    'script-torrent-added-enabled': false,
+    'script-torrent-added-filename': '',
     'script-torrent-done-enabled': false,
     'script-torrent-done-filename': '',
+    'script-torrent-done-seeding-enabled': false,
+    'script-torrent-done-seeding-filename': '',
 
     'seed-queue-enabled': false,
     'seed-queue-size': 0,
@@ -141,10 +144,6 @@ export default createReducer(initialState, (builder) => {
       ...state,
       portStatus: action.payload,
     }))
-    .addHandler(actions.setSpaceRemaining, (state, action) => ({
-      ...state,
-      spaceRemaining: action.payload,
-    }))
     .addHandler(actions.setIsWatching, (state, action) => ({
       ...state,
       isWatching: action.payload,
@@ -165,6 +164,24 @@ export default createReducer(initialState, (builder) => {
       return {
         ...state,
         fields: newFields,
+      }
+    })
+    .addStartHandler(actions.getFreeSpace, (state, action) => {
+      return {
+        ...state,
+        freeSpace: {
+          ...state.freeSpace,
+          [action.meta.path]: undefined,
+        },
+      }
+    })
+    .addSuccessHandler(actions.getFreeSpace, (state, action) => {
+      return {
+        ...state,
+        freeSpace: {
+          ...state.freeSpace,
+          [action.meta.path]: action.payload,
+        },
       }
     })
 })

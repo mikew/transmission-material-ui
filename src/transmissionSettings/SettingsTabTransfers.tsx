@@ -1,4 +1,5 @@
 import { List, ListSubheader } from '@mui/material'
+import { useField } from 'formik'
 
 import formatBytes from '@src/lib/formatBytes'
 import { useRootSelector } from '@src/redux/helpers'
@@ -8,9 +9,17 @@ import SettingsCheckboxComboWithTextField from './SettingsCheckboxComboWithTextF
 import SettingsTextField from './SettingsTextField'
 
 export function SettingsTabTransfers() {
-  const freeSpace = useRootSelector(
-    (state) => state.transmissionSettings.spaceRemaining,
+  const freeSpaceMap = useRootSelector(
+    (state) => state.transmissionSettings.freeSpace,
   )
+
+  // TODO This could be extracted to its own Formik Field component. That way we
+  // wouldn't re-render the whole parent component when only that field should
+  // care about changes.
+  const [{ value: downloadDir }] = useField('download-dir')
+  const freeSpaceDownloadDir = freeSpaceMap[downloadDir]
+  const [{ value: incompleteDownloadDir }] = useField('incomplete-dir')
+  const freeSpaceIncompleteDownloadDir = freeSpaceMap[incompleteDownloadDir]
 
   return (
     <>
@@ -19,9 +28,7 @@ export function SettingsTabTransfers() {
         <SettingsTextField
           name="download-dir"
           label="Default location"
-          helperText={`${
-            freeSpace === 'loading' ? '...' : formatBytes(freeSpace)
-          } remaining`}
+          helperText={buildFreeSpaceMessage(freeSpaceDownloadDir)}
         />
 
         <SettingsCheckbox
@@ -31,6 +38,12 @@ export function SettingsTabTransfers() {
         <SettingsCheckbox
           name={'rename-partial-files'}
           label="Append .part to incomplete files"
+        />
+        <SettingsCheckboxComboWithTextField
+          checkboxFieldName="incomplete-dir-enabled"
+          textFieldName="incomplete-dir"
+          label="Where to store incomplete downloads"
+          helperText={buildFreeSpaceMessage(freeSpaceIncompleteDownloadDir)}
         />
       </List>
 
@@ -89,11 +102,36 @@ export function SettingsTabTransfers() {
       <List dense>
         <ListSubheader>Scripts</ListSubheader>
         <SettingsCheckboxComboWithTextField
+          checkboxFieldName={'script-torrent-added-enabled'}
+          textFieldName={'script-torrent-added-filename'}
+          label="Call script when download is added ..."
+        />
+
+        <SettingsCheckboxComboWithTextField
           checkboxFieldName={'script-torrent-done-enabled'}
           textFieldName={'script-torrent-done-filename'}
           label="Call script when download completes ..."
         />
+
+        <SettingsCheckboxComboWithTextField
+          checkboxFieldName={'script-torrent-done-seeding-enabled'}
+          textFieldName={'script-torrent-done-seeding-filename'}
+          label="Call script when download is done seeding ..."
+        />
       </List>
     </>
   )
+}
+
+function buildFreeSpaceMessage(
+  freeSpace: undefined | TransmissionRPC['free-space']['response'],
+) {
+  const freeSpaceRemaining = freeSpace
+    ? formatBytes(freeSpace['size-bytes'])
+    : '...'
+  const driveSizeTotal = freeSpace
+    ? formatBytes(freeSpace['total_size'])
+    : '...'
+
+  return `${freeSpaceRemaining} remaining (${driveSizeTotal} total)`
 }

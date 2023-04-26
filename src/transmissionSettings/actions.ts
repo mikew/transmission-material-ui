@@ -15,7 +15,13 @@ export default createActions('transmissionSettings', {
   hideDialog: () => undefined,
 
   setPortStatus: identityPayloadCreator<State['portStatus']>(),
-  setSpaceRemaining: identityPayloadCreator<State['spaceRemaining']>(),
+
+  getFreeSpace: (path: string) => ({
+    payload: () => apiInstance.callServer('free-space', { path }),
+    meta: {
+      path,
+    },
+  }),
 
   get: (isMain = false) => ({
     payload: (_dispatch: RootDispatch, getState: RootGetState) =>

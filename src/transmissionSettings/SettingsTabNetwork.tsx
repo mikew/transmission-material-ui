@@ -18,6 +18,16 @@ const SettingsTabNetwork = () => {
           name={'peer-port'}
           label="Peer listening port"
           type="number"
+          color={
+            portStatus === 'loading'
+              ? 'info'
+              : portStatus === 'closed'
+              ? 'error'
+              : portStatus === 'open'
+              ? 'success'
+              : undefined
+          }
+          focused
           helperText={
             <>
               Port Status:{' '}

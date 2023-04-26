@@ -11,6 +11,7 @@ import {
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { Formik } from 'formik'
+import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState } from 'react'
 import { ActionSuccessType } from 'redux-easy-mode/lib/async/asyncMiddleware'
 
@@ -95,13 +96,17 @@ const SettingsDialog = () => {
         const response = (await dispatch(
           actions.get(true),
         )) as unknown as ActionSuccessType<typeof actions.get>
-        setInitialValues(response.payload)
-        setFormikKey((previous) => previous + 1)
+        commitValues(response.payload)
       }
     }
 
     run()
   }, [dispatch, isVisible])
+
+  function commitValues(values: TransmissionSession) {
+    setInitialValues(values)
+    setFormikKey((previous) => previous + 1)
+  }
 
   useEffect(() => {
     dispatch(actions.setIsWatching(true))
@@ -126,12 +131,14 @@ const SettingsDialog = () => {
           try {
             await dispatch(actions.update(cleanupValues(values), false))
 
-            setInitialValues(values)
-            setFormikKey((previous) => previous + 1)
+            // TODO Is this needed here? It was at some point ...
+            // commitValues(values)
 
             if (buttonRef.current === 'save') {
               hideDialog()
             }
+
+            enqueueSnackbar('Settings updated', { variant: 'success' })
           } catch (err) {
             console.error(err)
           }
