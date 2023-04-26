@@ -38,7 +38,14 @@ const StatusNotifier = () => {
   }
 
   return (
-    <Snackbar open={!!message} TransitionComponent={Slide}>
+    <Snackbar
+      open={!!message}
+      TransitionComponent={Slide}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+    >
       <Alert severity={severity} action={action}>
         {message}
       </Alert>
