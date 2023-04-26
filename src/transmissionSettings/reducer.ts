@@ -7,16 +7,19 @@ export interface State {
   fields: Set<keyof TransmissionSession>
   isSettingsDialogVisible: boolean
   portStatus: 'loading' | 'open' | 'closed'
-  spaceRemaining: 'loading' | number
   isWatching: boolean
+  freeSpace: Record<
+    string,
+    undefined | TransmissionRPC['free-space']['response']
+  >
 }
 
 const initialState: State = {
   fields: new Set<keyof TransmissionSession>(['alt-speed-enabled']),
   isSettingsDialogVisible: false,
   portStatus: 'loading',
-  spaceRemaining: 'loading',
   isWatching: false,
+  freeSpace: {},
   settings: {
     // TODO define these, they came back from the API but aren't defined.
     // 'anti-brute-force-enabled': false,
@@ -141,10 +144,6 @@ export default createReducer(initialState, (builder) => {
       ...state,
       portStatus: action.payload,
     }))
-    .addHandler(actions.setSpaceRemaining, (state, action) => ({
-      ...state,
-      spaceRemaining: action.payload,
-    }))
     .addHandler(actions.setIsWatching, (state, action) => ({
       ...state,
       isWatching: action.payload,
@@ -165,6 +164,24 @@ export default createReducer(initialState, (builder) => {
       return {
         ...state,
         fields: newFields,
+      }
+    })
+    .addStartHandler(actions.getFreeSpace, (state, action) => {
+      return {
+        ...state,
+        freeSpace: {
+          ...state.freeSpace,
+          [action.meta.path]: undefined,
+        },
+      }
+    })
+    .addSuccessHandler(actions.getFreeSpace, (state, action) => {
+      return {
+        ...state,
+        freeSpace: {
+          ...state.freeSpace,
+          [action.meta.path]: action.payload,
+        },
       }
     })
 })

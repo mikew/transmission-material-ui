@@ -1,4 +1,5 @@
 import { List, ListSubheader } from '@mui/material'
+import { useField } from 'formik'
 
 import formatBytes from '@src/lib/formatBytes'
 import { useRootSelector } from '@src/redux/helpers'
@@ -8,9 +9,21 @@ import SettingsCheckboxComboWithTextField from './SettingsCheckboxComboWithTextF
 import SettingsTextField from './SettingsTextField'
 
 export function SettingsTabTransfers() {
-  const freeSpace = useRootSelector(
-    (state) => state.transmissionSettings.spaceRemaining,
+  const freeSpaceMap = useRootSelector(
+    (state) => state.transmissionSettings.freeSpace,
   )
+
+  // TODO This could be extracted to its own Formik Field component. That way we
+  // wouldn't re-render the whole parent component when only that field should
+  // care about changes.
+  const [{ value: downloadDir }] = useField('download-dir')
+  const freeSpace = freeSpaceMap[downloadDir]
+  const freeSpaceRemaining = freeSpace
+    ? formatBytes(freeSpace['size-bytes'])
+    : '...'
+  const driveSizeTotal = freeSpace
+    ? formatBytes(freeSpace['total_size'])
+    : '...'
 
   return (
     <>
@@ -19,9 +32,7 @@ export function SettingsTabTransfers() {
         <SettingsTextField
           name="download-dir"
           label="Default location"
-          helperText={`${
-            freeSpace === 'loading' ? '...' : formatBytes(freeSpace)
-          } remaining`}
+          helperText={`${freeSpaceRemaining} remaining (${driveSizeTotal} total)`}
         />
 
         <SettingsCheckbox
