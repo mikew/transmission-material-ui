@@ -1,5 +1,6 @@
 import { Button, CircularProgress, Slide, Snackbar } from '@mui/material'
 import Alert, { AlertProps } from '@mui/material/Alert'
+import { useEffect, useState } from 'react'
 
 import {
   useRootDispatch,
@@ -37,7 +38,30 @@ const StatusNotifier = () => {
     action = <CircularProgress size={32} />
   }
 
-  return (
+  useEffect(() => {
+    function handler() {
+      if (!state.isWatching) {
+        dispatch(actions.startWatching())
+      }
+    }
+
+    window.addEventListener('focus', handler)
+
+    return () => {
+      window.removeEventListener('focus', handler)
+    }
+  }, [dispatch, state.isWatching])
+
+  // Since for all intents and purposes, everything is considered "not working"
+  // on the initial load, that means there's a flash of the "not responding"
+  // message on first load.
+  // Let's get rid of that.
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  return isMounted ? (
     <Snackbar
       open={!!message}
       TransitionComponent={Slide}
@@ -50,7 +74,7 @@ const StatusNotifier = () => {
         {message}
       </Alert>
     </Snackbar>
-  )
+  ) : null
 }
 
 export default StatusNotifier
