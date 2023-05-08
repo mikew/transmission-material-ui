@@ -134,6 +134,20 @@ const theme = createTheme({
         },
       },
     },
+    MuiSnackbar: {
+      styleOverrides: {
+        root: {
+          pointerEvents: 'none',
+        },
+      },
+    },
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          pointerEvents: 'initial',
+        },
+      },
+    },
   },
 })
 
