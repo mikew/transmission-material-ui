@@ -3,28 +3,9 @@ import { createTheme } from '@mui/material/styles'
 
 import SlideUp from '@src/lib/SlideUp'
 
-declare module '@mui/material/styles' {
-  interface BreakpointOverrides {
-    xxs: true
-  }
-}
-
 const ROUNDED_BORDER_RADIUS = 9999
 
 const theme = createTheme({
-  breakpoints: {
-    values: {
-      // What we actually care about
-      xxs: 0,
-      // "If you change the default breakpoints's values, you need to provide
-      // them all"
-      xs: 300,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-    },
-  },
   palette: {
     primary: {
       main: '#6e6f91',
@@ -131,20 +112,6 @@ const theme = createTheme({
         },
         bar: {
           borderRadius: ROUNDED_BORDER_RADIUS,
-        },
-      },
-    },
-    MuiSnackbar: {
-      styleOverrides: {
-        root: {
-          pointerEvents: 'none',
-        },
-      },
-    },
-    MuiAlert: {
-      styleOverrides: {
-        root: {
-          pointerEvents: 'initial',
         },
       },
     },

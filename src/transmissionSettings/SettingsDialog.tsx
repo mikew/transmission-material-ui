@@ -59,7 +59,7 @@ const SettingsDialog = () => {
   }
 
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMobile = useMediaQuery(theme.breakpoints.only('xs'))
   const isVisible = useRootSelector(
     (state) => state.transmissionSettings.isSettingsDialogVisible,
   )
