@@ -1,3 +1,4 @@
+import { Box } from '@mui/material'
 import Toolbar from '@mui/material/Toolbar'
 import Head from 'next/head'
 import { useEffect } from 'react'
@@ -42,7 +43,15 @@ export default function Home() {
         <MobileNavigationSpacer>
           <Toolbar variant="dense" />
         </MobileNavigationSpacer>
-        <BottomAppBar />
+
+        <Box
+          display={{
+            xxs: 'none',
+            xs: 'block',
+          }}
+        >
+          <BottomAppBar />
+        </Box>
 
         <StatusNotifier />
       </TorrentDropZone>

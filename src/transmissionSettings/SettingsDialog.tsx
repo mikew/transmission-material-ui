@@ -59,7 +59,7 @@ const SettingsDialog = () => {
   }
 
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.only('xs'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isVisible = useRootSelector(
     (state) => state.transmissionSettings.isSettingsDialogVisible,
   )
@@ -185,7 +185,7 @@ const SettingsDialog = () => {
                   <Button
                     variant="outlined"
                     onClick={hideDialog}
-                    sx={{ display: ['block', 'none'] }}
+                    sx={{ display: { xxs: 'block', sm: 'none' } }}
                   >
                     Close
                   </Button>

@@ -40,6 +40,7 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
           pinnedTabPath={`${FAVICON_BASE_PATH}/safari-pinned-tab.svg`}
           pinnedTabColor={theme.palette.primary.main}
         />
+        <meta name="disabled-adaptations" content="watch" />
 
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="emotion-insertion-point" content="" />

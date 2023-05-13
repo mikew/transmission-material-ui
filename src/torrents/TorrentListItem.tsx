@@ -7,12 +7,14 @@ import {
   ListItemSecondaryAction,
   Stack,
   Typography,
+  useMediaQuery,
 } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
 import LinearProgress, {
   LinearProgressProps,
 } from '@mui/material/LinearProgress'
 import ListItemText from '@mui/material/ListItemText'
+import { useTheme } from '@mui/material/styles'
 import { memo } from 'react'
 
 import { TorrentStatus } from '@src/api'
@@ -52,6 +54,14 @@ function TorrentListItem(props: Props) {
       />
     ) : null
 
+  // CSS-in-JS smell: We just want to not render the secondary action on xxs
+  // screens.
+  // Seems pretty easy! But we need the element to not exist in JSX, hiding it
+  // with CSS isn't enough.
+  // So, runtime costs for things browsers already do for us.
+  const theme = useTheme()
+  const isXxs = useMediaQuery(theme.breakpoints.only('xxs'))
+
   return (
     <ListItem
       button
@@ -62,7 +72,7 @@ function TorrentListItem(props: Props) {
       // TODO this is supposed to be read from the list context.
       dense
     >
-      <ListItemIcon>
+      <ListItemIcon sx={{ display: { xxs: 'none', xs: 'block' } }}>
         <Checkbox
           onClickCapture={(event) =>
             props.onCheckboxChange(event, props.torrent)
@@ -87,7 +97,7 @@ function TorrentListItem(props: Props) {
         }
       />
 
-      {props.secondaryAction ? (
+      {props.secondaryAction && !isXxs ? (
         <ListItemSecondaryAction>
           {props.secondaryAction}
         </ListItemSecondaryAction>

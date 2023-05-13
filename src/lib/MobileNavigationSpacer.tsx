@@ -7,7 +7,19 @@ import { Box } from '@mui/material'
 const MobileNavigationSpacer: React.FC<{ children?: React.ReactNode }> = (
   props,
 ) => {
-  return <Box sx={{ paddingBottom: [3, 0] }}>{props.children}</Box>
+  return (
+    <Box
+      sx={{
+        paddingBottom: {
+          xxs: 0,
+          xs: 4,
+          sm: 0,
+        },
+      }}
+    >
+      {props.children}
+    </Box>
+  )
 }
 
 export default MobileNavigationSpacer

@@ -32,7 +32,7 @@ function Inspector() {
       anchor="right"
       PaperProps={{
         sx: (theme) => ({
-          [theme.breakpoints.only('xs')]: {
+          [theme.breakpoints.down('sm')]: {
             width: '100%',
             borderWidth: 0,
           },
