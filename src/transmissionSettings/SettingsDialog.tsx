@@ -185,7 +185,7 @@ const SettingsDialog = () => {
                   <Button
                     variant="outlined"
                     onClick={hideDialog}
-                    sx={{ display: ['block', 'none'] }}
+                    sx={{ display: { xxs: 'block', sm: 'none' } }}
                   >
                     Close
                   </Button>

@@ -44,7 +44,12 @@ export default function Home() {
           <Toolbar variant="dense" />
         </MobileNavigationSpacer>
 
-        <Box display={['none', 'block']}>
+        <Box
+          display={{
+            xxs: 'none',
+            xs: 'block',
+          }}
+        >
           <BottomAppBar />
         </Box>
 

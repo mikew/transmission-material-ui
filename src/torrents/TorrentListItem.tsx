@@ -72,7 +72,7 @@ function TorrentListItem(props: Props) {
       // TODO this is supposed to be read from the list context.
       dense
     >
-      <ListItemIcon sx={{ display: ['none', 'block'] }}>
+      <ListItemIcon sx={{ display: { xxs: 'none', xs: 'block' } }}>
         <Checkbox
           onClickCapture={(event) =>
             props.onCheckboxChange(event, props.torrent)
@@ -98,7 +98,7 @@ function TorrentListItem(props: Props) {
       />
 
       {props.secondaryAction && !isXxs ? (
-        <ListItemSecondaryAction sx={{ display: ['none', 'block'] }}>
+        <ListItemSecondaryAction>
           {props.secondaryAction}
         </ListItemSecondaryAction>
       ) : undefined}
