@@ -18,7 +18,7 @@ const theme = createTheme({
       xxs: 0,
       // "If you change the default breakpoints's values, you need to provide
       // them all"
-      xs: 300,
+      xs: 321,
       sm: 600,
       md: 900,
       lg: 1200,
