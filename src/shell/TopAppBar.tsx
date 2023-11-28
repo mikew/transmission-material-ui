@@ -3,16 +3,29 @@ import { Box, Divider, Stack } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import { useEffect } from 'react'
 
 import formatBytes from '@src/lib/formatBytes'
-import { useRootSelectorShallowEqual } from '@src/redux/helpers'
+import {
+  useRootDispatch,
+  useRootSelectorShallowEqual,
+} from '@src/redux/helpers'
+import actions from '@src/stats/actions'
 import CheckAllTorrents from '@src/torrents/CheckAllTorrents'
 import DeleteAllTorrents from '@src/torrents/DeleteAllTorrents'
-import * as selectors from '@src/torrents/selectors'
 import StartAllTorrents from '@src/torrents/StartAllTorrents'
 
 const TopAppBar: React.FC = () => {
   const mappedState = useRootSelectorShallowEqual(mapState)
+  const dispatch = useRootDispatch()
+
+  useEffect(() => {
+    dispatch(actions.setIsWatching(true))
+
+    return () => {
+      dispatch(actions.setIsWatching(false))
+    }
+  }, [dispatch])
 
   return (
     <AppBar>
@@ -44,8 +57,8 @@ const TopAppBar: React.FC = () => {
 }
 
 const mapState = (state: RootState) => ({
-  rateUpload: selectors.getRateUpload(state),
-  rateDownload: selectors.getRateDownload(state),
+  rateUpload: state.stats.stats?.uploadSpeed || 0,
+  rateDownload: state.stats.stats?.downloadSpeed || 0,
 })
 
 export default TopAppBar
