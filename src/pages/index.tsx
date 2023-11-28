@@ -9,6 +9,7 @@ import { useRootDispatch } from '@src/redux/helpers'
 import actions from '@src/settings/actions'
 import BottomAppBar from '@src/shell/BottomAppBar'
 import TopAppBar from '@src/shell/TopAppBar'
+import StatsDialog from '@src/stats/StatsDialog'
 import AddTorrentDialog from '@src/torrents/AddTorrentDialog'
 import DeleteDialog from '@src/torrents/DeleteDialog'
 import StatusNotifier from '@src/torrents/StatusNotifier'
@@ -39,6 +40,7 @@ export default function Home() {
         <DeleteDialog />
         <Inspector />
         <SettingsDialog />
+        <StatsDialog />
 
         <MobileNavigationSpacer>
           <Toolbar variant="dense" />
