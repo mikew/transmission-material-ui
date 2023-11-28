@@ -10,7 +10,7 @@ export interface State {
 
 const initialState: State = {
   stats: undefined,
-  isDialogOpen: true,
+  isDialogOpen: false,
   isWatching: false,
 }
 

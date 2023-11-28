@@ -1,4 +1,4 @@
-import { Close, Settings } from '@mui/icons-material'
+import { Close, Poll, Settings } from '@mui/icons-material'
 import Add from '@mui/icons-material/Add'
 import Info from '@mui/icons-material/Info'
 import AppBar from '@mui/material/AppBar'
@@ -10,6 +10,7 @@ import Toolbar from '@mui/material/Toolbar'
 import inspectorActions from '@src/inspector/actions'
 import MobileNavigationSpacer from '@src/lib/MobileNavigationSpacer'
 import { useRootDispatch, useRootSelector } from '@src/redux/helpers'
+import statsActions from '@src/stats/actions'
 import torrentActions from '@src/torrents/actions'
 import transmissionSettingsActions from '@src/transmissionSettings/actions'
 import SlowModeButton from '@src/transmissionSettings/SlowModeButton'
@@ -42,6 +43,14 @@ const BottomAppBar: React.FC = () => {
           </IconButton>
 
           <SlowModeButton />
+
+          <IconButton
+            onClick={() => {
+              dispatch(statsActions.showDialog())
+            }}
+          >
+            <Poll />
+          </IconButton>
 
           <Box flexGrow={1} />
 
