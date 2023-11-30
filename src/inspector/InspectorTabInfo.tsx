@@ -62,7 +62,6 @@ function InspectorTabInfo() {
           />
           <Stack spacing={1} paddingX={1}>
             <Button
-              variant="outlined"
               color="warning"
               onClick={() => {
                 dispatch(

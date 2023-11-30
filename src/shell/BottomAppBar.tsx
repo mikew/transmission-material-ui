@@ -44,6 +44,8 @@ const BottomAppBar: React.FC = () => {
 
           <SlowModeButton />
 
+          <Box flexGrow={1} />
+
           <IconButton
             onClick={() => {
               dispatch(statsActions.showDialog())
@@ -51,8 +53,6 @@ const BottomAppBar: React.FC = () => {
           >
             <Poll />
           </IconButton>
-
-          <Box flexGrow={1} />
 
           <IconButton
             edge="end"

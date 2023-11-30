@@ -174,16 +174,11 @@ const SettingsDialog = () => {
               </DialogContent>
               <MobileNavigationSpacer>
                 <DialogActions>
-                  <Button
-                    color="primary"
-                    variant="outlined"
-                    onClick={() => resetForm()}
-                  >
+                  <Button color="primary" onClick={() => resetForm()}>
                     Reset
                   </Button>
                   <Box flexGrow="1" />
                   <Button
-                    variant="outlined"
                     onClick={hideDialog}
                     sx={{ display: { xxs: 'block', sm: 'none' } }}
                   >
@@ -191,7 +186,6 @@ const SettingsDialog = () => {
                   </Button>
                   <Button
                     color="primary"
-                    variant="outlined"
                     onClick={() => {
                       buttonRef.current = 'apply'
                       submitForm()

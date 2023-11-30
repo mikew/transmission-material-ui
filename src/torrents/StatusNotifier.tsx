@@ -24,11 +24,7 @@ const StatusNotifier = () => {
     severity = 'error'
     message = 'Server has stopped responding'
     action = (
-      <Button
-        onClick={() => dispatch(actions.startWatching())}
-        size="small"
-        variant="outlined"
-      >
+      <Button onClick={() => dispatch(actions.startWatching())} size="small">
         Reconnect
       </Button>
     )
