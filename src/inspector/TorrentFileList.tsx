@@ -10,10 +10,10 @@ import {
   Terminal,
   Videocam,
 } from '@mui/icons-material'
-import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem'
-import TreeView from '@mui/lab/TreeView'
 import { Box, List } from '@mui/material'
 import { alpha } from '@mui/material/styles'
+import { TreeItem, treeItemClasses } from '@mui/x-tree-view/TreeItem'
+import { TreeView } from '@mui/x-tree-view/TreeView'
 import { Fragment } from 'react'
 
 import ForceWrap from '@src/lib/ForceWrap'
@@ -83,13 +83,13 @@ function renderItem(item: DirSpec | FileSpec) {
 function getIconForFile(path: string) {
   path = path.toLowerCase()
 
-  if (path.match(/\.(mkv|mp4|divx|xvid)$/)) {
+  if (path.match(/\.(mkv|mp4|divx|xvid|webm)$/)) {
     return <Videocam color="disabled" />
   }
-  if (path.match(/\.(jpe?g|png|tiff?)$/)) {
+  if (path.match(/\.(jpe?g|png|tiff?|webp)$/)) {
     return <Photo color="disabled" />
   }
-  if (path.match(/\.(wav|mp3|ogg)$/)) {
+  if (path.match(/\.(wav|mp3|ogg|flac|aac)$/)) {
     return <Audiotrack color="disabled" />
   }
   if (path.match(/\.(txt|docx|md|nfo)$/)) {
