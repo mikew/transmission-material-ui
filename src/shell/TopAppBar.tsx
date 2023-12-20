@@ -28,7 +28,7 @@ const TopAppBar: React.FC = () => {
   }, [dispatch])
 
   return (
-    <AppBar>
+    <AppBar position="sticky">
       <Toolbar variant="dense">
         <Box>
           <CheckAllTorrents edge="start" />

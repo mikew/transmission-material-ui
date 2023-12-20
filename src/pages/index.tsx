@@ -32,7 +32,6 @@ export default function Home() {
 
       <TorrentDropZone>
         <TopAppBar />
-        <Toolbar variant="dense" />
 
         <TorrentList />
 
