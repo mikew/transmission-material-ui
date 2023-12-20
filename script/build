@@ -10,8 +10,16 @@ if [ "$BUILD_FOR_NPX_SERVE" != "1" ]; then
   export NEXT_PUBLIC_TRANSMISSION_RPC_PATH=/transmission/rpc
 fi
 
-rm -rf out/ pwa-out/
+rm -rf \
+  out/ \
+  pwa-out/ \
+  transmission-material-ui/ \
+  transmission-material-ui.zip
 
 ./node_modules/.bin/next build
-./node_modules/.bin/next export
 cp -a pwa-out/* out/
+mv out/ transmission-material-ui/
+rm -rf pwa-out/
+
+find transmission-material-ui/ -iname '*.map' -print -exec rm {} \;
+zip -r transmission-material-ui.zip transmission-material-ui/

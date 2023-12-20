@@ -13,7 +13,7 @@ import { useTheme } from '@mui/material/styles'
 import { Formik } from 'formik'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState } from 'react'
-import { ActionSuccessType } from 'redux-easy-mode/lib/async/asyncMiddleware'
+import { ActionSuccessType } from 'redux-easy-mode/async/asyncMiddleware'
 
 import MobileNavigationSpacer from '@src/lib/MobileNavigationSpacer'
 import { useRootDispatch, useRootSelector } from '@src/redux/helpers'

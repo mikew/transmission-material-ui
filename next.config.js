@@ -1,6 +1,6 @@
 // @ts-check
 
-const nextPwa = require('@ducanh2912/next-pwa').default
+import nextPwa from '@ducanh2912/next-pwa'
 
 process.env.NEXT_PUBLIC_BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || ''
 process.env.NEXT_PUBLIC_TRANSMISSION_RPC_PATH =
@@ -12,10 +12,6 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'export',
   basePath: process.env.NEXT_PUBLIC_BASE_PATH,
-
-  experimental: {
-    legacyBrowsers: false,
-  },
 }
 
 function randomId() {
@@ -56,4 +52,4 @@ const withPwa = nextPwa({
   dest: 'pwa-out',
 })
 
-module.exports = withPwa(nextConfig)
+export default withPwa(nextConfig)

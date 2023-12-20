@@ -17,7 +17,6 @@ import actions from './actions'
 
 const StatsDialog: React.FC = (props) => {
   const isOpen = useRootSelector((state) => state.stats.isDialogOpen)
-  console.log(isOpen)
   const dispatch = useRootDispatch()
   const stats = useRootSelector((state) => state.stats.stats)
 

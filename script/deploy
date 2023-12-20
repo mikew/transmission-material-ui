@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 set -ex
 
-find out/ -iname '*.map' -print -exec rm {} \;
-
-rm -rf transmission-material-ui/ transmission-material-ui.zip
-mv out/ transmission-material-ui/
-zip -r transmission-material-ui.zip transmission-material-ui/
-
 RELEASE_TAG="release-$(date "+%F-%H-%M")"
 
 gh release create "$RELEASE_TAG" --generate-notes --target "$GITHUB_SHA"

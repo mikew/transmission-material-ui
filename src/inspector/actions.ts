@@ -1,6 +1,5 @@
 import { createActions } from 'redux-easy-mode'
-
-import identityPayloadCreator from '@src/redux/identityPayloadCreator'
+import identityPayloadCreator from 'redux-easy-mode/identityPayloadCreator'
 
 import InspectorTab from './InspectorTabs'
 
