@@ -26,6 +26,7 @@ export function SettingsTabBandwidth() {
           checkboxFieldName={'speed-limit-down-enabled'}
           textFieldName={'speed-limit-down'}
           label="Limit download rate ..."
+          type="number"
           helperText="KB/s"
         />
 
